@@ -6,8 +6,14 @@ package restaurantenegocio;
 
 /**
  *
- * @author Jaime
+ * @author JAR
  */
-public class NegocioException {
-    
+public class NegocioException extends Exception {
+    public NegocioException(String message) {
+        super(message);
+    }
+
+    public NegocioException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

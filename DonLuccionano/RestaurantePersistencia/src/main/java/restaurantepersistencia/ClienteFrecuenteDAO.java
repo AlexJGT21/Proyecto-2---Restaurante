@@ -14,7 +14,6 @@ import restaurantedtos.ClienteFrecuenteDTO;
 public class ClienteFrecuenteDAO implements IClienteFrecuente {
 
     private static final Logger LOGGER = Logger.getLogger(ClienteFrecuenteDAO.class.getName());
-    
     @Override
     public ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteFrecuente) throws PersistenciaException {
         ClienteFrecuente cliente = new ClienteFrecuente(clienteFrecuente.getNombre(),
