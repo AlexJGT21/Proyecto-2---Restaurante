@@ -19,17 +19,17 @@ import javax.persistence.Table;
 public class ClienteFrecuente implements Serializable {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_clienteFrecuente", nullable = false)
     private Long id;
 
-    @Column(name = "nombre", nullable = false, length = 20)
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
     
-    @Column(name = "apellido_paterno", nullable = false, length = 20)
+    @Column(name = "apellido_paterno", nullable = false, length = 50)
     private String apellidoPaterno;
 
-    @Column(name = "apellido_materno", nullable = false, length = 20)
+    @Column(name = "apellido_materno", nullable = false, length = 50)
     private String apellidoMaterno;
     
     @Column(name = "numero_telefonico", nullable = false, length = 10)
@@ -110,7 +110,7 @@ public class ClienteFrecuente implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -181,7 +181,6 @@ public class ClienteFrecuente implements Serializable {
 
     @Override
     public String toString() {
-        return "restaurantedominio.ClienteFrecuente[ id=" + id + " ]";
-    }
-    
+        return "ClienteFrecuente{" + "nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", numeroTelefonico=" + numeroTelefonico + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + '}';
+    }        
 }

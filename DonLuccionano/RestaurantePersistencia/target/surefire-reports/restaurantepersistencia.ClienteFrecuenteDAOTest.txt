@@ -1,21 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: restaurantepersistencia.ClienteFrecuenteDAOTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.574 s <<< FAILURE! -- in restaurantepersistencia.ClienteFrecuenteDAOTest
-restaurantepersistencia.ClienteFrecuenteDAOTest.testCrearClienteFrecuente -- Time elapsed: 1.534 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: Unexpected exception thrown: restaurantepersistencia.PersistenciaException: NO SE PUDO REGISTRAR EL CLIENTE
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
-	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:53)
-	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:36)
-	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3168)
-	at restaurantepersistencia.ClienteFrecuenteDAOTest.testCrearClienteFrecuente(ClienteFrecuenteDAOTest.java:30)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-Caused by: restaurantepersistencia.PersistenciaException: NO SE PUDO REGISTRAR EL CLIENTE
-	at restaurantepersistencia.ClienteFrecuenteDAO.crearCliente(ClienteFrecuenteDAO.java:37)
-	at restaurantepersistencia.ClienteFrecuenteDAOTest.lambda$testCrearClienteFrecuente$0(ClienteFrecuenteDAOTest.java:31)
-	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:49)
-	... 6 more
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.915 s -- in restaurantepersistencia.ClienteFrecuenteDAOTest

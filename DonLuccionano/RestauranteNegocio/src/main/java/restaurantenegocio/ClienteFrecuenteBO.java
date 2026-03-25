@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package restaurantenegocio;
 
 import java.time.LocalDate;
@@ -93,7 +90,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("La Fecha De Registro No Puede Ser Futura");
         }
 
-        // Inserción en la BDz
+        // Inserción en la BDs
         try {
             ClienteFrecuente cliente = this.clienteDAO.crearCliente(clienteDTO);
             return cliente;

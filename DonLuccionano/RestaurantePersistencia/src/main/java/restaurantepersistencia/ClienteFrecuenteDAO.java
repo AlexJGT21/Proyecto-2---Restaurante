@@ -1,9 +1,11 @@
 
 package restaurantepersistencia;
 
+import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
 
@@ -36,5 +38,35 @@ public class ClienteFrecuenteDAO implements IClienteFrecuente {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO REGISTRAR EL CLIENTE");
         }
+    }
+
+    @Override
+    public List<ClienteFrecuente> buscarNombre(String nombreCliente) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();            
+            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
+            """
+            SELECT c.nombre, c.apellido_paterno, c.apellido_materno, c.fecha_registro, c.numero_telefonico
+            FROM ClienteFrecuente c
+            WHERE c.nombre LIKE :nombreCliente
+            """, ClienteFrecuente.class);
+            query.setParameter("nombreCliente", nombreCliente);
+            
+            List<ClienteFrecuente> clienteFrecuente = query.getResultList();
+            return clienteFrecuente;            
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO SE PUSO CONSULTAR EL CLIENTE FRECUENTE");
+        }
+    }
+
+    @Override
+    public List<ClienteFrecuente> numeroCliente(String numeroCliente) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ClienteFrecuente> emailCliente(String emailCliente) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
