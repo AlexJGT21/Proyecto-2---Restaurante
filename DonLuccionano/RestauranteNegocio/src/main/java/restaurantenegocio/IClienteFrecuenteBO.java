@@ -4,10 +4,14 @@
  */
 package restaurantenegocio;
 
+import restaurantedominio.ClienteFrecuente;
+import restaurantedtos.ClienteFrecuenteDTO;
+
 /**
  *
- * @author Jaime
+ * @author JAR
  */
-public class IClienteFrecuenteBO {
+public interface IClienteFrecuenteBO  {
     
+    ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteDTO) throws NegocioException;
 }
