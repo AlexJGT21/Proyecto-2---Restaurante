@@ -98,11 +98,29 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
+    @Override
     public ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws NegocioException {
         try {
             return this.clienteDAO.buscarCliente(nombre, apellidoP, apellidoM);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al buscar el cliente");
+        }
+    }
+
+    @Override
+    public ClienteFrecuente buscarPorTelefono(String telefono) throws NegocioException {
+        try {
+            return this.clienteDAO.buscarPorTelefono(telefono);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar cliente por teléfono");
+        }
+    }
+
+    public ClienteFrecuente buscarPorCorreo(String correo) throws NegocioException {
+        try {
+            return this.clienteDAO.buscarPorCorreo(correo);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar cliente por correo");
         }
     }
 }

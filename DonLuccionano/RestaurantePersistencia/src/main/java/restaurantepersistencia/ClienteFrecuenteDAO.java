@@ -101,4 +101,58 @@ public class ClienteFrecuenteDAO implements IClienteFrecuente {
             throw new PersistenciaException("No se pudo consultar el cliente frecuente");
         }
     }
+
+    @Override
+    public ClienteFrecuente buscarPorTelefono(String telefono) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+
+            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
+                    """
+            SELECT c
+            FROM ClienteFrecuente c
+            WHERE c.numeroTelefonico = :telefono
+            """,
+                    ClienteFrecuente.class
+            );
+
+            query.setParameter("telefono", telefono);
+
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null; // cuando no eziste 
+
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("No se pudo consultar el cliente por teléfono");
+        }
+    }
+
+    @Override
+    public ClienteFrecuente buscarPorCorreo(String correo) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+
+            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
+                    """
+            SELECT c
+            FROM ClienteFrecuente c
+            WHERE c.correo = :correo
+            """,
+                    ClienteFrecuente.class
+            );
+
+            query.setParameter("correo", correo);
+
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null; 
+
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("No se pudo consultar el cliente por correo");
+        }
+    }
 }

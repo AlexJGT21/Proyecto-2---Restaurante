@@ -68,8 +68,18 @@ public class BuscarClinteForm extends javax.swing.JFrame {
         });
 
         btnBuscarPorCelular.setText("Buscar por celular");
+        btnBuscarPorCelular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPorCelularActionPerformed(evt);
+            }
+        });
 
         btnBuscarPorCorreo.setText("Buscar por correo");
+        btnBuscarPorCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPorCorreoActionPerformed(evt);
+            }
+        });
 
         txtApellidoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,12 +205,12 @@ public class BuscarClinteForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, mensaje, "Cliente encontrado", JOptionPane.INFORMATION_MESSAGE);
                 // aqui se abre la ventana de seleccion de mesa pasandole el clientefrecuente para que lo registre en la comanda que se va a generar par esa mesa
             }
-            if (clienteFrecuente == null){
+            if (clienteFrecuente == null) {
                 JOptionPane.showMessageDialog(
-                    this,
-                    "No se pudo encontrar el cliente con ese nombre: ",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                        this,
+                        "No existe cliente con ese nombre registrado: ",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (NegocioException ex) {
             logger.severe(ex.getMessage());
@@ -212,6 +222,48 @@ public class BuscarClinteForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnBuscarPorNombreActionPerformed
+
+    private void btnBuscarPorCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorCelularActionPerformed
+        try {
+            ClienteFrecuente clienteFrecuente = clienteFrecuenteBO.buscarPorTelefono(txtTelefono.getText());
+
+            if (clienteFrecuente != null) {
+                String mensaje = "Da la bienvenida a: "
+                        + clienteFrecuente.getNombre() + " "
+                        + clienteFrecuente.getApellidoPaterno() + " "
+                        + clienteFrecuente.getApellidoMaterno()
+                        + "\n\nEscoge su mesa a continuación.";
+                JOptionPane.showMessageDialog(this, mensaje, "Cliente encontrado", JOptionPane.INFORMATION_MESSAGE);
+                // aqui se abre la ventana de seleccion de mesa pasandole el clientefrecuente para que lo registre en la comanda que se va a generar par esa mesa
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe cliente con ese telefono registrado");
+            }
+
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarPorCelularActionPerformed
+
+    private void btnBuscarPorCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorCorreoActionPerformed
+        try {
+    ClienteFrecuente clienteFrecuente = clienteFrecuenteBO.buscarPorCorreo(txtCorreo.getText());
+
+    if (clienteFrecuente != null) {
+        String mensaje = "Da la bienvenida a: "
+                        + clienteFrecuente.getNombre() + " "
+                        + clienteFrecuente.getApellidoPaterno() + " "
+                        + clienteFrecuente.getApellidoMaterno()
+                        + "\n\nEscoge su mesa a continuación.";
+                JOptionPane.showMessageDialog(this, mensaje, "Cliente encontrado", JOptionPane.INFORMATION_MESSAGE);
+                // aqui se abre la ventana de seleccion de mesa pasandole el clientefrecuente para que lo registre en la comanda que se va a generar par esa mesa
+    } else {
+        JOptionPane.showMessageDialog(this, "No existe cliente con ese correo registrado");
+    }
+
+} catch (NegocioException e) {
+    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+}
+    }//GEN-LAST:event_btnBuscarPorCorreoActionPerformed
 
     /**
      * @param args the command line arguments

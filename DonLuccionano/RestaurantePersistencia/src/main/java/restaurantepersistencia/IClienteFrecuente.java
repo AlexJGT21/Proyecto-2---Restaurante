@@ -25,4 +25,10 @@ public interface IClienteFrecuente {
     
     //Contrato 5; busca cliente frecuente por nombre completo
     public abstract ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws PersistenciaException;
+    
+    //contato 6; busca cliente frecuente por numero telefonico
+    public ClienteFrecuente buscarPorTelefono(String telefono) throws PersistenciaException;
+    
+    //contrato 7; busca cliente frecuente por correo electronico
+    public ClienteFrecuente buscarPorCorreo(String correo) throws PersistenciaException;
 }
