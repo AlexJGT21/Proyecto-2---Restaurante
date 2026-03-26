@@ -1,4 +1,3 @@
-
 package restaurantenegocio;
 
 import java.time.LocalDate;
@@ -13,9 +12,9 @@ import restaurantepersistencia.PersistenciaException;
  * @author Jaime
  */
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
-    
+
     private final IClienteFrecuente clienteDAO;
-    
+
     public ClienteFrecuenteBO() {
         this.clienteDAO = new ClienteFrecuenteDAO();
     }
@@ -84,7 +83,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         if (clienteDTO.getFechaRegistro() == null) {
             throw new NegocioException("La Fecha de Registro es Obligatoria");
         }
-        
+
         LocalDate fechaHoy = LocalDate.now();
         if (clienteDTO.getFechaRegistro().isAfter(fechaHoy)) {
             throw new NegocioException("La Fecha De Registro No Puede Ser Futura");
@@ -96,6 +95,14 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             return cliente;
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al Crear al Cliente", ex);
+        }
+    }
+
+    public ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws NegocioException {
+        try {
+            return this.clienteDAO.buscarCliente(nombre, apellidoP, apellidoM);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar el cliente");
         }
     }
 }

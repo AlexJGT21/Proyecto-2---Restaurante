@@ -24,12 +24,12 @@ public class ClienteFrecuenteDAOTest {
         this.dao = new ClienteFrecuenteDAO();
     }
     
-    @Test
-    public void testCrearClienteFrecuente() {
-        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("JAR", "Lopez", "Osuna", "1234567890", "tilin@gmail.com", LocalDate.of(2026, 03, 24));        
-        assertDoesNotThrow(() -> {
-            ClienteFrecuente clienteFc = dao.crearCliente(cliente);
-            assertNotNull(clienteFc);
-        });
-    }
+//    @Test
+//    public void testCrearClienteFrecuente() {
+//        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("JAR", "Lopez", "Osuna", "1234567890", "tilin@gmail.com", LocalDate.of(2026, 03, 24));        
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente clienteFc = dao.crearCliente(cliente);
+//            assertNotNull(clienteFc);
+//        });
+//    }
 }

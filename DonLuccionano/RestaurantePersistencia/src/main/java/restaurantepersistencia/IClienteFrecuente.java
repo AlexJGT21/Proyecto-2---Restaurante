@@ -22,4 +22,7 @@ public interface IClienteFrecuente {
     
     //Contrato 4: buscar cliente por correo electronico
     public abstract List<ClienteFrecuente> emailCliente(String emailCliente) throws PersistenciaException;
+    
+    //Contrato 5; busca cliente frecuente por nombre completo
+    public abstract ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws PersistenciaException;
 }

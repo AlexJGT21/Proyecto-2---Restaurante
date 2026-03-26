@@ -11,4 +11,6 @@ import restaurantedtos.ClienteFrecuenteDTO;
 public interface IClienteFrecuenteBO  {
     
     ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteDTO) throws NegocioException;
+    
+    public abstract ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws NegocioException;
 }

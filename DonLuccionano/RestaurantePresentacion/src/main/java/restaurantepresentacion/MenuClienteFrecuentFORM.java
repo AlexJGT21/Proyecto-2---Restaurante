@@ -46,6 +46,11 @@ public class MenuClienteFrecuentFORM extends javax.swing.JFrame {
         });
 
         btnBuscarCliente.setText("Buscar Cliente ");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,6 +83,12 @@ public class MenuClienteFrecuentFORM extends javax.swing.JFrame {
         this.dispose();
         registroClienteFORM.setVisible(true);
     }//GEN-LAST:event_btnRegistrarClienteActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        this.dispose();
+        BuscarClinteForm buscarClinteForm = new BuscarClinteForm();
+        buscarClinteForm.setVisible(true);
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     /**
      * @param args the command line arguments
