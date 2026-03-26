@@ -95,7 +95,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuente {
 
         } catch (NoResultException e) {
             return null;
-
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("No se pudo consultar el cliente frecuente");

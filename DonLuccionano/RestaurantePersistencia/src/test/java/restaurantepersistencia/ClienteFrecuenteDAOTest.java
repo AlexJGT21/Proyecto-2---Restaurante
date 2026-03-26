@@ -10,7 +10,8 @@ import restaurantedtos.ClienteFrecuenteDTO;
 
 /**
  *
- * @author maild
+ * @author Alex García Trejo
+ * JAR
  */
 public class ClienteFrecuenteDAOTest {
     
@@ -23,13 +24,42 @@ public class ClienteFrecuenteDAOTest {
     public void init() {
         this.dao = new ClienteFrecuenteDAO();
     }
-    
+//    
 //    @Test
 //    public void testCrearClienteFrecuente() {
-//        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("JAR", "Lopez", "Osuna", "1234567890", "tilin@gmail.com", LocalDate.of(2026, 03, 24));        
+//        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("Sidharta", "Gautama", "Buda", "159753624", "DiosPropio@gmail.com", LocalDate.of(2026, 03, 24));
 //        assertDoesNotThrow(() -> {
 //            ClienteFrecuente clienteFc = dao.crearCliente(cliente);
 //            assertNotNull(clienteFc);
+//        });
+//    }
+//    
+//    @Test
+//    public void testBuscarClientePorNombre() {
+//        String nombre = "Mario";
+//        String apellidoPaterno = "Alberto";
+//        String apellidoMaterno = "Quaquity";
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente clienteFr = dao.buscarCliente(nombre, apellidoPaterno, apellidoMaterno);
+//            assertNotNull(clienteFr);
+//        });
+//    }
+//    
+//    @Test
+//    public void testBuscarClientePorNumeroTelefonico() {
+//        String numeroTelefonico = "159753624";
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente clienteFr = dao.buscarPorTelefono(numeroTelefonico);
+//            assertNotNull(clienteFr);
+//        });
+//    }
+//    
+//    @Test
+//    public void testBuscarClientePorCorreoElectronico() {
+//        String correoElectronico = "DiosPropio@gmail.com";
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente clienteFr = dao.buscarPorCorreo(correoElectronico);
+//            assertNotNull(clienteFr);
 //        });
 //    }
 }
