@@ -1,6 +1,7 @@
 package restaurantenegocio;
 
 import java.time.LocalDate;
+import java.util.List;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantepersistencia.ClienteFrecuenteDAO;
@@ -97,30 +98,83 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("Error al Crear al Cliente", ex);
         }
     }
+    
+    @Override
+    public List<ClienteFrecuente> buscarNombre(String nombreCliente) throws NegocioException {
+       // Validaciones del puro nombre
+       if (nombreCliente == null || nombreCliente.trim().isEmpty()) {
+            throw new NegocioException("El nombre a buscar no puede estar vacío");
+        }
+         // Inserción en la BDs
+        try {
+            return clienteDAO.buscarNombre(nombreCliente);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al buscar cliente por nombre: " + ex.getMessage(), ex);
+        }
+    }
 
     @Override
     public ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws NegocioException {
+        // Validaciones del nombre completo (apellidos)
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre es obligatorio para la búsqueda");
+        }
+        if (apellidoP == null || apellidoP.trim().isEmpty()) {
+            throw new NegocioException("El apellido paterno es obligatorio para la búsqueda");
+        }
+        if (apellidoM == null || apellidoM.trim().isEmpty()) {
+            throw new NegocioException("El apellido materno es obligatorio para la búsqueda");
+        }
+        // Inserción en la BDs
         try {
-            return this.clienteDAO.buscarCliente(nombre, apellidoP, apellidoM);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al buscar el cliente");
+            return clienteDAO.buscarCliente(nombre, apellidoP, apellidoM);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al buscar el cliente completo: " + ex.getMessage(), ex);
         }
     }
 
     @Override
     public ClienteFrecuente buscarPorTelefono(String telefono) throws NegocioException {
+        // Validaciones del teléfono del cliente
+       if (telefono == null || telefono.trim().isEmpty()) {
+            throw new NegocioException("El teléfono a buscar no puede estar vacío");
+        }
+        if (!telefono.matches("\\d{10}")) {
+            throw new NegocioException("El teléfono a buscar debe tener exactamente 10 dígitos numéricos");
+        }
+        // Inserción en la BDs
         try {
-            return this.clienteDAO.buscarPorTelefono(telefono);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al buscar cliente por teléfono");
+            return clienteDAO.buscarPorTelefono(telefono);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al buscar cliente por teléfono: " + ex.getMessage(), ex);
+        }
+    }
+    
+    @Override
+    public ClienteFrecuente buscarPorCorreo(String correo) throws NegocioException {
+        // Validaciones del correo del cliente
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new NegocioException("El correo a buscar no puede estar vacío");
+        }
+        if (!correo.contains("@")) {
+            throw new NegocioException("El formato del correo a buscar es inválido");
+        }
+        // Inserción en la BDs
+        try {
+            return clienteDAO.buscarPorCorreo(correo);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al buscar cliente por correo: " + ex.getMessage(), ex);
         }
     }
 
-    public ClienteFrecuente buscarPorCorreo(String correo) throws NegocioException {
-        try {
-            return this.clienteDAO.buscarPorCorreo(correo);
-        } catch (PersistenciaException e) {
-            throw new NegocioException("Error al buscar cliente por correo");
-        }
+  
+    @Override
+    public List<ClienteFrecuente> numeroCliente(String numeroCliente) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ClienteFrecuente> emailCliente(String emailCliente) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
