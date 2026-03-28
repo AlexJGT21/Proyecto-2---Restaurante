@@ -13,7 +13,7 @@ public class MenuClienteFrecuentFORM extends javax.swing.JFrame {
      * Creates new form MenuClienteFrecuentFORM
      */
     public MenuClienteFrecuentFORM() {
-        
+        setLocationRelativeTo(null);
         initComponents();
     }
 

@@ -167,51 +167,49 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
-  
-        @Override
-        public List<ClienteFrecuente> numeroCliente(String numeroCliente) throws NegocioException {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
+    @Override   
+    public List<ClienteFrecuente> numeroCliente(String numeroCliente) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
-        @Override
-        public List<ClienteFrecuente> emailCliente(String emailCliente) throws NegocioException {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
+    @Override
+    public List<ClienteFrecuente> emailCliente(String emailCliente) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
-        @Override
+    @Override
         public List<ClienteFrecuente> buscarNombre(String nombreCliente) throws NegocioException {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
 
-        @Override
-        public List<ClienteFrecuente> buscarClienteLista(String nombre, String apellidoP, String apellidoM) throws NegocioException {
-            
-            // Verificamos cuales de los campos traen texto
-            boolean hasNombre = nombre != null && !nombre.trim().isEmpty();
-            boolean hasApellidoP = apellidoP != null && !apellidoP.trim().isEmpty();
-            boolean hasApellidoM = apellidoM != null && !apellidoM.trim().isEmpty();
-
-             // Obligamos a poner si o si un dato
-            if (!hasNombre && !hasApellidoP && !hasApellidoM) {
-                throw new NegocioException("Debe ingresar al menos un criterio de búsqueda (Nombre o Apellidos).");
-            }
-
-            // Validamos la longitudes máximas de los datos
-            if (hasNombre && nombre.length() > 20) {
-                throw new NegocioException("El nombre no puede exceder los 20 caracteres.");
-            }
-            if (hasApellidoP && apellidoP.length() > 20) {
-                throw new NegocioException("El apellido paterno no puede exceder los 20 caracteres.");
-            }
-            if (hasApellidoM && apellidoM.length() > 20) {
-                throw new NegocioException("El apellido materno no puede exceder los 20 caracteres.");
-            }
-
-            try {
-                // Llamamos al método de la DAO jijija
-                return clienteDAO.buscarClienteLista(nombre, apellidoP, apellidoM);
-            } catch (PersistenciaException ex) {
-                throw new NegocioException("Error al buscar la lista de clientes: " + ex.getMessage(), ex);
-            }
+    @Override
+    public List<ClienteFrecuente> buscarClienteLista(String nombre, String apellidoP, String apellidoM) throws NegocioException {        
+        // Verificamos cuales de los campos traen texto
+        boolean hasNombre = nombre != null && !nombre.trim().isEmpty();
+        boolean hasApellidoP = apellidoP != null && !apellidoP.trim().isEmpty();
+        boolean hasApellidoM = apellidoM != null && !apellidoM.trim().isEmpty();
+        
+        // Obligamos a poner si o si un dato
+        if (!hasNombre && !hasApellidoP && !hasApellidoM) {
+            throw new NegocioException("Debe ingresar al menos un criterio de búsqueda (Nombre o Apellidos).");
         }
+        
+        // Validamos la longitudes máximas de los datos
+        if (hasNombre && nombre.length() > 20) {
+            throw new NegocioException("El nombre no puede exceder los 20 caracteres.");
+        }
+        if (hasApellidoP && apellidoP.length() > 20) {
+            throw new NegocioException("El apellido paterno no puede exceder los 20 caracteres.");
+        }
+        if (hasApellidoM && apellidoM.length() > 20) {
+            throw new NegocioException("El apellido materno no puede exceder los 20 caracteres.");
+        }
+        
+        try {
+            // Llamamos al método de la DAO jijija
+            return clienteDAO.buscarClienteLista(nombre, apellidoP, apellidoM);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al buscar la lista de clientes: " + ex.getMessage(), ex);
+        }
+    }
 }
