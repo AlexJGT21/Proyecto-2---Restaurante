@@ -25,8 +25,7 @@ public interface IClienteFrecuenteBO  {
     
     public abstract ClienteFrecuente buscarPorCorreo(String correo) throws NegocioException;
     
-
-    
+    public abstract List<ClienteFrecuente> buscarClienteLista(String nombre, String apellidoP, String apellidoM) throws NegocioException;
 
     
   

@@ -179,55 +179,56 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             if (nombre && apellidoPa && apellidoMa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
-                                builder.like(builder.lower(clienteFreciente.get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%"),
-                                builder.like(builder.lower(clienteFreciente.get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
+                                builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%"),
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
                         )
                 );
             } else if (nombre && apellidoPa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
-                                builder.like(builder.lower(clienteFreciente.get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%")
+                                builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%")
                         )
                 );                
             } else if (nombre && apellidoMa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
-                                builder.like(builder.lower(clienteFreciente.get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
+                                builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
                         )
                 );
             } else if (apellidoPa && apellidoMa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(               
-                                builder.like(builder.lower(clienteFreciente.get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%"),
-                                builder.like(builder.lower(clienteFreciente.get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%"),
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
                         )
                 );
             } else if (nombre) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%")                
+                                builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%")                
                         )
                 );
             } else if (apellidoPa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%")
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%")
                         )
                 );
             } else if (apellidoMa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
+                                builder.like(builder.lower(clienteFreciente.<String>get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
                         )
                 );
             } else {
                 criteria.select(clienteFreciente);
             }
+            
             TypedQuery<ClienteFrecuente> query = entityManager.createQuery(criteria);
-            return query.getResultList();            
+            return query.getResultList();       
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO CONSULTAR AL CLIENTE");

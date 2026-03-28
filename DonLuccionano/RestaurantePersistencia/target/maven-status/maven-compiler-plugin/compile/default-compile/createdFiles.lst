@@ -1,4 +1,4 @@
 restaurantepersistencia\ClienteFrecuenteDAO.class
 restaurantepersistencia\ManejadorConexiones.class
-restaurantepersistencia\IClienteFrecuente.class
 restaurantepersistencia\PersistenciaException.class
+restaurantepersistencia\IClienteFrecuenteDAO.class
