@@ -16,7 +16,7 @@ import restaurantedtos.ClienteFrecuenteDTO;
  *
  * @author Alex García Trejo
  */
-public class ClienteFrecuenteDAO implements IClienteFrecuente {
+public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     private static final Logger LOGGER = Logger.getLogger(ClienteFrecuenteDAO.class.getName());
 

@@ -9,7 +9,7 @@ import restaurantedtos.ClienteFrecuenteDTO;
  *
  * @author Alex García Trejo
  */
-public interface IClienteFrecuente {
+public interface IClienteFrecuenteDAO {
     
     //Contrato 1: crear (insertar en sistema) un cliente frecuente
     public abstract ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteFrecuente) throws PersistenciaException;

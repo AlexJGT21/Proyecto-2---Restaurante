@@ -5,7 +5,7 @@ import java.util.List;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantepersistencia.ClienteFrecuenteDAO;
-import restaurantepersistencia.IClienteFrecuente;
+import restaurantepersistencia.IClienteFrecuenteDAO;
 import restaurantepersistencia.PersistenciaException;
 
 /**
@@ -14,7 +14,7 @@ import restaurantepersistencia.PersistenciaException;
  */
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
-    private final IClienteFrecuente clienteDAO;
+    private final IClienteFrecuenteDAO clienteDAO;
 
     public ClienteFrecuenteBO() {
         this.clienteDAO = new ClienteFrecuenteDAO();
