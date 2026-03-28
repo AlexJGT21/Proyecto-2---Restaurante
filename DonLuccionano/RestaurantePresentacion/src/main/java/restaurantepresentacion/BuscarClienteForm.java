@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package restaurantepresentacion;
 
 import javax.swing.JOptionPane;
@@ -13,15 +10,15 @@ import restaurantenegocio.NegocioException;
  *
  * @author Dell
  */
-public class BuscarClinteForm extends javax.swing.JFrame {
+public class BuscarClienteForm extends javax.swing.JFrame {
 
     private ClienteFrecuenteBO clienteFrecuenteBO;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarClinteForm.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarClienteForm.class.getName());
 
     /**
      * Creates new form BuscarClinteForm
      */
-    public BuscarClinteForm() {
+    public BuscarClienteForm() {
         this.clienteFrecuenteBO = new ClienteFrecuenteBO();
         initComponents();
     }
@@ -306,7 +303,7 @@ public class BuscarClinteForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new BuscarClinteForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new BuscarClienteForm().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

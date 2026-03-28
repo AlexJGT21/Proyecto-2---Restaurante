@@ -10,7 +10,7 @@ import restaurantepersistencia.PersistenciaException;
 
 /**
  *
- * @author Jaime
+ * @author JAR
  */
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
@@ -98,20 +98,20 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("Error al Crear al Cliente", ex);
         }
     }
-    
-    @Override
-    public List<ClienteFrecuente> buscarNombre(String nombreCliente) throws NegocioException {
-       // Validaciones del puro nombre
-       if (nombreCliente == null || nombreCliente.trim().isEmpty()) {
-            throw new NegocioException("El nombre a buscar no puede estar vacío");
-        }
-         // Inserción en la BDs
-        try {
-            return clienteDAO.buscarNombre(nombreCliente);
-        } catch (PersistenciaException ex) {
-            throw new NegocioException("Error al buscar cliente por nombre: " + ex.getMessage(), ex);
-        }
-    }
+//    
+//    @Override
+//    public List<ClienteFrecuente> buscarNombre(String nombreCliente) throws NegocioException {
+//       // Validaciones del puro nombre
+//       if (nombreCliente == null || nombreCliente.trim().isEmpty()) {
+//            throw new NegocioException("El nombre a buscar no puede estar vacío");
+//        }
+//         // Inserción en la BDs
+//        try {
+//            return clienteDAO.buscarNombre(nombreCliente);
+//        } catch (PersistenciaException ex) {
+//            throw new NegocioException("Error al buscar cliente por nombre: " + ex.getMessage(), ex);
+//        }
+//    }
 
     @Override
     public ClienteFrecuente buscarCliente(String nombre, String apellidoP, String apellidoM) throws NegocioException {
@@ -175,6 +175,11 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     @Override
     public List<ClienteFrecuente> emailCliente(String emailCliente) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ClienteFrecuente> buscarNombre(String nombreCliente) throws NegocioException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

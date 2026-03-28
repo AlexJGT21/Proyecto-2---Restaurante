@@ -15,7 +15,7 @@ public interface IClienteFrecuente {
     public abstract ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteFrecuente) throws PersistenciaException;
     
     //Contrato 2: buscar un cliente frecuente por nombre
-    public abstract List<ClienteFrecuente> buscarNombre(String nombreCliente) throws PersistenciaException;
+    public abstract List<ClienteFrecuente> buscarClienteLista(String nombreCliente, String apellidoPaterno, String apellidoMaterno) throws PersistenciaException;
     
     //Contrato 3: buscar cliente por numero telefonico
     public abstract List<ClienteFrecuente> numeroCliente(String numeroCliente) throws PersistenciaException;
