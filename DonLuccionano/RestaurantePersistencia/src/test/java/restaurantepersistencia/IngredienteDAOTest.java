@@ -26,7 +26,7 @@ public class IngredienteDAOTest {
     
     @Test
     public void registrarNuevoIngrediente() {
-        IngredienteDTO ingrediente = new IngredienteDTO("Carne Molida", TipoUnidad.GRAMOS, 500);
+        IngredienteDTO ingrediente = new IngredienteDTO("Carne Molida", TipoUnidad.GRAMOS, 500.5);
         assertDoesNotThrow(() -> {
             Ingrediente ingredienteNuevo = dao.nuevoIngrediente(ingrediente);
             assertNotNull(ingredienteNuevo);

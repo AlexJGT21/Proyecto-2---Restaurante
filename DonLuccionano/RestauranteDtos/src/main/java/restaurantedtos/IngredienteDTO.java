@@ -9,9 +9,9 @@ public class IngredienteDTO {
     
     private String nombre;
     private TipoUnidad unidad;
-    private Integer cantidad;
+    private Double cantidad;
 
-    public IngredienteDTO(String nombre, TipoUnidad unidad, Integer cantidad) {
+    public IngredienteDTO(String nombre, TipoUnidad unidad, Double cantidad) {
         this.nombre = nombre;
         this.unidad = unidad;
         this.cantidad = cantidad;
@@ -33,11 +33,11 @@ public class IngredienteDTO {
         this.unidad = unidad;
     }
 
-    public Integer getCantidad() {
+    public Double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
 }

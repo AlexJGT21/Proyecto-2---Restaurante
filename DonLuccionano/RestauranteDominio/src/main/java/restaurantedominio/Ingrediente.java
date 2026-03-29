@@ -32,7 +32,7 @@ public class Ingrediente implements Serializable {
     private TipoUnidad unidad;
     
     @Column(name = "cantidad_actual", nullable = false)
-    private Integer cantidad;
+    private Double cantidad;
 
     /**
      * Constructor por defecto para JPA.
@@ -47,7 +47,7 @@ public class Ingrediente implements Serializable {
      * @param unidad OBLIGATORIO
      * @param cantidad OBLIGATORIO
      */    
-    public Ingrediente(Long id, String nombre, TipoUnidad unidad, Integer cantidad) {
+    public Ingrediente(Long id, String nombre, TipoUnidad unidad, Double cantidad) {
         this.id = id;
         this.nombre = nombre;
         this.unidad = unidad;
@@ -70,7 +70,7 @@ public class Ingrediente implements Serializable {
      * @param unidad OBLIGATORIO
      * @param cantidad OBLIGATORIO
      */
-    public Ingrediente(String nombre, TipoUnidad unidad, Integer cantidad) {
+    public Ingrediente(String nombre, TipoUnidad unidad, Double cantidad) {
         this.nombre = nombre;
         this.unidad = unidad;
         this.cantidad = cantidad;
@@ -102,11 +102,11 @@ public class Ingrediente implements Serializable {
         this.unidad = unidad;
     }
 
-    public Integer getCantidad() {
+    public Double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }        
 
