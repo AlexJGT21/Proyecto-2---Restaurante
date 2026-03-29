@@ -1,31 +1,31 @@
-//
-//package restaurantepersistencia;
-//
-//import java.time.LocalDate;
-//import java.util.List;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.*;
-//import org.junit.jupiter.api.BeforeEach;
-//import restaurantedominio.ClienteFrecuente;
-//import restaurantedtos.ClienteFrecuenteDTO;
-//
-///**
-// *
-// * @author Alex García Trejo
-// * JAR
-// */
-//public class ClienteFrecuenteDAOTest {
-//    
-//    private ClienteFrecuenteDAO dao;
-//    
-//    public ClienteFrecuenteDAOTest() {
-//    }
-//    
-//    @BeforeEach
-//    public void init() {
-//        this.dao = new ClienteFrecuenteDAO();
-//    }
-//    
+
+package restaurantepersistencia;
+
+import java.time.LocalDate;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import restaurantedominio.ClienteFrecuente;
+import restaurantedtos.ClienteFrecuenteDTO;
+
+/**
+ *
+ * @author Alex García Trejo
+ * JAR
+ */
+public class ClienteFrecuenteDAOTest {
+    
+    private ClienteFrecuenteDAO dao;
+    
+    public ClienteFrecuenteDAOTest() {
+    }
+    
+    @BeforeEach
+    public void init() {
+        this.dao = new ClienteFrecuenteDAO();
+    }
+    
 //    @Test
 //    public void testCrearClienteFrecuente() {
 //        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("Alex", "García", "Trejo", "6241857098", "alexGarciaTrejo@gmail.com", LocalDate.of(2003, 04, 28));
@@ -106,4 +106,4 @@
 //            }
 //        });
 //    }
-//}
+}
