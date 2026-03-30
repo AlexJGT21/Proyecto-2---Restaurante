@@ -3,7 +3,6 @@ package Interfaces;
 
 import restaurantedominio.Ingrediente;
 import restaurantedtos.IngredienteDTO;
-import restaurantedominio.TipoUnidad;
 import restaurantenegocio.NegocioException;
 
 /**

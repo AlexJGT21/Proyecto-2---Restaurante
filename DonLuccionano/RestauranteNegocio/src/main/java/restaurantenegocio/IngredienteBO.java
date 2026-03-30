@@ -58,6 +58,15 @@ public class IngredienteBO implements IIngredienteBO {
         }
         
         try {
+            //Convierte la unidad de DTO a DOMINIO
+            restaurantedominio.TipoUnidad unidad = restaurantedominio.TipoUnidad.valueOf(nuevoIngredienteDTO.getUnidad().name());
+            
+            //Busca en la DAO
+            Ingrediente existe = ingredienteDAO.buscarPorNombreYUnidad(nuevoIngredienteDTO.getNombre(), unidad);
+            if (existe != null) {
+                throw new NegocioException("NO SE PUEDE INGRESAR INGREDIENTE. YA EXISTE UNO IGUAL");
+            }        
+            
             Ingrediente ingrediente = ingredienteDAO.nuevoIngrediente(nuevoIngredienteDTO);
             return ingrediente;
         } catch (PersistenciaException e) {
