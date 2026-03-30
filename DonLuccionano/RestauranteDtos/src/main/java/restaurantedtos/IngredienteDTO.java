@@ -1,6 +1,8 @@
 
 package restaurantedtos;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Alex García Trejo
@@ -9,9 +11,9 @@ public class IngredienteDTO {
     
     private String nombre;
     private TipoUnidad unidad;
-    private Double cantidad;
+    private BigDecimal cantidad;
 
-    public IngredienteDTO(String nombre, TipoUnidad unidad, Double cantidad) {
+    public IngredienteDTO(String nombre, TipoUnidad unidad, BigDecimal cantidad) {
         this.nombre = nombre;
         this.unidad = unidad;
         this.cantidad = cantidad;
@@ -33,11 +35,11 @@ public class IngredienteDTO {
         this.unidad = unidad;
     }
 
-    public Double getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Double cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
 }

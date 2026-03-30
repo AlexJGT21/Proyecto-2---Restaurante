@@ -82,5 +82,11 @@
             <version>5.10.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.frostnova</groupId>
+            <artifactId>persistence-jpa</artifactId>
+            <version>1.0.0-RC1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>

@@ -2,6 +2,7 @@
 package restaurantedominio;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,8 +32,8 @@ public class Ingrediente implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private TipoUnidad unidad;
     
-    @Column(name = "cantidad_actual", nullable = false)
-    private Double cantidad;
+    @Column(name = "cantidad_actual", precision = 10, scale = 2, nullable = false)
+    private BigDecimal cantidad;
 
     /**
      * Constructor por defecto para JPA.
@@ -47,7 +48,7 @@ public class Ingrediente implements Serializable {
      * @param unidad OBLIGATORIO
      * @param cantidad OBLIGATORIO
      */    
-    public Ingrediente(Long id, String nombre, TipoUnidad unidad, Double cantidad) {
+    public Ingrediente(Long id, String nombre, TipoUnidad unidad, BigDecimal cantidad) {
         this.id = id;
         this.nombre = nombre;
         this.unidad = unidad;
@@ -70,7 +71,7 @@ public class Ingrediente implements Serializable {
      * @param unidad OBLIGATORIO
      * @param cantidad OBLIGATORIO
      */
-    public Ingrediente(String nombre, TipoUnidad unidad, Double cantidad) {
+    public Ingrediente(String nombre, TipoUnidad unidad, BigDecimal cantidad) {
         this.nombre = nombre;
         this.unidad = unidad;
         this.cantidad = cantidad;
@@ -102,11 +103,11 @@ public class Ingrediente implements Serializable {
         this.unidad = unidad;
     }
 
-    public Double getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Double cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }        
 

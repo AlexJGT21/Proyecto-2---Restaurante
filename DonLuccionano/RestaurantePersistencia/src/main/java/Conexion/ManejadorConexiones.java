@@ -1,5 +1,5 @@
 
-package restaurantepersistencia;
+package Conexion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

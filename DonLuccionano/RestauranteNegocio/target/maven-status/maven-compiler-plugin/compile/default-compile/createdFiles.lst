@@ -1,4 +1,6 @@
 restaurantenegocio\UnaClaseDeAlgo.class
+Interfaces\IClienteFrecuenteBO.class
+Interfaces\IIngredienteBO.class
+restaurantenegocio\IngredienteBO.class
 restaurantenegocio\ClienteFrecuenteBO.class
-restaurantenegocio\IClienteFrecuenteBO.class
 restaurantenegocio\NegocioException.class
