@@ -99,36 +99,35 @@ public class IngredienteDAO implements IIngredienteDAO {
         }        
     }
 
-//    @Override
-//    public List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException {
-//        try {
-//            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
-//            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-//            CriteriaQuery<Ingrediente> criteria = builder.createQuery(Ingrediente.class);
-//            Root<Ingrediente> ingrediente = criteria.from(Ingrediente.class);
-//            
-//            //Predicado para aplicar filtros
-//            List<Predicate> predicate = new ArrayList<>();
-//            
-//            if(nombreIngrediente != null && !nombreIngrediente.trim().isEmpty()) {
-//                predicate.add(builder.and(
-//                        builder.like(builder.lower(ingrediente.get("nombre")), "%" + nombreIngrediente.trim().toLowerCase() + "%")
-//                        )
-//                );
-//            }
-//            if (unidadIngrediente != null) {
-//                predicate.add(builder.and(
-//                        builder.equal(builder.lower(ingrediente.get("unidad")), unidadIngrediente)
-//                        )
-//                );
-//            }            
-//            criteria.select(ingrediente)
-//                    .where(builder.and(predicate.toArray(new Predicate[0])));
-//            TypedQuery<Ingrediente> query = entityManager.createQuery(criteria);
-//            return query.getResultList();            
-//        } catch (PersistenceException e) {
-//            LOGGER.severe(e.getMessage());
-//            throw new PersistenciaException("ERROR AL CONSULTAR INGREDIENTESS");
-//        }
-//    }
+    @Override
+    public List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Ingrediente> criteria = builder.createQuery(Ingrediente.class);
+            Root<Ingrediente> ingrediente = criteria.from(Ingrediente.class);
+            
+            //Predicado para aplicar filtros
+            List<Predicate> predicate = new ArrayList<>();
+            
+            if(nombreIngrediente != null && !nombreIngrediente.trim().isEmpty()) {
+                predicate.add(builder.and(
+                        builder.like(builder.lower(ingrediente.get("nombre")), "%" + nombreIngrediente.trim().toLowerCase() + "%")
+                        )
+                );
+            }
+            if (unidadIngrediente != null) {
+                predicate.add(
+                        builder.equal(ingrediente.get("unidad"), unidadIngrediente)
+                );
+            }            
+            criteria.select(ingrediente)
+                    .where(builder.and(predicate.toArray(new Predicate[0])));
+            TypedQuery<Ingrediente> query = entityManager.createQuery(criteria);
+            return query.getResultList();            
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("ERROR AL CONSULTAR INGREDIENTESS");
+        }
+    }
 }

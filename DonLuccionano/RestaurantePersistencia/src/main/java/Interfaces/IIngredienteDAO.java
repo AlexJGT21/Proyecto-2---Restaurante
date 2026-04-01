@@ -23,11 +23,11 @@ public interface IIngredienteDAO {
     //Contrato 3: Este metodo sirve para llenar la tabla de ingredientes (y de ingredientes para productos en su momento)
     //De manera automatica
     public abstract List<Ingrediente> llenarTabla() throws PersistenciaException;
-//    
-//    //Contrato 4: Este metodo es para buscar por nombre y unidad pero regresando una lista
-//    //Este es diferente al "Contrato 2", ya que ese es para buscar uno y verificar
-//    //Este se usa para busquedar y traer todos los resultados posibles
-//    public abstract List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException;
-//    
-//    
+    
+    //Contrato 4: Este metodo es para buscar por nombre y unidad pero regresando una lista
+    //Este es diferente al "Contrato 2", ya que ese es para buscar uno y verificar
+    //Este se usa para busquedar y traer todos los resultados posibles
+    public abstract List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException;
+    
+    
 }
