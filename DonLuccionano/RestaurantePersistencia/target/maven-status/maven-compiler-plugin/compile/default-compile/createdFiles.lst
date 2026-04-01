@@ -1,8 +1,11 @@
 restaurantepersistencia\ClienteFrecuenteDAO.class
 Interfaces\IIngredienteDAO.class
 restaurantepersistencia\IngredienteDAO.class
+restaurantepersistencia\Adapter\NuevoProductoDTOAProductoAdapter.class
 restaurantepersistencia\Adapter\NuevoIngredienteDTOAIngredienteAdapter.class
+restaurantepersistencia\ProductoDAO.class
 restaurantepersistencia\Adapter\NuevoIngredienteDTOAIngredienteAdapter$1.class
+Interfaces\IProductoDAO.class
 Interfaces\IClienteFrecuenteDAO.class
 restaurantepersistencia\PersistenciaException.class
 Conexion\ManejadorConexiones.class
