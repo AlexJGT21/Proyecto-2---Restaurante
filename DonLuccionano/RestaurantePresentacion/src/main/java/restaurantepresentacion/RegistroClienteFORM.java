@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package restaurantepresentacion;
 
 import java.time.LocalDate;
@@ -186,11 +183,11 @@ public class RegistroClienteFORM extends javax.swing.JFrame {
         String correo = this.txtCorreo.getText();
         ClienteFrecuenteDTO clienteFrecuenteDTO = new ClienteFrecuenteDTO(nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now());
         try{
-                ClienteFrecuente clienteFrecuente = clienteFrecuenteBO.crearCliente(clienteFrecuenteDTO);
-                JOptionPane.showMessageDialog(this, "Cliente registrado correctamente");
-                MenuClienteFrecuentFORM menuClienteFrecuentFORM = new MenuClienteFrecuentFORM();
-                menuClienteFrecuentFORM.setVisible(true);
-                this.dispose();
+            ClienteFrecuente clienteFrecuente = clienteFrecuenteBO.crearCliente(clienteFrecuenteDTO);
+            JOptionPane.showMessageDialog(this, "Cliente registrado correctamente");
+            MenuClienteFrecuentFORM menuClienteFrecuentFORM = new MenuClienteFrecuentFORM();
+            menuClienteFrecuentFORM.setVisible(true);
+            this.dispose();
         }catch (NegocioException ex){
             logger.severe(ex.getMessage());
             JOptionPane.showMessageDialog(
@@ -198,11 +195,8 @@ public class RegistroClienteFORM extends javax.swing.JFrame {
             "No se pudo registrar el cliente: " + ex.getMessage(),
             "Error",
             JOptionPane.ERROR_MESSAGE
-        );
-            
-            
-        }
-        
+            );                       
+        }        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed

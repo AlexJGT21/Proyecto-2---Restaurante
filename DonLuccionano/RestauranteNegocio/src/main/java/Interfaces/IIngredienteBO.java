@@ -17,5 +17,7 @@ public interface IIngredienteBO {
     
     //Contrato 2: Este metodo sirve para llenar la tabla de ingredientes (y de ingredientes para productos en su momento)
     //De manera automatica
-    public abstract List<Ingrediente> llenarTabla() throws NegocioException;    
+    public abstract List<Ingrediente> llenarTabla() throws NegocioException; 
+    
+    
 }

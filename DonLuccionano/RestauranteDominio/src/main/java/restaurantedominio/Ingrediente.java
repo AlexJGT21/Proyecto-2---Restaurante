@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -34,6 +35,14 @@ public class Ingrediente implements Serializable {
     
     @Column(name = "cantidad_actual", precision = 10, scale = 2, nullable = false)
     private BigDecimal cantidad;
+    
+    /**
+     * Atributo para cargar la imagen en mi producto
+     * SE CAMBIO A OPCIONAL PARA PODER INGRESAR O NO LA IMAGEN
+     */
+    @Lob
+    @Column(name = "imagen_producto", columnDefinition = "LONGBLOB", nullable = true)
+    private byte[] imagen;    
 
     /**
      * Constructor por defecto para JPA.
@@ -76,6 +85,20 @@ public class Ingrediente implements Serializable {
         this.unidad = unidad;
         this.cantidad = cantidad;
     }
+
+    /**
+     * Constructor que crea un ingrediente, con una imagen
+     * @param nombre OBLIGATORIO
+     * @param unidad OBLIGATORIO
+     * @param cantidad OBLIGATORIO
+     * @param imagen OPCIONAL
+     */
+    public Ingrediente(String nombre, TipoUnidad unidad, BigDecimal cantidad, byte[] imagen) {
+        this.nombre = nombre;
+        this.unidad = unidad;
+        this.cantidad = cantidad;
+        this.imagen = imagen;
+    }       
     
     //GETTERS AND SETTERS
     
@@ -109,6 +132,14 @@ public class Ingrediente implements Serializable {
 
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
+    }     
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }        
 
     @Override
