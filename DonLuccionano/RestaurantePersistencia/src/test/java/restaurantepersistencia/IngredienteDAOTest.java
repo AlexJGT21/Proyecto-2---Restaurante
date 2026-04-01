@@ -2,10 +2,13 @@
 package restaurantepersistencia;
 
 import java.math.BigDecimal;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.function.Executable;
 import restaurantedominio.Ingrediente;
+import restaurantedominio.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 
 /**
@@ -42,6 +45,16 @@ public class IngredienteDAOTest {
 //            assertNotNull(ingredienteBuscar);
 //            assertEquals(nombre, ingredienteBuscar.getNombre());
 //            assertEquals(TipoUnidad.PIEZAS, ingredienteBuscar.getUnidad());
+//        });
+//    }
+//    
+//    @Test
+//    public void testConsultarIngredientesBD() {
+//        assertDoesNotThrow(() -> {
+//            List<Ingrediente> consultar = dao.llenarTabla();
+//            for (Ingrediente i: consultar) {
+//                System.out.println(i.toString());
+//            }
 //        });
 //    }
 }

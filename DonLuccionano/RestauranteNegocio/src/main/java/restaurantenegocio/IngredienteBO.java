@@ -4,6 +4,7 @@ package restaurantenegocio;
 import Interfaces.IIngredienteBO;
 import Interfaces.IIngredienteDAO;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.logging.Logger;
 import restaurantedominio.Ingrediente;
 import restaurantedtos.IngredienteDTO;
@@ -24,6 +25,12 @@ public class IngredienteBO implements IIngredienteBO {
         ingredienteDAO = new IngredienteDAO();
     }
     
+    /**
+     * Metodo que valida la entrada de datos al momento de registrar un nuevo ingrediente
+     * @param nuevoIngredienteDTO Datos por validar
+     * @return Nuevo ingrediente registrad
+     * @throws NegocioException Esto se lanzara en caso de no poder registrar el nuevo ingrediente
+     */
     @Override
     public Ingrediente nuevoIngrediente(IngredienteDTO nuevoIngredienteDTO) throws NegocioException {
         if (nuevoIngredienteDTO == null) {
@@ -74,5 +81,20 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("Error al registrar ingrediente.");
         }
     }
-    
+
+    /**
+     * Metodo que llama a la persistencia para llenar la tabla de ingredientes
+     * @return Listado de ingredientes
+     * @throws NegocioException Esto se lanzara en caso de no poder consultar la BD
+     */
+    @Override
+    public List<Ingrediente> llenarTabla() throws NegocioException {
+        try {
+            List<Ingrediente> llenarTabla = ingredienteDAO.llenarTabla();
+            return llenarTabla;
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("NO SE PUDO CONSULTAR LA BD PARA LLENAR LA TABLA");
+        }        
+    }    
 }
