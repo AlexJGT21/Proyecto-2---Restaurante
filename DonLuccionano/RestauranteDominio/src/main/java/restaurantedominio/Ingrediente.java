@@ -37,7 +37,7 @@ public class Ingrediente implements Serializable {
     private BigDecimal cantidad;
     
     /**
-     * Atributo para cargar la imagen en mi producto
+     * Atributo para cargar la imagen en mi ingrediente
      * SE CAMBIO A OPCIONAL PARA PODER INGRESAR O NO LA IMAGEN
      */
     @Lob
@@ -98,7 +98,7 @@ public class Ingrediente implements Serializable {
         this.unidad = unidad;
         this.cantidad = cantidad;
         this.imagen = imagen;
-    }       
+    }
     
     //GETTERS AND SETTERS
     

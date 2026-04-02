@@ -1,18 +1,29 @@
 
 package PanelesDinamicos;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Ingrediente;
 import restaurantedtos.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;
+import restaurantepresentacion.ImageTable;
 import restaurantepresentacion.InventarioFORM;
 
 /**
@@ -21,12 +32,16 @@ import restaurantepresentacion.InventarioFORM;
  */
 public class NuevoIngredientePanel extends javax.swing.JPanel {
 
-     private IngredienteBO ingredienteBO;
+    
+    private IngredienteBO ingredienteBO;
+    public File selectFile;
     private static final Logger LOGGER = Logger.getLogger(NuevoIngredientePanel.class.getName());     
 
     public NuevoIngredientePanel() {
         initComponents();
         this.ingredienteBO = new IngredienteBO();
+        tbIngredientes.setRowHeight(60);
+        tbIngredientes.getColumnModel().getColumn(3).setCellRenderer(new ImageTable());
         llenarTabla();
         cargarUnidadesCombo();
     }
@@ -38,14 +53,22 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         try {
             ingredientes = ingredienteBO.llenarTabla();
             if (ingredientes.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron ingredientes registrados con esos datos.", "Búsqueda vacía", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No existen ingredientes registrados. Ingrese uno para comenzar llenado.", 
+                                              "Búsqueda vacía", JOptionPane.INFORMATION_MESSAGE);
                 return;               
             }
             for (Ingrediente i: ingredientes) {
+                JLabel lbImage = new JLabel();
+                if (i.getImagen() != null) {
+                    ImageIcon icon = new ImageIcon(i.getImagen());
+                    Image image = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    lbImage.setIcon(new ImageIcon(image));
+                }                
                 Object[] fila = {
                     i.getNombre(),
                     i.getCantidad(),
-                    i.getUnidad()
+                    i.getUnidad(),
+                    lbImage
                 };
                 modelo.addRow(fila);
             }
@@ -63,6 +86,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         txtNombre.setText("");
         txtCantidad.setText("");
         comboUnidades.setSelectedItem(0);
+        txtRutaImagen.setText("");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,9 +107,11 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         btnCancelar = new javax.swing.JButton();
         txtCantidad = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lbImagen = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbIngredientes = new javax.swing.JTable();
+        btnImagen = new javax.swing.JButton();
+        txtRutaImagen = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 102, 255));
 
@@ -141,7 +167,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel5.setText("Imagen:");
 
-        jLabel6.setText("jLabel6");
+        lbImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tbIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -153,33 +179,62 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
             new String [] {
                 "Nombre", "Cantidad", "Unidad", "Imagen"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbIngredientes);
+
+        btnImagen.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
+        btnImagen.setText("Seleccionar imagen");
+        btnImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImagenActionPerformed(evt);
+            }
+        });
+
+        txtRutaImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRutaImagenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(90, 90, 90)
+                        .addComponent(btnImagen)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                 .addContainerGap())
@@ -203,10 +258,14 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(comboUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnImagen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegistrar)
@@ -249,8 +308,25 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
             return;
         }
         
+        byte[] imagenBytes = null;
+        if (selectFile != null) {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(selectFile);
+                if (bufferedImage == null) {
+                    JOptionPane.showMessageDialog(this, "El archivo no es una imagen valida.", "ERROR CARGAR IMAGEN", 
+                                                  JOptionPane.ERROR_MESSAGE);
+                }
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, "png", bos);
+                imagenBytes = bos.toByteArray();
+            } catch (IOException e) {
+                LOGGER.severe(e.getMessage());
+                JOptionPane.showMessageDialog(this, "Error al procesar imagen", "ERROR IMAGEN", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         TipoUnidad unidad = (TipoUnidad) comboUnidades.getSelectedItem();        
-        IngredienteDTO nuevoIngrediente = new IngredienteDTO(nombre, unidad, cantidad);
+        IngredienteDTO nuevoIngrediente = new IngredienteDTO(nombre, unidad, cantidad, imagenBytes);
         try {
             Ingrediente ingrediente = ingredienteBO.nuevoIngrediente(nuevoIngrediente);
             JOptionPane.showMessageDialog(this, 
@@ -271,7 +347,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiarCampos();        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
@@ -282,9 +358,48 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboUnidadesActionPerformed
 
+    private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagenes", "jpg", "jpeg", "png", "gif");
+        fileChooser.setFileFilter(filtro);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectFile = fileChooser.getSelectedFile();
+            txtRutaImagen.setText(selectFile.getName());
+            
+            try {
+                //Creamos la imagen
+                Image image = ImageIO.read(selectFile);
+                if (image == null) {
+                    JOptionPane.showMessageDialog(this, "El archivo no es una imagen valida", "ERROR IMAGEN", JOptionPane.ERROR_MESSAGE);
+                }
+                ImageIcon originalIcon = new ImageIcon(image);
+                
+                //Escalado de imagen de acuerdo al tamaño del label 
+                int lblweidth = lbImagen.getWidth();
+                int lblheigth = lbImagen.getHeight();
+                
+                //Asignacion de imagen escalada
+                Image scaledImage = originalIcon.getImage().getScaledInstance(lblweidth, lblheigth, Image.SCALE_SMOOTH);
+                lbImagen.setIcon(new ImageIcon(scaledImage));
+            } catch (IOException e) {
+                LOGGER.severe(e.getMessage());
+                JOptionPane.showMessageDialog(this, "Error al cargar imagen", "ERROR IMAGEN", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnImagenActionPerformed
+
+    private void txtRutaImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaImagenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutaImagenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnImagen;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<TipoUnidad> comboUnidades;
     private javax.swing.JLabel jLabel1;
@@ -292,10 +407,11 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbImagen;
     private javax.swing.JTable tbIngredientes;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtRutaImagen;
     // End of variables declaration//GEN-END:variables
 }

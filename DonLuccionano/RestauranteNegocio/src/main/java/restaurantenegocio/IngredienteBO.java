@@ -47,6 +47,9 @@ public class IngredienteBO implements IIngredienteBO {
         if (nuevoIngredienteDTO.getNombre().length() > 20) {
             throw new NegocioException("El nombre del ingrediente es muy largo. Excede los 20 caracteres");
         }
+        if (nuevoIngredienteDTO.getNombre().matches("\\d+")) {
+            throw new NegocioException("El nombre del ingrediente no puede ser numero.");
+        }
         
         //Validaciones por cantidad
         if (nuevoIngredienteDTO.getCantidad() == null) {
@@ -63,6 +66,9 @@ public class IngredienteBO implements IIngredienteBO {
         if (nuevoIngredienteDTO.getUnidad() == null) {
             throw new NegocioException("La unidad no puede ser nula.");
         }
+        
+        //Validacion de imagen
+        
         
         try {
             //Convierte la unidad de DTO a DOMINIO
