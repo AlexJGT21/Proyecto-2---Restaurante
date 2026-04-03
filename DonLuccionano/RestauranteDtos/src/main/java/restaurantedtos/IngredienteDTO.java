@@ -12,11 +12,13 @@ public class IngredienteDTO {
     private String nombre;
     private TipoUnidad unidad;
     private BigDecimal cantidad;
+    private byte[] imagen;
 
-    public IngredienteDTO(String nombre, TipoUnidad unidad, BigDecimal cantidad) {
+    public IngredienteDTO(String nombre, TipoUnidad unidad, BigDecimal cantidad, byte[] imagen) {
         this.nombre = nombre;
         this.unidad = unidad;
         this.cantidad = cantidad;
+        this.imagen = imagen;
     }
 
     public String getNombre() {
@@ -42,4 +44,12 @@ public class IngredienteDTO {
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }        
 }

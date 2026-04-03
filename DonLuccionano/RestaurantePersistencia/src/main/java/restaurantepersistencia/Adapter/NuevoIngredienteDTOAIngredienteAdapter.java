@@ -1,4 +1,4 @@
-                                                                                                    
+
 package restaurantepersistencia.Adapter;
 
 import restaurantedominio.Ingrediente;
@@ -22,6 +22,6 @@ public class NuevoIngredienteDTOAIngredienteAdapter {
             case ONZA -> unidad = TipoUnidad.ONZA;
             default -> throw new IllegalArgumentException("Unidad no valida");
         } 
-        return new Ingrediente(nuevoIngrediente.getNombre(), unidad, nuevoIngrediente.getCantidad());        
+        return new Ingrediente(nuevoIngrediente.getNombre(), unidad, nuevoIngrediente.getCantidad(), nuevoIngrediente.getImagen());
     }   
 }
