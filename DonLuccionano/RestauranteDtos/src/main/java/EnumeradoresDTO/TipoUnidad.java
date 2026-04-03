@@ -1,5 +1,5 @@
 
-package restaurantedtos;
+package EnumeradoresDTO;
 
 /**
  *

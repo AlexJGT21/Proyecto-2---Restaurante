@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Ingrediente;
-import restaurantedtos.TipoUnidad;
+import EnumeradoresDTO.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;

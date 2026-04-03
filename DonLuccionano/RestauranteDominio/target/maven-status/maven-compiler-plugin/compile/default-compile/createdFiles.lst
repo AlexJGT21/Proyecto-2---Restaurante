@@ -1,4 +1,6 @@
+EnumeradoresDominio\Disponibilidad.class
+EnumeradoresDominio\TipoUnidad.class
 restaurantedominio\Ingrediente.class
-restaurantedominio\TipoUnidad.class
 restaurantedominio\ClienteFrecuente.class
+restaurantedominio\Mesa.class
 restaurantedominio\Producto.class

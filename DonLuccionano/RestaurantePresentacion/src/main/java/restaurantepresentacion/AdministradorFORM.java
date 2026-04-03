@@ -1,17 +1,34 @@
 
 package restaurantepresentacion;
 
+import EnumeradoresDTO.Disponibilidad;
+import java.awt.GridLayout;
+import java.util.logging.Logger;
+import javax.persistence.PersistenceException;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import restaurantedtos.MesaDTO;
+import restaurantenegocio.MesaBO;
+import restaurantenegocio.NegocioException;
+
 /**
  *
  * @author Alex García Trejo
  */
 public class AdministradorFORM extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdministradorFORM
-     */
+    private JTextField txtNumeroMesa;
+    private JPanel panelDinamico;
+    private MesaBO mesaBO;
+    
+    private static final Logger LOGGER = Logger.getLogger(AdministradorFORM.class.getName());
+    
     public AdministradorFORM() {
         initComponents();
+        this.mesaBO = new MesaBO();
     }
 
     /**
@@ -31,6 +48,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
         btnProductos = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnReturn = new javax.swing.JButton();
+        btnMesas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +123,16 @@ public class AdministradorFORM extends javax.swing.JFrame {
             }
         });
 
+        btnMesas.setBackground(new java.awt.Color(0, 153, 204));
+        btnMesas.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        btnMesas.setText("Añadir mesa");
+        btnMesas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMesasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -118,7 +146,8 @@ public class AdministradorFORM extends javax.swing.JFrame {
                         .addComponent(btnIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -135,7 +164,9 @@ public class AdministradorFORM extends javax.swing.JFrame {
                 .addComponent(btnProductos)
                 .addGap(18, 18, 18)
                 .addComponent(btnReportes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnMesas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(btnReturn)
                 .addGap(18, 18, 18))
         );
@@ -174,6 +205,41 @@ public class AdministradorFORM extends javax.swing.JFrame {
         management.setVisible(true);
     }//GEN-LAST:event_btnReturnActionPerformed
 
+    private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed
+        JComboBox comboDisponibilidad = new JComboBox(Disponibilidad.values());
+        txtNumeroMesa = new JTextField(10);
+        
+        panelDinamico = new JPanel();
+        panelDinamico.setLayout(new GridLayout(2, 2));
+        
+        panelDinamico.add(new JLabel("Numero de mesa:"));
+        panelDinamico.add(txtNumeroMesa);
+        
+        panelDinamico.add(new JLabel("Disponibilidad:"));
+        panelDinamico.add(comboDisponibilidad);        
+        
+        int result = JOptionPane.showConfirmDialog(this, panelDinamico, "MESA", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) {
+            return;
+        }
+        try {
+            String numMesa = txtNumeroMesa.getText().trim();
+            if (!numMesa.matches("^[1-9]\\d*$")) {
+                JOptionPane.showMessageDialog(this, "La mesa debe ser registrada con un número.");
+                return;
+            }
+            
+            Integer mesaNum = Integer.valueOf(numMesa);
+            Disponibilidad disponibilidad = (Disponibilidad) comboDisponibilidad.getSelectedItem();        
+
+            MesaDTO mesa = new MesaDTO(mesaNum, disponibilidad);
+            mesaBO.registrarMesa(mesa);
+            JOptionPane.showMessageDialog(this, "MESA REGISTRADA CORRECTAMENTE", "MESA REGISTRADA", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException | NegocioException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }        
+    }//GEN-LAST:event_btnMesasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -211,6 +277,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngredientes;
+    private javax.swing.JButton btnMesas;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnReturn;

@@ -13,7 +13,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Ingrediente;
-import restaurantedominio.TipoUnidad;
+import EnumeradoresDominio.TipoUnidad;
 import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;

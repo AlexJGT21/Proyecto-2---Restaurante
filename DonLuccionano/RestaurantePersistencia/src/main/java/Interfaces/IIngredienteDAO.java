@@ -3,7 +3,7 @@ package Interfaces;
 
 import java.util.List;
 import restaurantedominio.Ingrediente;
-import restaurantedominio.TipoUnidad;
+import EnumeradoresDominio.TipoUnidad;
 import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantepersistencia.PersistenciaException;

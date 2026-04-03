@@ -1,6 +1,7 @@
 
 package restaurantedtos;
 
+import EnumeradoresDTO.TipoUnidad;
 import java.math.BigDecimal;
 
 /**

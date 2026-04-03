@@ -1,6 +1,7 @@
 
 package restaurantedominio;
 
+import EnumeradoresDominio.TipoUnidad;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;

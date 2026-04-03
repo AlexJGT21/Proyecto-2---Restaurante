@@ -1,14 +1,12 @@
 
 package Interfaces;
 
-import java.math.BigDecimal;
 import java.util.List;
 import restaurantedominio.Ingrediente;
-import restaurantedominio.TipoUnidad;
+import EnumeradoresDominio.TipoUnidad;
 import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantenegocio.NegocioException;
-import restaurantepersistencia.PersistenciaException;
 
 /**
  *
@@ -29,5 +27,5 @@ public interface IIngredienteBO {
     //Contrato 4: Permite actualizar la cantidad de un ingrediente.
     //Aquí se hacen las validaciones de la cantidad
     public abstract Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws NegocioException;
-
+    
 }

@@ -1,5 +1,7 @@
-restaurantedtos\ProductoDTO.class
+EnumeradoresDTO\TipoUnidad.class
 restaurantedtos\ClienteFrecuenteDTO.class
+restaurantedtos\MesaDTO.class
+EnumeradoresDTO\Disponibilidad.class
+restaurantedtos\ProductoDTO.class
 restaurantedtos\IngredienteDTO.class
 restaurantedtos\IngredienteActualizadoDTO.class
-restaurantedtos\TipoUnidad.class

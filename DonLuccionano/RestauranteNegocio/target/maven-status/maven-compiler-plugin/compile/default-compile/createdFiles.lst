@@ -1,7 +1,9 @@
 restaurantenegocio\UnaClaseDeAlgo.class
 restaurantenegocio\ProductoBO.class
 restaurantenegocio\IngredienteBO.class
+Interfaces\IMesaBO.class
 restaurantenegocio\ClienteFrecuenteBO.class
+restaurantenegocio\MesaBO.class
 Interfaces\IClienteFrecuenteBO.class
 Interfaces\IIngredienteBO.class
 Interfaces\IProductoBO.class

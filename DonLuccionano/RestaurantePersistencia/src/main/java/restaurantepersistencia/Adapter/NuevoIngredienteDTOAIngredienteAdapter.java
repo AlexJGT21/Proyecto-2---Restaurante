@@ -2,7 +2,7 @@
 package restaurantepersistencia.Adapter;
 
 import restaurantedominio.Ingrediente;
-import restaurantedominio.TipoUnidad;
+import EnumeradoresDominio.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 
 /**

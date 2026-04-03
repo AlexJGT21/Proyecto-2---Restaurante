@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Logger;
 import restaurantedominio.Ingrediente;
-import restaurantedominio.TipoUnidad;
+import EnumeradoresDominio.TipoUnidad;
 import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantepersistencia.IngredienteDAO;
@@ -71,7 +71,7 @@ public class IngredienteBO implements IIngredienteBO {
         
         try {
             //Convierte la unidad de DTO a DOMINIO
-            restaurantedominio.TipoUnidad unidad = restaurantedominio.TipoUnidad.valueOf(nuevoIngredienteDTO.getUnidad().name());
+            EnumeradoresDominio.TipoUnidad unidad = EnumeradoresDominio.TipoUnidad.valueOf(nuevoIngredienteDTO.getUnidad().name());
             
             //Busca en la DAO
             Ingrediente existe = ingredienteDAO.buscarPorNombreYUnidad(nuevoIngredienteDTO.getNombre(), unidad);

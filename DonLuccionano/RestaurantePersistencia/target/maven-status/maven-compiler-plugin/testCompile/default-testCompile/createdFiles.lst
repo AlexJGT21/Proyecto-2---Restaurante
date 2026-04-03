@@ -1,3 +1,4 @@
 restaurantepersistencia\ClienteFrecuenteDAOTest.class
-restaurantepersistencia\ProductoDAOTest.class
+restaurantepersistencia\MesaDAOTest.class
 restaurantepersistencia\IngredienteDAOTest.class
+restaurantepersistencia\ProductoDAOTest.class
