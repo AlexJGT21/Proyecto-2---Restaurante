@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Logger;
 import restaurantedominio.Ingrediente;
+import restaurantedominio.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 import restaurantepersistencia.IngredienteDAO;
 import restaurantepersistencia.PersistenciaException;
@@ -103,4 +104,15 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("NO SE PUDO CONSULTAR LA BD PARA LLENAR LA TABLA");
         }        
     }    
+
+    @Override
+    public List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws NegocioException {
+        try {
+            List<Ingrediente> lista = ingredienteDAO.buscarPorNombreUnidad(nombreIngrediente, unidadIngrediente);
+            return lista;
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("ERROR AL BUSCAR INGREDIENTE");
+        }
+    }
 }

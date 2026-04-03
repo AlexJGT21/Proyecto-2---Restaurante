@@ -3,6 +3,7 @@ package Interfaces;
 
 import java.util.List;
 import restaurantedominio.Ingrediente;
+import restaurantedominio.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 import restaurantenegocio.NegocioException;
 
@@ -19,5 +20,6 @@ public interface IIngredienteBO {
     //De manera automatica
     public abstract List<Ingrediente> llenarTabla() throws NegocioException; 
     
-    
+        public abstract List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws NegocioException;
+
 }

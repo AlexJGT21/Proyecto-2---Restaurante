@@ -29,5 +29,4 @@ public interface IIngredienteDAO {
     //Este se usa para busquedar y traer todos los resultados posibles
     public abstract List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException;
     
-    
 }

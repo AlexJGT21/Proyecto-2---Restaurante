@@ -1,6 +1,7 @@
 
 package restaurantepresentacion;
 
+import PanelesDinamicos.BuscarIPPanel;
 import PanelesDinamicos.NuevoIngredientePanel;
 import java.awt.BorderLayout;
 
@@ -11,6 +12,7 @@ import java.awt.BorderLayout;
 public class GestionIngredientesFORM extends javax.swing.JFrame {
 
     private NuevoIngredientePanel ingredientePanel;
+    private BuscarIPPanel inventariarIngredientePanel;
     
     /**
      * Creates new form GestionIngredientesFORM
@@ -116,19 +118,12 @@ public class GestionIngredientesFORM extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnNuevoIngrediente)
-                                .addGap(20, 20, 20))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(btnInventariar, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGap(20, 20, 20)
+                                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnNuevoIngrediente, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnInventariar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -177,7 +172,14 @@ public class GestionIngredientesFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoIngredienteActionPerformed
 
     private void btnInventariarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventariarActionPerformed
-        // TODO add your handling code here:
+        inventariarIngredientePanel = new BuscarIPPanel();
+        jPanel3.removeAll();
+        
+        jPanel3.setLayout(new BorderLayout());
+        jPanel3.add(inventariarIngredientePanel, BorderLayout.CENTER);
+        
+        jPanel3.revalidate();
+        jPanel3.repaint();        
     }//GEN-LAST:event_btnInventariarActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
