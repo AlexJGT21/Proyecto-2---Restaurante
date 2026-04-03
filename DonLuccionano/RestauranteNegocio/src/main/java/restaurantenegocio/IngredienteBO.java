@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import restaurantedominio.Ingrediente;
 import restaurantedominio.TipoUnidad;
+import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantepersistencia.IngredienteDAO;
 import restaurantepersistencia.PersistenciaException;
@@ -68,9 +69,6 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("La unidad no puede ser nula.");
         }
         
-        //Validacion de imagen
-        
-        
         try {
             //Convierte la unidad de DTO a DOMINIO
             restaurantedominio.TipoUnidad unidad = restaurantedominio.TipoUnidad.valueOf(nuevoIngredienteDTO.getUnidad().name());
@@ -105,6 +103,13 @@ public class IngredienteBO implements IIngredienteBO {
         }        
     }    
 
+    /**
+     * Metodo que lista todos los ingredientes relacionados a un argumento de busqueda
+     * @param nombreIngrediente Argumento de busqueda
+     * @param unidadIngrediente Argumento de busqueda
+     * @return Lista de ingredientes relacionados al argumento de busqueda
+     * @throws NegocioException Si hubo un error al consultar ingredientes
+     */
     @Override
     public List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws NegocioException {
         try {
@@ -114,5 +119,31 @@ public class IngredienteBO implements IIngredienteBO {
             LOGGER.severe(e.getMessage());
             throw new NegocioException("ERROR AL BUSCAR INGREDIENTE");
         }
+    }
+
+    @Override
+    public Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws NegocioException {        
+        if (ingredienteInventario.getId() == null) {
+            throw new NegocioException("Ningun ingrediente seleccionado. Seleccione uno para actualizar");           
+        }
+        
+        //Validaciones por cantidad
+        if (ingredienteInventario.getCantidad() == null) {
+            throw new NegocioException("La cantidad del ingrediente no puede ser nula");
+        }
+        if (ingredienteInventario.getCantidad().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new NegocioException("La cantidad no puede ser negativa");
+        }
+        if (ingredienteInventario.getCantidad().scale() > 2) {
+            throw new NegocioException("La cantidad no puede tener mas de dos decimales");
+        }
+        
+        try {
+            Ingrediente ingredienteActualizar = ingredienteDAO.inventariarIngrediente(ingredienteInventario);
+            return ingredienteActualizar;
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("FALLO EN LA ACTUALIZACIÓN DE INGREDIENTE");
+        }        
     }
 }

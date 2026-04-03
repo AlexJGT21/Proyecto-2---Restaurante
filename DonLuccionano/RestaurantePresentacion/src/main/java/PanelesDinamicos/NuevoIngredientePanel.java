@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
@@ -24,14 +23,12 @@ import restaurantedtos.IngredienteDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;
 import restaurantepresentacion.ImageTable;
-import restaurantepresentacion.InventarioFORM;
 
 /**
  *
  * @author Alex Garcia Trejo
  */
 public class NuevoIngredientePanel extends javax.swing.JPanel {
-
     
     private IngredienteBO ingredienteBO;
     public File selectFile;
@@ -41,7 +38,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         initComponents();
         this.ingredienteBO = new IngredienteBO();
         tbIngredientes.setRowHeight(60);
-        tbIngredientes.getColumnModel().getColumn(3).setCellRenderer(new ImageTable());
+        tbIngredientes.getColumnModel().getColumn(4).setCellRenderer(new ImageTable());
         llenarTabla();
         cargarUnidadesCombo();
     }
@@ -65,6 +62,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
                     lbImage.setIcon(new ImageIcon(image));
                 }                
                 Object[] fila = {
+                    i.getId(),
                     i.getNombre(),
                     i.getCantidad(),
                     i.getUnidad(),
@@ -73,7 +71,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
                 modelo.addRow(fila);
             }
         } catch (NegocioException ex) {
-            Logger.getLogger(InventarioFORM.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.severe(ex.getMessage());
         }       
     }
     
@@ -87,6 +85,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         txtCantidad.setText("");
         comboUnidades.setSelectedItem(0);
         txtRutaImagen.setText("");
+        lbImagen.setIcon(null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,17 +170,17 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
 
         tbIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Cantidad", "Unidad", "Imagen"
+                "ID", "Nombre", "Cantidad", "Unidad", "Imagen"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

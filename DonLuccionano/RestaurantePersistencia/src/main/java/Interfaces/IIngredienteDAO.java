@@ -4,6 +4,7 @@ package Interfaces;
 import java.util.List;
 import restaurantedominio.Ingrediente;
 import restaurantedominio.TipoUnidad;
+import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantepersistencia.PersistenciaException;
 
@@ -28,5 +29,8 @@ public interface IIngredienteDAO {
     //Este es diferente al "Contrato 2", ya que ese es para buscar uno y verificar
     //Este se usa para busquedar y traer todos los resultados posibles
     public abstract List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException;
+    
+    //Contrato 5: Permite actualizar la cantidad de un ingrediente
+    public abstract Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws PersistenciaException;
     
 }

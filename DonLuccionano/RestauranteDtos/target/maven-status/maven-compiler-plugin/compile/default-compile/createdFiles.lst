@@ -1,4 +1,5 @@
 restaurantedtos\ProductoDTO.class
 restaurantedtos\ClienteFrecuenteDTO.class
 restaurantedtos\IngredienteDTO.class
+restaurantedtos\IngredienteActualizadoDTO.class
 restaurantedtos\TipoUnidad.class

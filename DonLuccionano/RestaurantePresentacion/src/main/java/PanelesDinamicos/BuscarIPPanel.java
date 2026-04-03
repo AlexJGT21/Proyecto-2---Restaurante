@@ -2,17 +2,22 @@
 package PanelesDinamicos;
 
 import java.awt.Image;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Ingrediente;
 import restaurantedominio.TipoUnidad;
+import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;
+import restaurantepresentacion.ImageTable;
 
 /**
  *
@@ -21,11 +26,20 @@ import restaurantenegocio.NegocioException;
 public class BuscarIPPanel extends javax.swing.JPanel {
 
     private IngredienteBO ingredienteBO;
+    private JSpinner spinner;
+    private SpinnerNumberModel spinnerNumber;
     private static final Logger LOGGER = Logger.getLogger(BuscarIPPanel.class.getName());
     
     public BuscarIPPanel() {
         initComponents();
-        ingredienteBO = new IngredienteBO();
+        ingredienteBO = new IngredienteBO(); 
+        tbIngredientes.setRowHeight(60);
+        tbIngredientes.getColumnModel().getColumn(4).setCellRenderer(new ImageTable());
+        spinnerNumber = new SpinnerNumberModel(1, 1, 100, 1);
+        spinner = new JSpinner();
+        spinner.setModel(spinnerNumber);
+        ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
+        llenarTabla();
         cargarUnidadesCombo();
     }
     
@@ -40,6 +54,7 @@ public class BuscarIPPanel extends javax.swing.JPanel {
                 lbImage.setIcon(new ImageIcon(image));
             }
             Object[] fila = {
+                i.getId(),
                 i.getNombre(),
                 i.getCantidad(),       
                 i.getUnidad(),
@@ -47,6 +62,60 @@ public class BuscarIPPanel extends javax.swing.JPanel {
             };
             modelo.addRow(fila);
         }
+    }
+    
+    private void llenarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tbIngredientes.getModel();
+        modelo.setRowCount(0); 
+        List<Ingrediente> ingredientes;
+        try {
+            ingredientes = ingredienteBO.llenarTabla();
+            for (Ingrediente i: ingredientes) {
+                JLabel lbImage = new JLabel();
+                if (i.getImagen() != null) {
+                    ImageIcon icon = new ImageIcon(i.getImagen());
+                    Image image = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    lbImage.setIcon(new ImageIcon(image));
+                }                
+                Object[] fila = {
+                    i.getId(),
+                    i.getNombre(),
+                    i.getCantidad(),
+                    i.getUnidad(),
+                    lbImage
+                };
+                modelo.addRow(fila);
+            }
+        } catch (NegocioException ex) {
+            LOGGER.severe(ex.getMessage());
+        }       
+    }
+    
+    private void actualizarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tbIngredientes.getModel();
+        modelo.setRowCount(0); 
+        List<Ingrediente> ingredientes;
+        try {
+            ingredientes = ingredienteBO.llenarTabla();
+            for (Ingrediente i: ingredientes) {
+                JLabel lbImage = new JLabel();
+                if (i.getImagen() != null) {
+                    ImageIcon icon = new ImageIcon(i.getImagen());
+                    Image image = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    lbImage.setIcon(new ImageIcon(image));
+                }                
+                Object[] fila = {
+                    i.getId(),
+                    i.getNombre(),
+                    i.getCantidad(),
+                    i.getUnidad(),
+                    lbImage
+                };
+                modelo.addRow(fila);
+            }
+        } catch (NegocioException ex) {
+            LOGGER.severe(ex.getMessage());
+        }       
     }
     
     private void cargarUnidadesCombo() {
@@ -68,6 +137,7 @@ public class BuscarIPPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -76,8 +146,11 @@ public class BuscarIPPanel extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbIngredientes = new javax.swing.JTable();
+        btnInventario = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
 
         setBackground(new java.awt.Color(0, 102, 255));
         setPreferredSize(new java.awt.Dimension(719, 540));
@@ -87,6 +160,12 @@ public class BuscarIPPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel2.setText("Nombre:");
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
         jLabel3.setText("Unidad:");
@@ -99,6 +178,7 @@ public class BuscarIPPanel extends javax.swing.JPanel {
 
         btnBuscar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -107,17 +187,17 @@ public class BuscarIPPanel extends javax.swing.JPanel {
 
         tbIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Cantidad", "Unidad", "Imagen"
+                "ID", "Nombre", "Cantidad", "Unidad", "Imagen"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,47 +206,66 @@ public class BuscarIPPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbIngredientes);
 
+        btnInventario.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
+        btnInventario.setText("Inventariar");
+        btnInventario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre))
-                    .addComponent(jLabel1)
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(btnBuscar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(comboUnidades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(357, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboUnidades, 0, 240, Short.MAX_VALUE)
+                                    .addComponent(txtNombre))
+                                .addGap(353, 353, 353))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(comboUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboUnidades))
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -197,11 +296,46 @@ public class BuscarIPPanel extends javax.swing.JPanel {
         }        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+        int fila = tbIngredientes.getSelectedRow();
+        
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un ingrediente para iniciar inventariado.");
+            return;
+        }
+        
+        int result = JOptionPane.showConfirmDialog(this, spinner, "Ingrese cantidad", JOptionPane.OK_CANCEL_OPTION);
+        if (result != JOptionPane.OK_OPTION) {
+            return;
+        }   
+        BigDecimal cantidad;
+        try {
+            Long id = (Long) tbIngredientes.getValueAt(fila, 0);
+            int cantidadI = (int) spinner.getValue();           
+            cantidad = new BigDecimal(cantidadI);
+            
+            IngredienteActualizadoDTO ingrediente = new IngredienteActualizadoDTO(id, cantidad);            
+            ingredienteBO.inventariarIngrediente(ingrediente);
+            
+            JOptionPane.showMessageDialog(this, "Cantidad actualizada correctamente");
+            actualizarTabla();
+        } catch (NegocioException e) {
+            LOGGER.severe(e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al actualizar cantidad.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnInventario;
     private javax.swing.JComboBox<TipoUnidad> comboUnidades;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

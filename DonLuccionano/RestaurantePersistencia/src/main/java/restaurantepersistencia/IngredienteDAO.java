@@ -16,6 +16,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import restaurantedominio.Ingrediente;
 import restaurantedominio.TipoUnidad;
+import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantepersistencia.Adapter.NuevoIngredienteDTOAIngredienteAdapter;
 
@@ -128,6 +129,29 @@ public class IngredienteDAO implements IIngredienteDAO {
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("ERROR AL CONSULTAR INGREDIENTESS");
+        }
+    }
+
+    /**
+     * Metodo que permite inventariar la cantidad actual de un ingrediente
+     * @param ingredienteInventario DTO que permite acceder a la ID del ingrediente. Posteriormente se inventaria la cantidad
+     * @return Cantidad actualizada de ingrediente
+     * @throws PersistenciaException Si hubo un error al actualizar la cantidad del ingrediente
+     */
+    @Override
+    public Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            
+            Ingrediente ingrediente = entityManager.find(Ingrediente.class, ingredienteInventario.getId());
+            ingrediente.setCantidad(ingredienteInventario.getCantidad());            
+            entityManager.getTransaction().begin();
+            entityManager.merge(ingrediente);
+            entityManager.getTransaction().commit();
+            return ingrediente;
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO SE PUDO ACTUALIZAR EL INGREDIENTE");
         }
     }
 }

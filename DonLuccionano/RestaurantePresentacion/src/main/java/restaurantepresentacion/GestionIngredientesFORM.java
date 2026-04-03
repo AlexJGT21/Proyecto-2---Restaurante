@@ -183,7 +183,10 @@ public class GestionIngredientesFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInventariarActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        AdministradorFORM management = new AdministradorFORM();
+        management.setVisible(true);
+        
     }//GEN-LAST:event_btnReturnActionPerformed
 
     private void jPanel3ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel3ComponentAdded
