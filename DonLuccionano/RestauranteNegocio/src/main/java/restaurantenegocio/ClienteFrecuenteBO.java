@@ -172,9 +172,9 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      * @throws NegocioException En caso de existir un error al listar clientes
      */
     @Override
-    public List<ClienteFrecuente> listaClientesF() throws NegocioException {
+    public List<ClienteFrecuenteDTO> listaClientesF() throws NegocioException {
         try {
-            List<ClienteFrecuente> lista = clienteFrecuenteDAO.listaClientesF();
+            List<ClienteFrecuenteDTO> lista = clienteFrecuenteDAO.listaClientesF();
             return lista;
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al generar lista de clientes frecuentes: " + e.getMessage());

@@ -29,16 +29,16 @@ public class RegistrarClientePanel extends javax.swing.JPanel {
     private void llenarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) tbClienteFrecuente.getModel();
         modelo.setRowCount(0); 
-        List<ClienteFrecuente> clienteFrecuente;
+        List<ClienteFrecuenteDTO> clienteFrecuente;
         try {
             clienteFrecuente = clienteFrecuenteBO.listaClientesF();
-            for (ClienteFrecuente c: clienteFrecuente) {               
+            for (ClienteFrecuenteDTO c: clienteFrecuente) {               
                 Object[] fila = {
                     c.getNombre(),
                     c.getApellidoPaterno(),
                     c.getApellidoMaterno(),
-                    c.getNumeroTelefonico(),
-                    c.getCorreo(),
+                    c.getTelefono(),
+                    c.getEmail(),
                     c.getFechaRegistro()
                 };
                 modelo.addRow(fila);

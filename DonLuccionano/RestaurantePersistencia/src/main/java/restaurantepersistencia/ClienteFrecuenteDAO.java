@@ -1,7 +1,10 @@
+
 package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
 import Interfaces.IClienteFrecuenteDAO;
+import Seguridad.ProteccionDatos;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -30,10 +33,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
      */
     @Override
     public ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteFrecuente) throws PersistenciaException {
+        String telefonoCifrado = ProteccionDatos.encriptar(clienteFrecuente.getTelefono());                
         ClienteFrecuente cliente = new ClienteFrecuente(clienteFrecuente.getNombre(),
                 clienteFrecuente.getApellidoPaterno(),
                 clienteFrecuente.getApellidoMaterno(),
-                clienteFrecuente.getTelefono(),
+                telefonoCifrado,
                 clienteFrecuente.getEmail(),
                 clienteFrecuente.getFechaRegistro());
         try {
@@ -147,18 +151,20 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
     public ClienteFrecuente buscarPorTelefono(String telefono) throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
-
-            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
-                    """
+            List<ClienteFrecuente> query = entityManager.createQuery(
+            """
             SELECT c
             FROM ClienteFrecuente c
-            WHERE c.numeroTelefonico = :telefono
             """, ClienteFrecuente.class
-            );
-            query.setParameter("telefono", telefono);
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null; // cuando no eziste 
+            ).getResultList();
+            
+            for (ClienteFrecuente c: query) {
+                String telefonoDescifrado = ProteccionDatos.desencriptar(c.getNumeroTelefonico());
+                if (telefonoDescifrado == null ? telefono == null : telefonoDescifrado.equals(telefono)) {
+                    return c;                    
+                }
+            }
+            return null;
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("No se pudo consultar el cliente por teléfono");
@@ -198,15 +204,28 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
      * @throws PersistenciaException No fue posible listar clientes frecuentes
      */
     @Override
-    public List<ClienteFrecuente> listaClientesF() throws PersistenciaException {
+    public List<ClienteFrecuenteDTO> listaClientesF() throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
-            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
+            List<ClienteFrecuente> query = entityManager.createQuery(
             """
             SELECT c
             FROM ClienteFrecuente c
-            """, ClienteFrecuente.class);
-            return query.getResultList();
+            """, ClienteFrecuente.class).getResultList();            
+            List<ClienteFrecuenteDTO> resultado = new ArrayList<>();
+            
+            for (ClienteFrecuente cf: query) {
+                String telefonoDescifrado = ProteccionDatos.desencriptar(cf.getNumeroTelefonico());
+                ClienteFrecuenteDTO clienteDescifrado = new ClienteFrecuenteDTO(
+                        cf.getNombre(), 
+                        cf.getApellidoPaterno(), 
+                        cf.getApellidoMaterno(), 
+                        telefonoDescifrado, 
+                        cf.getCorreo(), 
+                        cf.getFechaRegistro());
+                resultado.add(clienteDescifrado);
+            }
+            return resultado;            
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO FUE POSIBLE LISTAR CLIENTES FRECUENTES.");

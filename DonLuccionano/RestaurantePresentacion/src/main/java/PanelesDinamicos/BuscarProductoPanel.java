@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package PanelesDinamicos;
 
+import ImagenTabla.ImageTable;
 import Interfaces.IProductoBO;
 import java.awt.Image;
 import java.util.List;
@@ -33,7 +31,7 @@ public class BuscarProductoPanel extends javax.swing.JPanel {
         DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
         modelo.setRowCount(0);
         
-        tblProductos.getColumnModel().getColumn(3).setCellRenderer(new restaurantepresentacion.ImageTable());
+        tblProductos.getColumnModel().getColumn(3).setCellRenderer(new ImageTable());
         
         llenarTabla();
     }

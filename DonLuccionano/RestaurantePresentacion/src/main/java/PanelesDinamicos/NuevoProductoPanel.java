@@ -23,7 +23,7 @@ import restaurantedominio.Producto;
 import restaurantedtos.ProductoDTO;
 import restaurantenegocio.NegocioException;
 import restaurantenegocio.ProductoBO;
-import restaurantepresentacion.ImageTable;
+import ImagenTabla.ImageTable;
 
 /**
  *

@@ -25,5 +25,5 @@ public interface IClienteFrecuenteBO  {
     public abstract ClienteFrecuente buscarPorCorreo(String correo) throws NegocioException;
     
     //Contrato 5: Permite crear un listado de clientes frecuentes
-    public abstract List<ClienteFrecuente> listaClientesF() throws NegocioException;
+    public abstract List<ClienteFrecuenteDTO> listaClientesF() throws NegocioException;
 }
