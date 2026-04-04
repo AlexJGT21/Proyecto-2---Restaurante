@@ -161,7 +161,9 @@ public class AdministradorFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngredientesActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        GestionProductosFORM managementI = new GestionProductosFORM();
+        managementI.setVisible(true);
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed

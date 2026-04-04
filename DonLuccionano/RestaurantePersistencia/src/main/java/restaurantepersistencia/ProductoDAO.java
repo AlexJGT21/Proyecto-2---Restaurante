@@ -6,6 +6,7 @@ package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
 import Interfaces.IProductoDAO;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
@@ -56,6 +57,23 @@ public class ProductoDAO implements IProductoDAO {
             throw new PersistenciaException("No se pudo consultar el producto: " + e.getMessage());
         }
     }
-    
+
+    @Override
+    public List<Producto> llenarTabla() throws PersistenciaException {
+        try {
+            EntityManager entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+            TypedQuery<Producto> query = entityManager.createQuery(
+                    """
+                    SELECT p 
+                    FROM Producto p
+                    """, Producto.class
+                    );
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al intentar obtener los productos: " + e.getMessage());
+        }
+    }
+
+ 
     
 }
