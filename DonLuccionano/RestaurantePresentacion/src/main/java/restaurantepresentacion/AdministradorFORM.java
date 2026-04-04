@@ -225,7 +225,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
         try {
             String numMesa = txtNumeroMesa.getText().trim();
             if (!numMesa.matches("^[1-9]\\d*$")) {
-                JOptionPane.showMessageDialog(this, "La mesa debe ser registrada con un número.");
+                JOptionPane.showMessageDialog(this, "La mesa debe ser registrada con un número positivo.");
                 return;
             }
             
@@ -235,7 +235,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
             MesaDTO mesa = new MesaDTO(mesaNum, disponibilidad);
             mesaBO.registrarMesa(mesa);
             JOptionPane.showMessageDialog(this, "MESA REGISTRADA CORRECTAMENTE", "MESA REGISTRADA", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException | NegocioException e) {
+        } catch (NegocioException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }        
     }//GEN-LAST:event_btnMesasActionPerformed

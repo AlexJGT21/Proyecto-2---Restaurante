@@ -24,4 +24,12 @@ public class MesaDTO {
     public Disponibilidad getDisponible() {
         return disponible;
     }
+
+    public void setNumMesa(Integer numMesa) {
+        this.numMesa = numMesa;
+    }
+
+    public void setDisponible(Disponibilidad disponible) {
+        this.disponible = disponible;
+    }        
 }

@@ -2,7 +2,9 @@
 package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
+import EnumeradoresDominio.Disponibilidad;
 import Interfaces.IMesaDAO;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -63,6 +65,12 @@ public class MesaDAO implements IMesaDAO {
         }
     }
 
+    /**
+     * Metodo que consulta la existencia de una mes, esto es para saber si podemos crearla o no.
+     * @param numMesa El numero de una mesa
+     * @return true si la mesa existe, false en caso contrario
+     * @throws PersistenciaException Si no fue posible consultar la mesa
+     */
     @Override
     public boolean existeMesa(Integer numMesa) throws PersistenciaException {
         try {
@@ -81,5 +89,53 @@ public class MesaDAO implements IMesaDAO {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO FUE POSIBLE CONSULTAR LA EXISTENCIA DE LA MESA.");
         }
+    }
+
+    /**
+     * Metodo que permite listar todas las mesas independientemente si estan disponibles
+     * @return Listado de todas las mesas
+     * @throws PersistenciaException Si no fue posible realizar el listado de mesas
+     */
+    @Override
+    public List<Mesa> listarMesas() throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            TypedQuery<Mesa> query = entityManager.createQuery(
+            """
+            SELECT m
+            FROM Mesa m
+            """, Mesa.class);
+            return query.getResultList();
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO FUE POSIBLE LISTAR LAS MESAS.");
+        }
+    }
+
+    /**
+     * Metodo que permite cambiar el estado de disponiblidad de una mesa, puede ser en ambos sentidos
+     * @param id Argumento de busqueda para cambiar el estado
+     * @param disponibilidad Cambio de estado de disponibilidad de la mesa
+     * @return Cambio de estado
+     * @throws PersistenciaException Si no fue posible cambiar el estado de una mesa
+     */
+    @Override
+    public Mesa cambiarDisponibilidad(Long id, Disponibilidad disponibilidad) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            entityManager.getTransaction().begin();
+            
+            Mesa mesa = entityManager.find(Mesa.class, id);
+            if (mesa == null) {
+                throw new PersistenciaException("LA MESA NO EXISTE.");
+            }
+            
+            mesa.setDisponible(disponibilidad);
+            entityManager.getTransaction().commit();
+            return mesa;
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO FUE POSIBLE CAMBIAR EL ESTADO DE LA MESA.");
+        }        
     }
 }

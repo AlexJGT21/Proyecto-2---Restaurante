@@ -1,6 +1,8 @@
 
 package Interfaces;
 
+import EnumeradoresDominio.Disponibilidad;
+import java.util.List;
 import restaurantedominio.Mesa;
 import restaurantedtos.MesaDTO;
 import restaurantepersistencia.PersistenciaException;
@@ -21,4 +23,10 @@ public interface IMesaDAO {
     
     //Contrato 3: Este metodo sera usado por "registroMesa" para validar si existe o no una mesa
     public abstract boolean existeMesa(Integer numMesa) throws PersistenciaException;
+    
+    //Contrato 4: Lista todas las mesas (disponibles y no disponibles)
+    public abstract List<Mesa> listarMesas() throws PersistenciaException;
+    
+    //Contrato 5: Permite cambiar el estado de una mesa de disponible a no disponible y visceversa
+    public abstract Mesa cambiarDisponibilidad(Long id, Disponibilidad disponibilidad) throws PersistenciaException;
 }

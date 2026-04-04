@@ -121,6 +121,12 @@ public class IngredienteBO implements IIngredienteBO {
         }
     }
 
+    /**
+     * Metodo que permite inventariar ingrediente(s)
+     * @param ingredienteInventario Ingrediente(s) el cual se va a inventariar
+     * @return Nuevo inventario de ingrediente(s)
+     * @throws NegocioException Si no fue posible actualizar el inventario del ingrediente(s)
+     */
     @Override
     public Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws NegocioException {        
         if (ingredienteInventario.getId() == null) {

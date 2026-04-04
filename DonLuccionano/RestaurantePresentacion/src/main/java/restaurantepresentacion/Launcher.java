@@ -8,7 +8,7 @@ package restaurantepresentacion;
 public class Launcher {
     
     public static void main(String[] args) {
-        MenuClienteFrecuentFORM menuClienteFrecuent = new MenuClienteFrecuentFORM();
-        menuClienteFrecuent.setVisible(true);
+        GestionRestauranteFORM management = new GestionRestauranteFORM();
+        management.setVisible(true);
     }
 }

@@ -1,7 +1,9 @@
 
 package restaurantenegocio;
 
+import EnumeradoresDominio.Disponibilidad;
 import Interfaces.IMesaBO;
+import java.util.List;
 import java.util.logging.Logger;
 import restaurantedominio.Mesa;
 import restaurantedtos.MesaDTO;
@@ -30,7 +32,7 @@ public class MesaBO implements IMesaBO {
         if (nuevaMesa.getNumMesa() <= 0) {
             throw new NegocioException("El número de mesa no puede ser menor a 0.");
         }
-        
+
         //Jerarquia de validaciones
         try {
             //Validacion de cantidad
@@ -49,5 +51,32 @@ public class MesaBO implements IMesaBO {
             LOGGER.severe(e.getMessage());
             throw new NegocioException("NO FUE POSIBLE REGISTRAR LA MESA.");
         }                        
+    }
+
+    @Override
+    public List<Mesa> listarMesas() throws NegocioException {
+        try {
+            List<Mesa> lista = mesaDAO.listarMesas();
+            return lista;
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("NO FUE POSIBLE REALIZAR LISTADO DE MESAS.");
+        }
+    }
+
+    @Override
+    public Mesa cambiarDisponibilidad(Long id, Disponibilidad disponibilidad) throws NegocioException {
+        if (id == null) {
+            throw new NegocioException("SELECCIONE UNA MESA PARA CAMBIAR ESTADO");
+        }                
+        
+        try {
+            Mesa mesa = mesaDAO.cambiarDisponibilidad(id, disponibilidad);
+            return mesa;
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("NO FUE POSIBLE CAMBIAR EL ESTADO DE LA MESA");
+        }
+        
     }
 }

@@ -1,7 +1,8 @@
 
 package restaurantepersistencia;
 
-import EnumeradoresDTO.Disponibilidad;
+import EnumeradoresDominio.Disponibilidad;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +27,60 @@ public class MesaDAOTest {
     
 //    @Test
 //    public void testRegistrarMesa() {
-//        MesaDTO mesaDTO = new MesaDTO(1, Disponibilidad.DISPONIBLE);
+//        MesaDTO mesaDTO = new MesaDTO(1, EnumeradoresDTO.Disponibilidad.DISPONIBLE);
 //        assertDoesNotThrow(() -> {
-//           Mesa mesa = dao.registrarMesa(mesaDTO);
+//           Mesa mesa = dao.registrarMesa(mesaDTO);           
 //        });
 //    }
 //    
-    
+//    @Test
+//    public void testConsultarCantidadMesasCreadas() {
+//        int mesasCreadas = 2; //Aquí sabemos que tenemos dos mesas creadas
+//        assertDoesNotThrow(() -> {
+//            int mesa = dao.consultarCantidad();
+//            assertEquals(mesa, mesasCreadas);
+//        });
+//    }
+//    
+//    @Test
+//    public void testConocerMesaYaExistente() {
+//        int mesaCreada = 7;
+//        assertDoesNotThrow(() -> {
+//            boolean mesa = dao.existeMesa(mesaCreada);
+//            assertTrue(mesa);
+//        });
+//    }
+//    
+//    @Test
+//    public void testNoExistenteMesa() {
+//        int mesaCreada = 8;
+//        assertDoesNotThrow(() -> {
+//            boolean mesa = dao.existeMesa(mesaCreada);
+//            assertFalse(mesa);
+//        });
+//    } 
+//    
+//    @Test
+//    public void testListarMesasCreadas() {
+//        assertDoesNotThrow(() -> {
+//           List<Mesa> mesas = dao.listarMesas();
+//            for (Mesa m: mesas) {
+//                System.out.println(m.toString());
+//            }
+//        });
+//    }
+//    
+//    @Test
+//    public void testCambiarNoDisponiblidadDeMesa() {
+//        assertDoesNotThrow(() -> {
+//            Mesa mesa = dao.cambiarDisponibilidad(1L, Disponibilidad.NO_DISPONIBLE);
+//        });
+//    }
+//    
+//    @Test
+//    public void testCambiarDisponiblidadDeMesa() {
+//        assertDoesNotThrow(() -> {
+//            Mesa mesa = dao.cambiarDisponibilidad(5L, Disponibilidad.DISPONIBLE);
+//        });
+//    }
 }
