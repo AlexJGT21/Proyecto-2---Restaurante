@@ -1,3 +1,4 @@
+
 package restaurantenegocio;
 
 import Interfaces.IClienteFrecuenteBO;
@@ -15,10 +16,10 @@ import restaurantepersistencia.PersistenciaException;
  */
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
-    private final IClienteFrecuenteDAO clienteDAO;
+    private final IClienteFrecuenteDAO clienteFrecuenteDAO;
 
     public ClienteFrecuenteBO() {
-        this.clienteDAO = new ClienteFrecuenteDAO();
+        this.clienteFrecuenteDAO = new ClienteFrecuenteDAO();
     }
 
     @Override
@@ -93,7 +94,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         // Inserción en la BDs
         try {
-            ClienteFrecuente cliente = this.clienteDAO.crearCliente(clienteDTO);
+            ClienteFrecuente cliente = this.clienteFrecuenteDAO.crearCliente(clienteDTO);
             return cliente;
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al Crear al Cliente", ex);
@@ -125,7 +126,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         
         try {
             // Llamamos al método de la DAO jijija
-            return clienteDAO.buscarClienteLista(nombre, apellidoP, apellidoM);
+            return clienteFrecuenteDAO.buscarClienteLista(nombre, apellidoP, apellidoM);
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al buscar la lista de clientes: " + ex.getMessage(), ex);
         }
@@ -142,7 +143,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
         // Inserción en la BDs
         try {
-            return clienteDAO.buscarPorTelefono(telefono);
+            return clienteFrecuenteDAO.buscarPorTelefono(telefono);
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al buscar cliente por teléfono: " + ex.getMessage(), ex);
         }
@@ -159,9 +160,24 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
         // Inserción en la BDs
         try {
-            return clienteDAO.buscarPorCorreo(correo);
+            return clienteFrecuenteDAO.buscarPorCorreo(correo);
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al buscar cliente por correo: " + ex.getMessage(), ex);
         }
     }       
+
+    /**
+     * Metodo que crea una lista de clientes frecuentes
+     * @return Lista de clientes frecuentes
+     * @throws NegocioException En caso de existir un error al listar clientes
+     */
+    @Override
+    public List<ClienteFrecuente> listaClientesF() throws NegocioException {
+        try {
+            List<ClienteFrecuente> lista = clienteFrecuenteDAO.listaClientesF();
+            return lista;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al generar lista de clientes frecuentes: " + e.getMessage());
+        }
+    }
 }

@@ -1,5 +1,5 @@
 
-package restaurantepresentacion;
+package ImagenTabla;
 
 import java.awt.Component;
 import javax.swing.JLabel;

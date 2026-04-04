@@ -22,7 +22,7 @@ import EnumeradoresDTO.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;
-import restaurantepresentacion.ImageTable;
+import ImagenTabla.ImageTable;
 
 /**
  *

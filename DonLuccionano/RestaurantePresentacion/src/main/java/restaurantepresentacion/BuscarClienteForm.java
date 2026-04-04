@@ -13,15 +13,15 @@ import restaurantenegocio.NegocioException;
  *
  * @author Dell
  */
-public class BuscarClienteForm extends javax.swing.JFrame {
+public class BuscarClienteFORM extends javax.swing.JFrame {
     
     private ClienteFrecuenteBO clienteFrecuenteBO;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarClienteForm.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarClienteFORM.class.getName());
     
     /**
      * Creates new form BuscarClinteForm
      */
-    public BuscarClienteForm() {
+    public BuscarClienteFORM() {
         this.clienteFrecuenteBO = new ClienteFrecuenteBO();
         initComponents();
     }
@@ -231,7 +231,7 @@ public class BuscarClienteForm extends javax.swing.JFrame {
         
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         this.dispose();
-        MenuClienteFrecuentFORM menuClienteFrecuentFORM = new MenuClienteFrecuentFORM();
+        MenuClienteFrecuenteFORM menuClienteFrecuentFORM = new MenuClienteFrecuenteFORM();
         menuClienteFrecuentFORM.setVisible(true);
     }//GEN-LAST:event_btnAtrasActionPerformed
 
@@ -315,7 +315,7 @@ public class BuscarClienteForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new BuscarClienteForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new BuscarClienteFORM().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

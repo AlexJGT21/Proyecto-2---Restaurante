@@ -191,4 +191,25 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             throw new PersistenciaException("No se pudo consultar el cliente por correo");
         }
     }
+
+    /**
+     * Metodo que permite listar todos los clientes refrecuentes
+     * @return Lista de clientes frecuentes
+     * @throws PersistenciaException No fue posible listar clientes frecuentes
+     */
+    @Override
+    public List<ClienteFrecuente> listaClientesF() throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
+            """
+            SELECT c
+            FROM ClienteFrecuente c
+            """, ClienteFrecuente.class);
+            return query.getResultList();
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO FUE POSIBLE LISTAR CLIENTES FRECUENTES.");
+        }
+    }
 }

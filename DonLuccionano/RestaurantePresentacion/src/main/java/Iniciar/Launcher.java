@@ -1,5 +1,7 @@
 
-package restaurantepresentacion;
+package Iniciar;
+
+import restaurantepresentacion.GestionRestauranteFORM;
 
 /**
  *

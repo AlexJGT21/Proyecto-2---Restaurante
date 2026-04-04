@@ -17,7 +17,7 @@ import EnumeradoresDominio.TipoUnidad;
 import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;
-import restaurantepresentacion.ImageTable;
+import ImagenTabla.ImageTable;
 
 /**
  *

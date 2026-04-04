@@ -23,4 +23,7 @@ public interface IClienteFrecuenteDAO {
     
     //Contrato 4: busca cliente frecuente por correo electronico
     public ClienteFrecuente buscarPorCorreo(String correo) throws PersistenciaException;
+    
+    //Contrato 5: Lista todos los clientes frecuentes
+    public abstract List<ClienteFrecuente> listaClientesF() throws PersistenciaException;
 }
