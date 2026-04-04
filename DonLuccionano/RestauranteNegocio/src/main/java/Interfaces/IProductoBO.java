@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import java.util.List;
 import restaurantedominio.Producto;
 import restaurantedtos.ProductoDTO;
 import restaurantenegocio.NegocioException;
@@ -14,5 +15,9 @@ import restaurantenegocio.NegocioException;
  */
 public interface IProductoBO {
     public Producto crearProducto(ProductoDTO productoDTO) throws NegocioException;
+    
+    public abstract List<Producto> llenarTabla() throws NegocioException; 
+    
+    public Producto buscarPorNombre(String nombre) throws NegocioException;
     
 }

@@ -14,6 +14,6 @@ import restaurantedtos.ProductoDTO;
 public class NuevoProductoDTOAProductoAdapter {
     
     public static Producto adaptar(ProductoDTO nuevoProducto) {
-        return new Producto(nuevoProducto.getNombre(), nuevoProducto.getPrecio());
+        return new Producto(nuevoProducto.getNombre(), nuevoProducto.getPrecio(), nuevoProducto.getImagen());
     }
 }

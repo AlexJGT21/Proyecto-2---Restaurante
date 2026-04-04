@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import java.util.List;
 import restaurantedominio.Producto;
 import restaurantedtos.ProductoDTO;
 import restaurantepersistencia.PersistenciaException;
@@ -18,4 +19,10 @@ public interface IProductoDAO {
     
     // Contrato 2: Permite buscar un producto por su nombre
     public Producto buscarPorNombre(String nombre) throws PersistenciaException;
+    
+    //Contrato 3: Este metodo sirve para llenar la tabla de productos
+    public abstract List<Producto> llenarTabla() throws PersistenciaException;
+    
+    
+
 }

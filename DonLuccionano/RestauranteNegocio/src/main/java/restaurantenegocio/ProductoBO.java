@@ -63,4 +63,28 @@ public class ProductoBO implements IProductoBO {
             throw new NegocioException("Error al registrar producto.");
         }
     }
+    
+    @Override
+    public java.util.List<Producto> llenarTabla() throws NegocioException {
+        try {
+            return productoDAO.llenarTabla();
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("Error al cargar la tabla de productos.");
+        }
+    }
+    
+    @Override
+    public Producto buscarPorNombre(String nombre) throws NegocioException {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre del producto a buscar no puede estar vacío.");
+        }
+        
+        try {
+            return productoDAO.buscarPorNombre(nombre);
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
+            throw new NegocioException("Error al intentar buscar el producto en la base de datos.");
+        }
+    }
 }

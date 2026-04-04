@@ -1,4 +1,4 @@
-
+    
 package restaurantepersistencia.Adapter;
 
 import restaurantedominio.Ingrediente;

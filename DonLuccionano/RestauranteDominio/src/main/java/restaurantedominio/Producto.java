@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +31,10 @@ public class Producto implements Serializable {
     
     @Column(name = "precio", nullable = false)
     private Float precio;
+    
+    @Lob
+    @Column(name = "imagen", columnDefinition = "MEDIUMBLOB", nullable = true)
+    private byte[] imagen;
 
     public Producto() {
     }
@@ -39,6 +44,20 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
+    public Producto(String nombre, Float precio, byte[] imagen) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.imagen = imagen;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+  
     public String getNombre() {
         return nombre;
     }

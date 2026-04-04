@@ -12,13 +12,15 @@ public class ProductoDTO {
     
     private String nombre;
     private Float precio;
+    private byte[] imagen;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(String nombre, Float precio) {
+    public ProductoDTO(String nombre, Float precio, byte[] imagen) {
         this.nombre = nombre;
         this.precio = precio;
+        this.imagen = imagen;
     }
 
     public String getNombre() {
@@ -36,6 +38,12 @@ public class ProductoDTO {
     public void setPrecio(Float precio) {
         this.precio = precio;
     }
-    
-    
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 }
