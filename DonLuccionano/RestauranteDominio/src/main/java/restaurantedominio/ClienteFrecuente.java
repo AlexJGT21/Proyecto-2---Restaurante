@@ -41,6 +41,17 @@ public class ClienteFrecuente implements Serializable {
     @Column(name = "fecha_registro", nullable = false)
     private LocalDate fechaRegistro;
 
+    //NUEVOS PARAMETROS
+    
+    @Column(name = "total_gastado", nullable = false)
+    private Double totalGastado;
+    
+    @Column(name = "puntos", nullable = false)
+    private Integer puntos;
+    
+    @Column(name = "total_visitas", nullable = false)
+    private Integer totalVisitas;        
+    
     /**
      * Constructor por defecto para JPA.
      */
@@ -100,9 +111,45 @@ public class ClienteFrecuente implements Serializable {
         this.numeroTelefonico = numeroTelefonico;
         this.fechaRegistro = fechaRegistro;
     }
-    
-    //GETTERS AND SETTERS
 
+    
+    /**
+     * Constructor que crea un cliente frecuente con total gastado, puntos y total visitas
+     * @param nombre OBLIGATORIO
+     * @param apellidoPaterno OBLIGATORO
+     * @param apellidoMaterno OBLIGATORIO
+     * @param numeroTelefonico OBLIGATORIO
+     * @param correo OBLIGATORIO
+     * @param fechaRegistro OBLIGATORIO
+     * @param totalGastado OLBIGATORIO
+     * @param puntos OBLIGATORIO
+     * @param totalVisitas OBLIGATORIO
+     */
+    public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, String numeroTelefonico, String correo, LocalDate fechaRegistro, Double totalGastado, Integer puntos, Integer totalVisitas) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.numeroTelefonico = numeroTelefonico;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+        this.totalGastado = totalGastado;
+        this.puntos = puntos;
+        this.totalVisitas = totalVisitas;
+    }
+
+    /**
+     * Constructor para actualizar total gastado, puntos y numero de visitas
+     * @param totalGastado OBLIGATORIO
+     * @param puntos OBLIGATORIO
+     * @param totalVisitas OBLIGATORIO
+     */
+    public ClienteFrecuente(Double totalGastado, Integer puntos, Integer totalVisitas) {
+        this.totalGastado = totalGastado;
+        this.puntos = puntos;
+        this.totalVisitas = totalVisitas;
+    }        
+
+    //GETTERS AND SETTERS
     public Long getId() {
         return id;
     }
@@ -159,6 +206,32 @@ public class ClienteFrecuente implements Serializable {
         this.fechaRegistro = fechaRegistro;
     }
     
+    //NUEVOS GETTS AND SETTS
+
+    public Double getTotalGastado() {
+        return totalGastado;
+    }
+
+    public void setTotalGastado(Double totalGastado) {
+        this.totalGastado = totalGastado;
+    }       
+    
+    public Integer getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(Integer puntos) {
+        this.puntos = puntos;
+    }
+
+    public Integer getTotalVisitas() {
+        return totalVisitas;
+    }
+
+    public void setTotalVisitas(Integer totalVisitas) {
+        this.totalVisitas = totalVisitas;
+    }            
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -177,10 +250,10 @@ public class ClienteFrecuente implements Serializable {
             return false;
         }
         return true;
-    }
+    }    
 
     @Override
     public String toString() {
-        return "ClienteFrecuente{" + "nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", numeroTelefonico=" + numeroTelefonico + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + '}';
-    }        
+        return "ClienteFrecuente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", numeroTelefonico=" + numeroTelefonico + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + ", puntos=" + puntos + ", totalVisitas=" + totalVisitas + '}';
+    }            
 }
