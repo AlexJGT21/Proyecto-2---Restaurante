@@ -9,6 +9,7 @@ import EnumeradoresDTO.Disponibilidad;
  */
 public class MesaDTO {
     
+    private Long id;
     private Integer numMesa;
     private Disponibilidad disponible;
 
@@ -16,6 +17,22 @@ public class MesaDTO {
         this.numMesa = numMesa;
         this.disponible = disponible;
     }
+
+    public MesaDTO(Long id, Integer numMesa, Disponibilidad disponible) {
+        this.id = id;
+        this.numMesa = numMesa;
+        this.disponible = disponible;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
 
     public Integer getNumMesa() {
         return numMesa;
@@ -31,5 +48,6 @@ public class MesaDTO {
 
     public void setDisponible(Disponibilidad disponible) {
         this.disponible = disponible;
-    }        
+    }   
+    
 }

@@ -9,6 +9,7 @@ import java.time.LocalDate;
  */
 public class ClienteFrecuenteDTO {
     
+    private Long id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -24,6 +25,15 @@ public class ClienteFrecuenteDTO {
         this.email = email;
         this.fechaRegistro = fechaRegistro;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
 
     public String getNombre() {
         return nombre;

@@ -26,4 +26,6 @@ public interface IClienteFrecuenteDAO {
     
     //Contrato 5: Lista todos los clientes frecuentes
     public abstract List<ClienteFrecuenteDTO> listaClientesF() throws PersistenciaException;
+
+    public abstract ClienteFrecuente buscarPorId(long id) throws PersistenciaException;
 }

@@ -74,6 +74,21 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    @Override
+    public Producto buscarPorId(Long id) throws PersistenciaException {
+        try {
+            EntityManager entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+            
+            // El método find busca directamente por la llave primaria (@Id)
+            Producto producto = entityManager.find(Producto.class, id);
+            
+            return producto;
+            
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al intentar buscar el producto por ID: " + e.getMessage());
+        }
+    }
+
  
     
 }

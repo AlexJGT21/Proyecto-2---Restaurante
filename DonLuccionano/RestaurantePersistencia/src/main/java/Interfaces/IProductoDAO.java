@@ -22,6 +22,8 @@ public interface IProductoDAO {
     
     //Contrato 3: Este metodo sirve para llenar la tabla de productos
     public abstract List<Producto> llenarTabla() throws PersistenciaException;
+
+    public abstract Producto buscarPorId(Long id) throws PersistenciaException;
     
     
 

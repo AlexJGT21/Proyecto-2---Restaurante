@@ -10,6 +10,7 @@ package restaurantedtos;
  */
 public class ProductoDTO {
     
+    private Long id;
     private String nombre;
     private Float precio;
     private byte[] imagen;
@@ -22,6 +23,16 @@ public class ProductoDTO {
         this.precio = precio;
         this.imagen = imagen;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
 
     public String getNombre() {
         return nombre;

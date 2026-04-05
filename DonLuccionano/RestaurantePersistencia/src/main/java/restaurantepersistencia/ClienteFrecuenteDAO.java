@@ -1,4 +1,3 @@
-
 package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
@@ -27,13 +26,15 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     /**
      * Metodo que persiste una Entidad Cliente en la Base de datos
+     *
      * @param clienteFrecuente Entidad por persistir
      * @return Cliente persistido en la BD
-     * @throws PersistenciaException En caso de no poder persistir el cliente en la BD
+     * @throws PersistenciaException En caso de no poder persistir el cliente en
+     * la BD
      */
     @Override
     public ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteFrecuente) throws PersistenciaException {
-        String telefonoCifrado = ProteccionDatos.encriptar(clienteFrecuente.getTelefono());                
+        String telefonoCifrado = ProteccionDatos.encriptar(clienteFrecuente.getTelefono());
         ClienteFrecuente cliente = new ClienteFrecuente(clienteFrecuente.getNombre(),
                 clienteFrecuente.getApellidoPaterno(),
                 clienteFrecuente.getApellidoMaterno(),
@@ -54,15 +55,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO REGISTRAR EL CLIENTE");
         }
-    }  
-    
+    }
+
     /**
-     * Metodo de busqueda de cliente por nombre, apellido paterno o apellido materno
+     * Metodo de busqueda de cliente por nombre, apellido paterno o apellido
+     * materno
+     *
      * @param nombreCliente OPCIONAL
      * @param apellidoPaterno OPCIONAL
      * @param apellidoMaterno OPCIONAL
      * @return Un cliente con datos correspondientes
-     * @throws restaurantepersistencia.PersistenciaException Si el cliente no pudo ser consultado
+     * @throws restaurantepersistencia.PersistenciaException Si el cliente no
+     * pudo ser consultado
      */
     @Override
     public List<ClienteFrecuente> buscarClienteLista(String nombreCliente, String apellidoPaterno, String apellidoMaterno) throws PersistenciaException {
@@ -75,13 +79,12 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             CriteriaQuery<ClienteFrecuente> criteria = builder.createQuery(ClienteFrecuente.class);
             //Representa la entidad principal sobre la cual se realizara la consulta (equivalente a FROM de SQL)
             Root<ClienteFrecuente> clienteFreciente = criteria.from(ClienteFrecuente.class);
-            
+
             boolean nombre = nombreCliente != null && !nombreCliente.trim().isEmpty();
             boolean apellidoPa = apellidoPaterno != null && !apellidoPaterno.trim().isEmpty();
             boolean apellidoMa = apellidoMaterno != null && !apellidoMaterno.trim().isEmpty();
-           
+
             //Un monton de if
-            
             if (nombre && apellidoPa && apellidoMa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
@@ -96,7 +99,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
                                 builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%"),
                                 builder.like(builder.lower(clienteFreciente.<String>get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%")
                         )
-                );                
+                );
             } else if (nombre && apellidoMa) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
@@ -106,7 +109,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
                 );
             } else if (apellidoPa && apellidoMa) {
                 criteria.select(clienteFreciente).where(
-                        builder.and(               
+                        builder.and(
                                 builder.like(builder.lower(clienteFreciente.<String>get("apellidoPaterno")), "%" + apellidoPaterno.trim().toLowerCase() + "%"),
                                 builder.like(builder.lower(clienteFreciente.<String>get("apellidoMaterno")), "%" + apellidoMaterno.trim().toLowerCase() + "%")
                         )
@@ -114,7 +117,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             } else if (nombre) {
                 criteria.select(clienteFreciente).where(
                         builder.and(
-                                builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%")                
+                                builder.like(builder.lower(clienteFreciente.<String>get("nombre")), "%" + nombreCliente.trim().toLowerCase() + "%")
                         )
                 );
             } else if (apellidoPa) {
@@ -132,17 +135,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             } else {
                 criteria.select(clienteFreciente);
             }
-            
+
             TypedQuery<ClienteFrecuente> query = entityManager.createQuery(criteria);
-            return query.getResultList();       
+            return query.getResultList();
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO CONSULTAR AL CLIENTE");
         }
     }
-    
+
     /**
      * Metodo de busqueda un cliente por su telefono
+     *
      * @param telefono Argumento de busqueda
      * @return Cliente con datos correspondientes
      * @throws PersistenciaException Si no se pudo consultar el cliente
@@ -152,16 +156,16 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             List<ClienteFrecuente> query = entityManager.createQuery(
-            """
+                    """
             SELECT c
             FROM ClienteFrecuente c
             """, ClienteFrecuente.class
             ).getResultList();
-            
-            for (ClienteFrecuente c: query) {
+
+            for (ClienteFrecuente c : query) {
                 String telefonoDescifrado = ProteccionDatos.desencriptar(c.getNumeroTelefonico());
                 if (telefonoDescifrado == null ? telefono == null : telefonoDescifrado.equals(telefono)) {
-                    return c;                    
+                    return c;
                 }
             }
             return null;
@@ -173,6 +177,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     /**
      * Metodo de busqueda a un cliente por correo
+     *
      * @param correo Argumento de busqueda
      * @return Cliente con datos correspondientes
      * @throws PersistenciaException Si no se pudo consultar el cliente
@@ -182,7 +187,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
-            """
+                    """
             SELECT c
             FROM ClienteFrecuente c
             WHERE c.correo = :correo
@@ -191,7 +196,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             query.setParameter("correo", correo);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            return null; 
+            return null;
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("No se pudo consultar el cliente por correo");
@@ -200,6 +205,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     /**
      * Metodo que permite listar todos los clientes refrecuentes
+     *
      * @return Lista de clientes frecuentes
      * @throws PersistenciaException No fue posible listar clientes frecuentes
      */
@@ -208,27 +214,41 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             List<ClienteFrecuente> query = entityManager.createQuery(
-            """
+                    """
             SELECT c
             FROM ClienteFrecuente c
-            """, ClienteFrecuente.class).getResultList();            
+            """, ClienteFrecuente.class).getResultList();
             List<ClienteFrecuenteDTO> resultado = new ArrayList<>();
-            
-            for (ClienteFrecuente cf: query) {
+
+            for (ClienteFrecuente cf : query) {
                 String telefonoDescifrado = ProteccionDatos.desencriptar(cf.getNumeroTelefonico());
                 ClienteFrecuenteDTO clienteDescifrado = new ClienteFrecuenteDTO(
-                        cf.getNombre(), 
-                        cf.getApellidoPaterno(), 
-                        cf.getApellidoMaterno(), 
-                        telefonoDescifrado, 
-                        cf.getCorreo(), 
+                        cf.getNombre(),
+                        cf.getApellidoPaterno(),
+                        cf.getApellidoMaterno(),
+                        telefonoDescifrado,
+                        cf.getCorreo(),
                         cf.getFechaRegistro());
                 resultado.add(clienteDescifrado);
             }
-            return resultado;            
+            return resultado;
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO FUE POSIBLE LISTAR CLIENTES FRECUENTES.");
+        }
+    }
+
+    @Override
+    public ClienteFrecuente buscarPorId(long id) throws PersistenciaException {
+        try {
+            EntityManager entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+
+            ClienteFrecuente cliente = entityManager.find(ClienteFrecuente.class, id);
+
+            return cliente; // Retornará el cliente si existe, o null si no se encuentra
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al intentar buscar el cliente por ID: " + e.getMessage());
         }
     }
 }
