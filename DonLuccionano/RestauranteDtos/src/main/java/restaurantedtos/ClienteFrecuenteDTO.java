@@ -9,6 +9,8 @@ import java.time.LocalDate;
  */
 public class ClienteFrecuenteDTO {
     
+    //Roberto agrego la id... y ya xd
+    
     private Long id;
     private String nombre;
     private String apellidoPaterno;
