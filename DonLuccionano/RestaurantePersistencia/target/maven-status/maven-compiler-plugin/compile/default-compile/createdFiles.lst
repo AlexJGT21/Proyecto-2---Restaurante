@@ -10,6 +10,8 @@ restaurantepersistencia\ClienteFrecuenteDAO.class
 Interfaces\IIngredienteDAO.class
 restaurantepersistencia\IngredienteDAO.class
 Interfaces\IMesaDAO.class
+restaurantepersistencia\ComandaDAO.class
+Interfaces\IComandaDAO.class
 restaurantepersistencia\Adapter\NuevoIngredienteDTOAIngredienteAdapter.class
 restaurantepersistencia\MesaDAO.class
 Interfaces\IClienteFrecuenteDAO.class

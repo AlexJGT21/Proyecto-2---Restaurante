@@ -1,4 +1,3 @@
-
 package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
