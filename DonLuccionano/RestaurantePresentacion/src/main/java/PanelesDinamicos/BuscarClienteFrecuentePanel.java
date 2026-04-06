@@ -35,7 +35,9 @@ public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
                 c.getApellidoPaterno(),
                 c.getApellidoMaterno(),
                 c.getNumeroTelefonico(),
-                c.getCorreo()
+                c.getCorreo(),
+                c.getFechaRegistro(),
+                c.getPuntos()
             };
             modelo.addRow(fila);
         }
@@ -88,17 +90,17 @@ public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
 
         tbClienteFrecuente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido paterno", "Apellido materno", "Telefono", "Correo electronico", "Fecha Registro"
+                "Nombre", "Apellido paterno", "Apellido materno", "Telefono", "Correo electronico", "Fecha registro", "Puntos "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -155,8 +157,9 @@ public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
