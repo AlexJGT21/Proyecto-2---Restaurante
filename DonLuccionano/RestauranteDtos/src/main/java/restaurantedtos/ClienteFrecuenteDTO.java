@@ -60,4 +60,9 @@ public class ClienteFrecuenteDTO {
     public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteFrecuenteDTO{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", email=" + email + ", fechaRegistro=" + fechaRegistro + '}';
+    }        
 }

@@ -1,5 +1,5 @@
 
-package Seguridad;
+package restaurantedominio;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

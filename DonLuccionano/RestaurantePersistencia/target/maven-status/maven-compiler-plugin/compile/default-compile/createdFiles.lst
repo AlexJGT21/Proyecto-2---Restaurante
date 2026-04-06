@@ -1,4 +1,3 @@
-Seguridad\ProteccionDatos.class
 restaurantepersistencia\Adapter\NuevaMesaDTOAMesaAdapter.class
 restaurantepersistencia\Adapter\NuevoProductoDTOAProductoAdapter.class
 restaurantepersistencia\ProductoDAO.class

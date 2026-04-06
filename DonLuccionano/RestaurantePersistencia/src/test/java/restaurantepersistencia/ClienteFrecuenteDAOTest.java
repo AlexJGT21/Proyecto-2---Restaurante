@@ -36,22 +36,12 @@ public class ClienteFrecuenteDAOTest {
 //    }
 //    
 //    @Test
-//    public void testBuscarClientePorNombre() {
-//        String nombre = "Alex";
-//        String apellidoPaterno = "García";
-//        String apellidoMaterno = "Trejo";
-//        assertDoesNotThrow(() -> {
-//            ClienteFrecuente clienteFr = dao.buscarCliente(nombre, apellidoPaterno, apellidoMaterno);
-//            assertNotNull(clienteFr);
-//        });
-//    }
-//    
-//    @Test
 //    public void testBuscarClientePorNumeroTelefonico() {
 //        String numeroTelefonico = "6241857098";
 //        assertDoesNotThrow(() -> {
 //            ClienteFrecuente clienteFr = dao.buscarPorTelefono(numeroTelefonico);
 //            assertNotNull(clienteFr);
+//            System.out.println(clienteFr.toString());
 //        });
 //    }
 //    
@@ -61,6 +51,7 @@ public class ClienteFrecuenteDAOTest {
 //        assertDoesNotThrow(() -> {
 //            ClienteFrecuente clienteFr = dao.buscarPorCorreo(correoElectronico);
 //            assertNotNull(clienteFr);
+//            System.out.println(clienteFr.toString());
 //        });
 //    }
 //    
@@ -102,6 +93,16 @@ public class ClienteFrecuenteDAOTest {
 //        assertDoesNotThrow(() -> {
 //            List<ClienteFrecuente> clienteFr = dao.buscarClienteLista(null, null, null);
 //            for (ClienteFrecuente c: clienteFr) {
+//                System.out.println(c.toString());
+//            }
+//        });
+//    }
+//    
+//    @Test
+//    public void testListarClientesFrecuenteFunciona() {
+//        assertDoesNotThrow(() -> {
+//           List<ClienteFrecuenteDTO> lista = dao.listaClientesF();
+//            for (ClienteFrecuenteDTO c: lista) {
 //                System.out.println(c.toString());
 //            }
 //        });

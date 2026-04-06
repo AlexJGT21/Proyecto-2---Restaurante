@@ -1,8 +1,8 @@
+
 package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
 import Interfaces.IClienteFrecuenteDAO;
-import Seguridad.ProteccionDatos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import restaurantedominio.ClienteFrecuente;
+import restaurantedominio.ClienteFrecuentePVDTO;
 import restaurantedtos.ClienteFrecuenteDTO;
 
 /**
@@ -34,11 +35,10 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
      */
     @Override
     public ClienteFrecuente crearCliente(ClienteFrecuenteDTO clienteFrecuente) throws PersistenciaException {
-        String telefonoCifrado = ProteccionDatos.encriptar(clienteFrecuente.getTelefono());
         ClienteFrecuente cliente = new ClienteFrecuente(clienteFrecuente.getNombre(),
                 clienteFrecuente.getApellidoPaterno(),
                 clienteFrecuente.getApellidoMaterno(),
-                telefonoCifrado,
+                clienteFrecuente.getTelefono(),
                 clienteFrecuente.getEmail(),
                 clienteFrecuente.getFechaRegistro());
         try {
@@ -155,20 +155,15 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
     public ClienteFrecuente buscarPorTelefono(String telefono) throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
-            List<ClienteFrecuente> query = entityManager.createQuery(
+            TypedQuery<ClienteFrecuente> query = entityManager.createQuery(
                     """
             SELECT c
             FROM ClienteFrecuente c
+            WHERE c.numeroTelefonico = :telefono        
             """, ClienteFrecuente.class
-            ).getResultList();
-
-            for (ClienteFrecuente c : query) {
-                String telefonoDescifrado = ProteccionDatos.desencriptar(c.getNumeroTelefonico());
-                if (telefonoDescifrado == null ? telefono == null : telefonoDescifrado.equals(telefono)) {
-                    return c;
-                }
-            }
-            return null;
+            );
+            query.setParameter("telefono", telefono);
+            return query.getSingleResult();
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("No se pudo consultar el cliente por teléfono");
@@ -214,19 +209,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             List<ClienteFrecuente> query = entityManager.createQuery(
-                    """
+            """
             SELECT c
             FROM ClienteFrecuente c
             """, ClienteFrecuente.class).getResultList();
             List<ClienteFrecuenteDTO> resultado = new ArrayList<>();
 
             for (ClienteFrecuente cf : query) {
-                String telefonoDescifrado = ProteccionDatos.desencriptar(cf.getNumeroTelefonico());
                 ClienteFrecuenteDTO clienteDescifrado = new ClienteFrecuenteDTO(
                         cf.getNombre(),
                         cf.getApellidoPaterno(),
                         cf.getApellidoMaterno(),
-                        telefonoDescifrado,
+                        cf.getNumeroTelefonico(),
                         cf.getCorreo(),
                         cf.getFechaRegistro());
                 resultado.add(clienteDescifrado);
@@ -250,5 +244,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         } catch (Exception e) {
             throw new PersistenciaException("Error al intentar buscar el cliente por ID: " + e.getMessage());
         }
+    }
+
+    @Override
+    public ClienteFrecuente actualizarVisita(ClienteFrecuentePVDTO clienteFrecuenteVisita) throws PersistenciaException {
+        return null;
+        
     }
 }

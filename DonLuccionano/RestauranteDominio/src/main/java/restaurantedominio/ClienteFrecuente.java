@@ -4,6 +4,7 @@ package restaurantedominio;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +33,8 @@ public class ClienteFrecuente implements Serializable {
     @Column(name = "apellido_materno", nullable = false, length = 50)
     private String apellidoMaterno;
     
-    @Column(name = "numero_telefonico", nullable = false, length = 10)
+    @Column(name = "numero_telefonico", nullable = false, length = 255)   
+    @Convert(converter = TelefonoConverter.class)
     private String numeroTelefonico;
     
     @Column(name = "correo_electronico", length = 50) //No se le puso "nullable" para hacerlo opcional
@@ -43,13 +45,13 @@ public class ClienteFrecuente implements Serializable {
 
     //NUEVOS PARAMETROS
     
-    @Column(name = "total_gastado", nullable = false)
+    @Column(name = "total_gastado")
     private Double totalGastado;
     
-    @Column(name = "puntos", nullable = false)
+    @Column(name = "puntos")
     private Integer puntos;
     
-    @Column(name = "total_visitas", nullable = false)
+    @Column(name = "total_visitas")
     private Integer totalVisitas;        
     
     /**

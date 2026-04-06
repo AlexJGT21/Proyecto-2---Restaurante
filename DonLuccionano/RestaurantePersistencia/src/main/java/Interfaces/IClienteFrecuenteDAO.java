@@ -3,6 +3,7 @@ package Interfaces;
 
 import java.util.List;
 import restaurantedominio.ClienteFrecuente;
+import restaurantedominio.ClienteFrecuentePVDTO;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantepersistencia.PersistenciaException;
 
@@ -27,5 +28,9 @@ public interface IClienteFrecuenteDAO {
     //Contrato 5: Lista todos los clientes frecuentes
     public abstract List<ClienteFrecuenteDTO> listaClientesF() throws PersistenciaException;
 
+    //Contrato 6: Busca un cliente frecuente por si id
     public abstract ClienteFrecuente buscarPorId(long id) throws PersistenciaException;
+    
+    //Constrato 7: Permite actualizar el total gastado, puntos y total de visitas de un cliente frecuente
+    public abstract ClienteFrecuente actualizarVisita(ClienteFrecuentePVDTO clienteFrecuenteVisita) throws PersistenciaException;
 }

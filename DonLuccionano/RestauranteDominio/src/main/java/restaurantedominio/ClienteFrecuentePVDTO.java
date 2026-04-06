@@ -16,14 +16,24 @@ public class ClienteFrecuentePVDTO {
 //    private String telefono;
 //    private String email; //Este puede ser opcional
 //    private LocalDate fechaRegistro;
+    private Long id;
     private Double totalGastado;
     private Integer puntos;
     private Integer totalVisitas;
 
-    public ClienteFrecuentePVDTO(Double totalGastado, Integer puntos, Integer totalVisitas) {
+    public ClienteFrecuentePVDTO(Long id, Double totalGastado, Integer puntos, Integer totalVisitas) {
+        this.id = id;
         this.totalGastado = totalGastado;
         this.puntos = puntos;
         this.totalVisitas = totalVisitas;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Double getTotalGastado() {
