@@ -1,4 +1,4 @@
-package interfaces;
+package Interfaces;
 
 import java.util.List;
 import restaurantedtos.ComandaDTO;

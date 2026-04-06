@@ -1,4 +1,3 @@
-
 package restaurantedtos;
 
 import EnumeradoresDTO.TipoUnidad;
@@ -10,11 +9,25 @@ import java.math.BigDecimal;
  */
 public class IngredienteDTO {
     
+    private Long id;
     private String nombre;
     private TipoUnidad unidad;
     private BigDecimal cantidad;
     private byte[] imagen;
 
+    /**
+     * CONSTRUCTOR NUEVO: Sin imagen (Opcional). 
+     * Ideal para las pruebas y cuando el usuario decide no subir foto.
+     */
+    public IngredienteDTO(String nombre, TipoUnidad unidad, BigDecimal cantidad) {
+        this.nombre = nombre;
+        this.unidad = unidad;
+        this.cantidad = cantidad;
+    }
+
+    /**
+     * CONSTRUCTOR ORIGINAL: Con imagen.
+     */
     public IngredienteDTO(String nombre, TipoUnidad unidad, BigDecimal cantidad, byte[] imagen) {
         this.nombre = nombre;
         this.unidad = unidad;
@@ -22,6 +35,14 @@ public class IngredienteDTO {
         this.imagen = imagen;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public String getNombre() {
         return nombre;
     }

@@ -1,4 +1,3 @@
-
 package restaurantedtos;
 
 import java.time.LocalDate;
@@ -8,16 +7,18 @@ import java.time.LocalDate;
  * @author JAR
  */
 public class ClienteFrecuenteDTO {
-    
-    //Roberto agrego la id... y ya xd
-    
+
+    // Roberto agrego la id... y ya xd
     private Long id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String telefono;
-    private String email; //Este puede ser opcional
+    private String email; // Este puede ser opcional
     private LocalDate fechaRegistro;
+
+    public ClienteFrecuenteDTO() {
+    }
 
     public ClienteFrecuenteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String email, LocalDate fechaRegistro) {
         this.nombre = nombre;
@@ -28,6 +29,17 @@ public class ClienteFrecuenteDTO {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String email, LocalDate fechaRegistro) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.email = email;
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    // ... (Tus mismos Getters, Setters y toString se mantienen igual)
     public Long getId() {
         return id;
     }
@@ -35,7 +47,6 @@ public class ClienteFrecuenteDTO {
     public void setId(long id) {
         this.id = id;
     }
-    
 
     public String getNombre() {
         return nombre;
@@ -60,9 +71,4 @@ public class ClienteFrecuenteDTO {
     public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
-
-    @Override
-    public String toString() {
-        return "ClienteFrecuenteDTO{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", email=" + email + ", fechaRegistro=" + fechaRegistro + '}';
-    }        
 }

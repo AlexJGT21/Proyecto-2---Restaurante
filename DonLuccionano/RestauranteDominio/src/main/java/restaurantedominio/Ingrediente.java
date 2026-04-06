@@ -15,13 +15,16 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Alex García Trejo
  */
 @Entity
-@Table(name = "ingredientes")
+@Table(name = "ingredientes", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"nombre_ingrediente", "unidad"})
+})
 public class Ingrediente implements Serializable {
 
     @Id
@@ -167,7 +170,6 @@ public class Ingrediente implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Ingrediente)) {
             return false;
         }

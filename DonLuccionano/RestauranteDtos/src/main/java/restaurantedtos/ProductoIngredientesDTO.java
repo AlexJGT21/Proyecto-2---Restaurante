@@ -1,33 +1,45 @@
-
 package restaurantedtos;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- *
- * @author Alex García Trejo
- */
-public class ProductoIngredientesDTO {
-    
-    private Long idProducto;
-    private Long idIngrediente;
-    private BigDecimal cantidad;
+public class ProductoIngredientesDTO implements Serializable {
 
-    public ProductoIngredientesDTO(Long idProducto, Long idIngrediente, BigDecimal cantidad) {
-        this.idProducto = idProducto;
+    private Long idIngrediente; // Para saber qué ingrediente buscar en la BD
+    private String nombreIngrediente; // Para mostrarlo en la JTable de NetBeans fácilmente
+    private BigDecimal cantidadRequerida; // Lo que lleva la receta (ej. 2.5 gramos)
+
+    public ProductoIngredientesDTO() {}
+
+    public ProductoIngredientesDTO(Long idIngrediente, String nombreIngrediente, BigDecimal cantidadRequerida) {
         this.idIngrediente = idIngrediente;
-        this.cantidad = cantidad;
-    }
-
-    public Long getIdProducto() {
-        return idProducto;
+        this.nombreIngrediente = nombreIngrediente;
+        this.cantidadRequerida = cantidadRequerida;
     }
 
     public Long getIdIngrediente() {
         return idIngrediente;
     }
 
-    public BigDecimal getCantidad() {
-        return cantidad;
+    public void setIdIngrediente(Long idIngrediente) {
+        this.idIngrediente = idIngrediente;
     }
+
+    public String getNombreIngrediente() {
+        return nombreIngrediente;
+    }
+
+    public void setNombreIngrediente(String nombreIngrediente) {
+        this.nombreIngrediente = nombreIngrediente;
+    }
+
+    public BigDecimal getCantidadRequerida() {
+        return cantidadRequerida;
+    }
+
+    public void setCantidadRequerida(BigDecimal cantidadRequerida) {
+        this.cantidadRequerida = cantidadRequerida;
+    }
+
+    
 }
