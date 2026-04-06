@@ -247,8 +247,16 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
     }
 
     @Override
-    public ClienteFrecuente actualizarVisita(ClienteFrecuentePVDTO clienteFrecuenteVisita) throws PersistenciaException {
-        return null;
-        
+    public ClienteFrecuente actualizarVisita(ClienteFrecuente clienteFrecuenteVisita) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            entityManager.getTransaction().begin();
+            ClienteFrecuente cliente = entityManager.merge(clienteFrecuenteVisita);
+            entityManager.getTransaction().commit();
+            return cliente;            
+        } catch (Exception e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO FUE POSIBLE ACTUALIZAR LOS PUNTOS, TOTAL Y VISITAS DEL CLIENTE.");
+        }
     }
 }

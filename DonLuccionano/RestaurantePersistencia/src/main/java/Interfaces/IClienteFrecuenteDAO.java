@@ -32,5 +32,5 @@ public interface IClienteFrecuenteDAO {
     public abstract ClienteFrecuente buscarPorId(long id) throws PersistenciaException;
     
     //Constrato 7: Permite actualizar el total gastado, puntos y total de visitas de un cliente frecuente
-    public abstract ClienteFrecuente actualizarVisita(ClienteFrecuentePVDTO clienteFrecuenteVisita) throws PersistenciaException;
+    public abstract ClienteFrecuente actualizarVisita(ClienteFrecuente clienteFrecuenteVisita) throws PersistenciaException;
 }

@@ -180,4 +180,39 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("Error al generar lista de clientes frecuentes: " + e.getMessage());
         }
     }
+
+    /**
+     * Este metodo sera usado por el modulo de comandas para pasarle el ID del cliente y el total de venta, para hacer los
+     * calculos necesarios y actualizar su vista
+     * @param idCliente Argumento de busqueda
+     * @param totalVenta Parametro para iniciar los calculos correspondientes
+     * @return Visita del cliente actualizado
+     * @throws NegocioException No se pudo realizar la actualizacion del cliente
+     */
+    @Override
+    public ClienteFrecuente actualizarVisita(Long idCliente, Double totalVenta) throws NegocioException {
+        try {
+            ClienteFrecuente clienteFrecuente = clienteFrecuenteDAO.buscarPorId(idCliente);
+            
+            if (clienteFrecuente == null) {
+                throw new NegocioException("El cliente no existe.");
+            }
+            
+            if (clienteFrecuente.getTotalVisitas() == null) {
+            clienteFrecuente.setTotalVisitas(0);
+            }
+            if (clienteFrecuente.getTotalGastado() == null) {
+                clienteFrecuente.setTotalGastado(0.0);
+            }
+            
+            clienteFrecuente.setTotalVisitas(clienteFrecuente.getTotalVisitas()+ 1);
+            clienteFrecuente.setTotalGastado(clienteFrecuente.getTotalGastado() + totalVenta);
+            double total = clienteFrecuente.getTotalGastado();
+            int puntos = (int)(total / 20);
+            clienteFrecuente.setPuntos(puntos);            
+            return clienteFrecuenteDAO.actualizarVisita(clienteFrecuente);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("NO SE PUDO ACTUALIZAR LOS PUNTOS, VISITAS Y TOTAL GASTADO DEL CLIENTE FRECUENTE.");
+        }
+    }
 }

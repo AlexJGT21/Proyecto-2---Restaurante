@@ -32,8 +32,7 @@ import restaurantepersistencia.ProductoDAO;
  */
 public class ComandaBO implements IComandaBO {
 
-    private static final Logger LOGGER = Logger.getLogger(ComandaBO.class.getName());
-    
+    private static final Logger LOGGER = Logger.getLogger(ComandaBO.class.getName());    
     
     private final IComandaDAO comandaDAO;
     private final IMesaDAO mesaDAO;
