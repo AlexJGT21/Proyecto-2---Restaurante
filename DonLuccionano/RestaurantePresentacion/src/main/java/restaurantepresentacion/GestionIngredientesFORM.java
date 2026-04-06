@@ -1,7 +1,7 @@
 
 package restaurantepresentacion;
 
-import PanelesDinamicos.BuscarIPPanel;
+import PanelesDinamicos.BuscarIngredienteProductoInventarioPanel;
 import PanelesDinamicos.NuevoIngredientePanel;
 import java.awt.BorderLayout;
 
@@ -12,7 +12,7 @@ import java.awt.BorderLayout;
 public class GestionIngredientesFORM extends javax.swing.JFrame {
 
     private NuevoIngredientePanel ingredientePanel;
-    private BuscarIPPanel inventariarIngredientePanel;
+    private BuscarIngredienteProductoInventarioPanel inventariarIngredientePanel;
     
     /**
      * Creates new form GestionIngredientesFORM
@@ -172,7 +172,7 @@ public class GestionIngredientesFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoIngredienteActionPerformed
 
     private void btnInventariarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventariarActionPerformed
-        inventariarIngredientePanel = new BuscarIPPanel();
+        inventariarIngredientePanel = new BuscarIngredienteProductoInventarioPanel();
         jPanel3.removeAll();
         
         jPanel3.setLayout(new BorderLayout());

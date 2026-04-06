@@ -23,14 +23,14 @@ import ImagenTabla.ImageTable;
  *
  * @author Alex García Trejo
  */
-public class BuscarIPPanel extends javax.swing.JPanel {
+public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel {
 
     private IngredienteBO ingredienteBO;
     private JSpinner spinner;
     private SpinnerNumberModel spinnerNumber;
-    private static final Logger LOGGER = Logger.getLogger(BuscarIPPanel.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BuscarIngredienteProductoInventarioPanel.class.getName());
     
-    public BuscarIPPanel() {
+    public BuscarIngredienteProductoInventarioPanel() {
         initComponents();
         ingredienteBO = new IngredienteBO(); 
         tbIngredientes.setRowHeight(60);

@@ -1,6 +1,7 @@
 
 package restaurantepresentacion;
 
+import PanelesDinamicos.BuscarClienteFrecuentePanel;
 import PanelesDinamicos.RegistrarClientePanel;
 import java.awt.BorderLayout;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
 
     private ClienteFrecuenteBO clienteFrecuenteBO;
     private RegistrarClientePanel registrarClientePanel;
+    private BuscarClienteFrecuentePanel buscarClienteFPanel;
     
     public AdministrarClientesFrecuentesFORM() {
         this.clienteFrecuenteBO = new ClienteFrecuenteBO();
@@ -38,7 +40,7 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrarCliente = new javax.swing.JButton();
-        btnBuscarCliente = new javax.swing.JButton();
+        btnBuscarClienteF = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnReturn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -60,13 +62,13 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
             }
         });
 
-        btnBuscarCliente.setBackground(new java.awt.Color(0, 153, 204));
-        btnBuscarCliente.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        btnBuscarCliente.setText("Buscar cliente frecuente");
-        btnBuscarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarClienteF.setBackground(new java.awt.Color(0, 153, 204));
+        btnBuscarClienteF.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        btnBuscarClienteF.setText("Buscar cliente frecuente");
+        btnBuscarClienteF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnBuscarClienteF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarClienteActionPerformed(evt);
+                btnBuscarClienteFActionPerformed(evt);
             }
         });
 
@@ -119,7 +121,7 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuscarCliente)
+                            .addComponent(btnBuscarClienteF)
                             .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRegistrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -140,7 +142,7 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRegistrarCliente)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscarCliente)
+                        .addComponent(btnBuscarClienteF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnReturn)
                         .addGap(14, 14, 14))))
@@ -172,9 +174,16 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
         jPanel3.repaint();        
     }//GEN-LAST:event_btnRegistrarClienteActionPerformed
 
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+    private void btnBuscarClienteFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteFActionPerformed
+        buscarClienteFPanel = new BuscarClienteFrecuentePanel();
+        jPanel3.removeAll();
+        
+        jPanel3.setLayout(new BorderLayout());
+        jPanel3.add(buscarClienteFPanel, BorderLayout.CENTER);
+        
+        jPanel3.revalidate();
+        jPanel3.repaint();        
+    }//GEN-LAST:event_btnBuscarClienteFActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         // TODO add your handling code here:
@@ -206,7 +215,7 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarClienteF;
     private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JButton btnReturn;
     private javax.swing.JLabel jLabel1;

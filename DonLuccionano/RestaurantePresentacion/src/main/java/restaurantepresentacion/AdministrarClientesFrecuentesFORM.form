@@ -52,7 +52,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnBuscarCliente" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBuscarClienteF" min="-2" max="-2" attributes="0"/>
                               <Component id="btnReturn" min="-2" pref="264" max="-2" attributes="0"/>
                               <Component id="btnRegistrarCliente" min="-2" pref="264" max="-2" attributes="0"/>
                           </Group>
@@ -79,7 +79,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnRegistrarCliente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnBuscarCliente" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBuscarClienteF" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnReturn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -118,7 +118,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarClienteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnBuscarCliente">
+        <Component class="javax.swing.JButton" name="btnBuscarClienteF">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="99" red="0" type="rgb"/>
@@ -134,7 +134,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarClienteActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarClienteFActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">
