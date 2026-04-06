@@ -17,7 +17,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cliente_frecuente")
-public class ClienteFrecuente implements Serializable {
+//@DiscriminatorValue(value = "FRECUENTE") Esto seria en caso de usar herencia
+public class ClienteFrecuente implements Serializable { //extends Cliente
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

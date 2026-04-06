@@ -10,4 +10,5 @@ restaurantedominio\Comanda.class
 EnumeradoresDominio\EstadoMesa.class
 EnumeradoresDominio\TipoUnidad.class
 restaurantedominio\TelefonoConverter.class
+restaurantedominio\Cliente.class
 restaurantedominio\Mesa.class
