@@ -4,6 +4,7 @@ package restaurantedominio;
 import EnumeradoresDominio.TipoUnidad;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -45,6 +47,9 @@ public class Ingrediente implements Serializable {
     @Column(name = "imagen_producto", columnDefinition = "LONGBLOB", nullable = true)
     private byte[] imagen;    
 
+    @OneToMany(mappedBy = "ingredientes")
+    private List<ProductoIngredientes> productos;
+    
     /**
      * Constructor por defecto para JPA.
      */
@@ -142,7 +147,17 @@ public class Ingrediente implements Serializable {
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }        
+    
+    //GETTS AND SETTS DE RELACION
 
+    public List<ProductoIngredientes> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoIngredientes> productos) {
+        this.productos = productos;
+    }
+        
     @Override
     public int hashCode() {
         int hash = 0;
