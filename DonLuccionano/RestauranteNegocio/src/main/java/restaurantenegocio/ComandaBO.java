@@ -16,6 +16,7 @@ import Interfaces.IComandaBO;
 import restaurantepersistencia.ComandaDAO;
 import restaurantepersistencia.MesaDAO;
 import Interfaces.IComandaDAO;
+import Interfaces.IIngredienteDAO;
 import Interfaces.IMesaDAO;
 import Interfaces.IProductoDAO;
 import java.math.BigDecimal;
@@ -26,6 +27,7 @@ import restaurantedominio.Producto;
 import restaurantedominio.ProductoIngredientes;
 import restaurantedtos.ProductoDTO;
 import restaurantepersistencia.ClienteFrecuenteDAO;
+import restaurantepersistencia.IngredienteDAO;
 import restaurantepersistencia.PersistenciaException;
 import restaurantepersistencia.ProductoDAO;
 
@@ -40,12 +42,14 @@ public class ComandaBO implements IComandaBO {
     private final IMesaDAO mesaDAO;
     private final IProductoDAO productoDAO;
     private final IClienteFrecuenteDAO clienteFrecuenteDAO;
+    private final IIngredienteDAO ingredienteDAO;
 
     public ComandaBO() {
         this.comandaDAO = new ComandaDAO();
         this.mesaDAO = new MesaDAO();
         this.productoDAO = new ProductoDAO();
         this.clienteFrecuenteDAO = new ClienteFrecuenteDAO();
+        this.ingredienteDAO = new IngredienteDAO();
     }
 
     @Override
@@ -99,6 +103,12 @@ public class ComandaBO implements IComandaBO {
                         throw new NegocioException("Stock insuficiente del ingrediente '" + ingrediente.getNombre()
                                 + "' para preparar el platillo '" + producto.getNombre() + "'.");
                     }
+                    // Restamos la cantidad usando BigDecimal y la seteamos al ingrediente
+                    BigDecimal nuevoStock = ingrediente.getCantidad().subtract(cantidadRequerida);
+                    ingrediente.setCantidad(nuevoStock);
+                    
+                    // Guardamos el ingrediente con su nuevo stock en la BD
+                    ingredienteDAO.actualizarIngrediente(ingrediente);
                 }
 
                 productosReales.add(producto);

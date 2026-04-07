@@ -1,4 +1,3 @@
-
 package restaurantepersistencia;
 
 import Conexion.ManejadorConexiones;
@@ -27,9 +26,10 @@ import restaurantepersistencia.Adapter.NuevoIngredienteDTOAIngredienteAdapter;
 public class IngredienteDAO implements IIngredienteDAO {
 
     private static final Logger LOGGER = Logger.getLogger(IngredienteDAO.class.getName());
-    
+
     /**
      * Metodo que persiste un Ingrediente en la Base de datos
+     *
      * @param nuevoIngrediente Ingrediente nuevo por persistir
      * @return Ingrediente persistido
      * @throws PersistenciaException Si no se pudo persistir
@@ -40,7 +40,7 @@ public class IngredienteDAO implements IIngredienteDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             entityManager.getTransaction().begin();
-            entityManager.persist(ingrediente);                        
+            entityManager.persist(ingrediente);
             entityManager.getTransaction().commit();
             return ingrediente;
         } catch (PersistenceException e) {
@@ -50,7 +50,9 @@ public class IngredienteDAO implements IIngredienteDAO {
     }
 
     /**
-     * Metodo de busqueda que se usa con "nuevoIngrediente" para verificar existencia de otros productos, evitando duplicados
+     * Metodo de busqueda que se usa con "nuevoIngrediente" para verificar
+     * existencia de otros productos, evitando duplicados
+     *
      * @param nombre Argumento de busqueda
      * @param unidad Argumento de busqueda
      * @return El ingrediente repetido si es que existe
@@ -61,7 +63,7 @@ public class IngredienteDAO implements IIngredienteDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Ingrediente> query = entityManager.createQuery(
-            """
+                    """
             SELECT i
             FROM Ingrediente i
             WHERE i.nombre = :nombre AND i.unidad = :unidad
@@ -75,20 +77,22 @@ public class IngredienteDAO implements IIngredienteDAO {
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO CONSULTAR INGREDIENTE");
-        }        
+        }
     }
 
     /**
      * Metodo que llenara la tabla en la presentación
+     *
      * @return Lista de todos los ingredientes en la base de datos
-     * @throws PersistenciaException Si no se encontraron ingredientes en la base de datos
+     * @throws PersistenciaException Si no se encontraron ingredientes en la
+     * base de datos
      */
     @Override
     public List<Ingrediente> llenarTabla() throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Ingrediente> query = entityManager.createQuery(
-            """
+                    """
             SELECT i
             FROM Ingrediente i
             """, Ingrediente.class
@@ -97,7 +101,7 @@ public class IngredienteDAO implements IIngredienteDAO {
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO CONSULTAR LOS INGREDIENTES DE LA BASE DE DATOS.");
-        }        
+        }
     }
 
     @Override
@@ -107,25 +111,25 @@ public class IngredienteDAO implements IIngredienteDAO {
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Ingrediente> criteria = builder.createQuery(Ingrediente.class);
             Root<Ingrediente> ingrediente = criteria.from(Ingrediente.class);
-            
+
             //Predicado para aplicar filtros
             List<Predicate> predicate = new ArrayList<>();
-            
-            if(nombreIngrediente != null && !nombreIngrediente.trim().isEmpty()) {
+
+            if (nombreIngrediente != null && !nombreIngrediente.trim().isEmpty()) {
                 predicate.add(builder.and(
                         builder.like(builder.lower(ingrediente.get("nombre")), "%" + nombreIngrediente.trim().toLowerCase() + "%")
-                        )
+                )
                 );
             }
             if (unidadIngrediente != null) {
                 predicate.add(
                         builder.equal(ingrediente.get("unidad"), unidadIngrediente)
                 );
-            }            
+            }
             criteria.select(ingrediente)
                     .where(builder.and(predicate.toArray(new Predicate[0])));
             TypedQuery<Ingrediente> query = entityManager.createQuery(criteria);
-            return query.getResultList();            
+            return query.getResultList();
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("ERROR AL CONSULTAR INGREDIENTESS");
@@ -134,17 +138,20 @@ public class IngredienteDAO implements IIngredienteDAO {
 
     /**
      * Metodo que permite inventariar la cantidad actual de un ingrediente
-     * @param ingredienteInventario DTO que permite acceder a la ID del ingrediente. Posteriormente se inventaria la cantidad
+     *
+     * @param ingredienteInventario DTO que permite acceder a la ID del
+     * ingrediente. Posteriormente se inventaria la cantidad
      * @return Cantidad actualizada de ingrediente
-     * @throws PersistenciaException Si hubo un error al actualizar la cantidad del ingrediente
+     * @throws PersistenciaException Si hubo un error al actualizar la cantidad
+     * del ingrediente
      */
     @Override
     public Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
-            
+
             Ingrediente ingrediente = entityManager.find(Ingrediente.class, ingredienteInventario.getId());
-            ingrediente.setCantidad(ingredienteInventario.getCantidad());            
+            ingrediente.setCantidad(ingredienteInventario.getCantidad());
             entityManager.getTransaction().begin();
             entityManager.merge(ingrediente);
             entityManager.getTransaction().commit();
@@ -152,6 +159,19 @@ public class IngredienteDAO implements IIngredienteDAO {
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO SE PUDO ACTUALIZAR EL INGREDIENTE");
+        }
+
+    }
+
+    @Override
+    public void actualizarIngrediente(Ingrediente ingrediente) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.merge(ingrediente); // Actualiza la entidad en la base de datos
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar el stock del ingrediente: " + e.getMessage());
         }
     }
 }

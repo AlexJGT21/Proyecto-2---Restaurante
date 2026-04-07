@@ -32,7 +32,7 @@ import restaurantepersistencia.ProductoDAO;
 /**
  * Prueba de Comandas.
  */
-//@Disabled("Desactivado temporalmente para no golpear la base de datos en el Clean and Build")
+@Disabled("Desactivado temporalmente para no golpear la base de datos en el Clean and Build")
 public class ComandaBOTest {
 
     // Declaramos nuestras dependencias reales
