@@ -3,11 +3,9 @@ package PanelesDinamicos;
 
 import java.util.List;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
-import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantenegocio.ClienteFrecuenteBO;
 import restaurantenegocio.NegocioException;
@@ -25,8 +23,7 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
     public ReportesClienteFrecuentePanel() {
         initComponents();
         clienteFrecuenteBO = new ClienteFrecuenteBO();
-        spinnerNumber = new SpinnerNumberModel(1, 1, 100, 1);
-        spNumVisitas = new JSpinner();
+        spinnerNumber = new SpinnerNumberModel(0, 0, 100, 1);
         spNumVisitas.setModel(spinnerNumber);        
         ((JSpinner.DefaultEditor) spNumVisitas.getEditor()).getTextField().setEditable(false);
     }
@@ -124,6 +121,11 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
         btnExportar.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         btnExportar.setText("Exportar PDF");
         btnExportar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -149,7 +151,7 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 106, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -169,7 +171,7 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
                     .addComponent(spNumVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFiltrar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -180,17 +182,20 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         String nombre = txtNombre.getText();
-        int visitas = (int) spNumVisitas.getValue();           
-
-        try {
-            clienteFrecuenteBO.filtrarClientes(nombre, visitas);
-            llenarTabla(nombre, visitas);
-            limpiarCampos();
-        } catch (NegocioException e) {
-            LOGGER.severe(e.getMessage());
-            JOptionPane.showMessageDialog(this, "No fue posible realizar filtrado: " + e.getMessage());
+        int valor = (int) spNumVisitas.getValue();
+        Integer visitas = (valor == 0) ? null: valor;
+        
+        if (nombre.isEmpty()) {
+            nombre = null;
         }
+        
+        llenarTabla(nombre, visitas);
+        limpiarCampos();
     }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportarActionPerformed
     
     private void limpiarCampos() {
         txtNombre.setText("");

@@ -33,6 +33,7 @@ restaurantepresentacion\BuscarClienteFORM$5.class
 restaurantepresentacion\GestionIngredientesFORM$5.class
 restaurantepresentacion\GestionProductosFORM$3.class
 PanelesDinamicos\BuscarClienteFrecuentePanel$3.class
+PanelesDinamicos\ReportesClienteFrecuentePanel$4.class
 restaurantepresentacion\AdministradorFORM$5.class
 restaurantepresentacion\GestionClientesFORM$4.class
 restaurantepresentacion\GestionRestauranteFORM$3.class
@@ -47,6 +48,7 @@ PanelesDinamicos\BuscarProductoPanel.class
 PanelesDinamicos\BuscarProductoPanel$1.class
 restaurantepresentacion\AdministradorFORM$1.class
 restaurantepresentacion\BuscarClienteFORM$1.class
+restaurantepresentacion\SistemaReportesFORM$4.class
 PanelesDinamicos\ReportesClienteFrecuentePanel$2.class
 restaurantepresentacion\AdministrarClientesFrecuentesFORM.class
 PanelesDinamicos\BuscarClienteFrecuentePanel$2.class
