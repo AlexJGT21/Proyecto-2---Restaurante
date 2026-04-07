@@ -3,8 +3,8 @@ package Interfaces;
 
 import java.util.List;
 import restaurantedominio.ClienteFrecuente;
-import restaurantedominio.ClienteFrecuentePVDTO;
 import restaurantedtos.ClienteFrecuenteDTO;
+import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantepersistencia.PersistenciaException;
 
 /**
@@ -33,4 +33,8 @@ public interface IClienteFrecuenteDAO {
     
     //Constrato 7: Permite actualizar el total gastado, puntos y total de visitas de un cliente frecuente
     public abstract ClienteFrecuente actualizarVisita(ClienteFrecuente clienteFrecuenteVisita) throws PersistenciaException;
+    
+    //Contrato 8: Permite filtrar clientes frecuentes por nombre o numero de visitas
+    public abstract List<ClienteFrecuenteReporteDTO> filtrarClientes(String nombre, Integer visitas) throws PersistenciaException;
+    
 }

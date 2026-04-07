@@ -208,7 +208,7 @@ public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-try {
+        try {
             // Extraemos los textos 
             String nombre = txtNombre.getText().trim();
             String apellidoP = txtApellidoP.getText().trim();

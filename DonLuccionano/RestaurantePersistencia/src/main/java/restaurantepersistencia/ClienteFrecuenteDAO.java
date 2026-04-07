@@ -14,8 +14,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import restaurantedominio.ClienteFrecuente;
-import restaurantedominio.ClienteFrecuentePVDTO;
 import restaurantedtos.ClienteFrecuenteDTO;
+import restaurantedtos.ClienteFrecuenteReporteDTO;
 
 /**
  *
@@ -257,6 +257,37 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("NO FUE POSIBLE ACTUALIZAR LOS PUNTOS, TOTAL Y VISITAS DEL CLIENTE.");
+        }
+    }
+
+    /**
+     * Metodo que permite filtrar clientes frecuentes por nombre o numero de visitas
+     * @param nombre Argumento de busqueda
+     * @param visitas Argumnento de busqueds
+     * @return Lista de clientes frecuentes
+     * @throws PersistenciaException No se pudo realizar filtrado de clientes frecuentes
+     */
+    @Override
+    public List<ClienteFrecuenteReporteDTO> filtrarClientes(String nombre, Integer visitas) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            TypedQuery<ClienteFrecuenteReporteDTO> query = entityManager.createQuery(
+            """
+            SELECT new restaurantedtos.ClienteFrecuenteReporteDTO (
+            cf.nombre, cf.totalVisitas, cf.totalGastado, MAX(co.fecha))
+            FROM Comanda co
+            JOIN co.cliente cf
+            WHERE (:nombre IS NULL OR LOWER(cf.nombre) LIKE LOWER(CONCAT('%', :nombre, '%')))
+            AND (:visitas IS NULL OR cf.totalVisitas = :visitas)
+            GROUP BY cf.id, cf.nombre, cf.totalVisitas, cf.totalGastado
+            """, ClienteFrecuenteReporteDTO.class);
+            query.setParameter("nombre", nombre);
+            query.setParameter("visitas", visitas);
+            
+            return query.getResultList();
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO FUE POSIBLE REALIZAR FILTRADO DE CLIENTES FRECUENTES.");
         }
     }
 }

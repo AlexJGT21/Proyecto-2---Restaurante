@@ -3,8 +3,8 @@ package Interfaces;
 
 import java.util.List;
 import restaurantedominio.ClienteFrecuente;
-import restaurantedominio.ClienteFrecuentePVDTO;
 import restaurantedtos.ClienteFrecuenteDTO;
+import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantenegocio.NegocioException;
 
 /**
@@ -30,4 +30,8 @@ public interface IClienteFrecuenteBO  {
     
     //Contrato 6: Logica de actualizacion para puntos, visitas y total gastado de un cliente frecuente
     public abstract ClienteFrecuente actualizarVisita(Long idCliente, Double totalVenta) throws NegocioException;
+    
+    //Contrato 7: Busca clientes frecuentes por nombre o numero de visitas
+    public abstract List<ClienteFrecuenteReporteDTO> filtrarClientes(String nombre, Integer visitas) throws NegocioException;
+
 }

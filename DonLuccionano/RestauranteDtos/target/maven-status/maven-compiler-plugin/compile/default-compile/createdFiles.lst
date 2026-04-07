@@ -6,5 +6,6 @@ EnumeradoresDTO\Disponibilidad.class
 restaurantedtos\ProductoIngredientesDTO.class
 restaurantedtos\ProductoDTO.class
 restaurantedtos\IngredienteDTO.class
+restaurantedtos\ClienteFrecuenteReporteDTO.class
 restaurantedtos\ComandaDTO.class
 restaurantedtos\IngredienteActualizadoDTO.class

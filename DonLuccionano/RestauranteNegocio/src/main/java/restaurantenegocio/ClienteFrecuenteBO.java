@@ -8,6 +8,7 @@ import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantepersistencia.ClienteFrecuenteDAO;
 import Interfaces.IClienteFrecuenteDAO;
+import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantepersistencia.PersistenciaException;
 
 /**
@@ -214,5 +215,15 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         } catch (PersistenciaException e) {
             throw new NegocioException("NO SE PUDO ACTUALIZAR LOS PUNTOS, VISITAS Y TOTAL GASTADO DEL CLIENTE FRECUENTE.");
         }
+    }
+
+    @Override
+    public List<ClienteFrecuenteReporteDTO> filtrarClientes(String nombre, Integer visitas) throws NegocioException {
+        try {
+            List<ClienteFrecuenteReporteDTO> resultado = clienteFrecuenteDAO.filtrarClientes(nombre, visitas);
+            return resultado;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("NO FUE POSIBLE REALIZAR FILTRADO DE CLIENTES FRECUENTES.");
+        }        
     }
 }
