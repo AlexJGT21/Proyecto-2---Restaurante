@@ -13,6 +13,11 @@ public class MesaDTO {
     private Integer numMesa;
     private Disponibilidad disponible;
 
+    public MesaDTO() {
+    }
+    
+    
+
     public MesaDTO(Integer numMesa, Disponibilidad disponible) {
         this.numMesa = numMesa;
         this.disponible = disponible;

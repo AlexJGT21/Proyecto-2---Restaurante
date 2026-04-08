@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Disabled;
 /**
  * Prueba de Integración Exclusiva de Capa de Negocio (BO)
  */
-//@Disabled("Desactivado temporalmente para no golpear la base de datos en el Clean and Build")
+@Disabled("Desactivado temporalmente para no golpear la base de datos en el Clean and Build")
 public class ComandaBOPuroTest {
 
     // Declaramos todos los BOs
