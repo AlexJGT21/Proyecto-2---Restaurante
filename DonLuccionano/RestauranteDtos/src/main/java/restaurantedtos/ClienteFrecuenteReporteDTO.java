@@ -35,5 +35,10 @@ public class ClienteFrecuenteReporteDTO {
 
     public LocalDate getFechaUltimaComanda() {
         return fechaUltimaComanda;
+    }
+
+    @Override
+    public String toString() {
+        return "ClienteFrecuenteReporteDTO{" + "nombre=" + nombre + ", totalVisitas=" + totalVisitas + ", totalGastado=" + totalGastado + ", fechaUltimaComanda=" + fechaUltimaComanda + '}';
     }        
 }

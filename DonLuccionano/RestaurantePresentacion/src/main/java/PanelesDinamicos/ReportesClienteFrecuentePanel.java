@@ -195,18 +195,19 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        String nombre = txtNombre.getText();
-        int valor = (int) spNumVisitas.getValue();
-        Integer visitas = (valor == 0) ? null: valor;
+        String nombre = txtNombre.getText().isEmpty()? null : txtNombre.getText();
+        Integer visitas = (int) spNumVisitas.getValue();
         
-        if (nombre.isEmpty()) {
-            nombre = null;
-        }
         try {
-            clienteFrecuenteBO.generarReporteClientesFrecuentes(nombre, visitas);
-            JOptionPane.showMessageDialog(this, "Reporte generado exitosamente.");
+            boolean generado = clienteFrecuenteBO.generarReporteClientesFrecuentes(nombre, visitas);
+            if (generado) {
+                JOptionPane.showMessageDialog(this, "Reporte generado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            }            
         } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al generar reporte.");
+            LOGGER.severe(e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al generar reporte.");            
         }        
     }//GEN-LAST:event_btnExportarActionPerformed
     

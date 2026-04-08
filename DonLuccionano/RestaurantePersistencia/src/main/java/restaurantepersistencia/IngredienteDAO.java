@@ -117,8 +117,7 @@ public class IngredienteDAO implements IIngredienteDAO {
 
             if (nombreIngrediente != null && !nombreIngrediente.trim().isEmpty()) {
                 predicate.add(builder.and(
-                        builder.like(builder.lower(ingrediente.get("nombre")), "%" + nombreIngrediente.trim().toLowerCase() + "%")
-                )
+                        builder.like(builder.lower(ingrediente.get("nombre")), "%" + nombreIngrediente.trim().toLowerCase() + "%")                )
                 );
             }
             if (unidadIngrediente != null) {
@@ -163,6 +162,11 @@ public class IngredienteDAO implements IIngredienteDAO {
 
     }
 
+    /**
+     * Metodo que actualiza un ingrediente al realizar una comanda
+     * @param ingrediente Ingrediente por actualizar
+     * @throws PersistenciaException No fue posible realizar la actualizacion del ingrediente
+     */
     @Override
     public void actualizarIngrediente(Ingrediente ingrediente) throws PersistenciaException {
         try {
@@ -175,6 +179,7 @@ public class IngredienteDAO implements IIngredienteDAO {
         }
     }
 
+    @Override
     public List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception {
         EntityManager entitymanager = Conexion.ManejadorConexiones.crearEntityManager();
         try {

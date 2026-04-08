@@ -232,15 +232,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         }
     }
 
+    /**
+     * Metodo que busca un cliente por si ID
+     * @param id Parametro de busqueda
+     * @return Cliente frecuente
+     * @throws PersistenciaException No se pudo consultar el cliente frecuente
+     */
     @Override
     public ClienteFrecuente buscarPorId(long id) throws PersistenciaException {
         try {
             EntityManager entityManager = Conexion.ManejadorConexiones.crearEntityManager();
-
             ClienteFrecuente cliente = entityManager.find(ClienteFrecuente.class, id);
-
             return cliente; // Retornará el cliente si existe, o null si no se encuentra
-
         } catch (Exception e) {
             throw new PersistenciaException("Error al intentar buscar el cliente por ID: " + e.getMessage());
         }

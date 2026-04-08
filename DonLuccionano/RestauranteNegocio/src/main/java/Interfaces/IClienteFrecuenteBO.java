@@ -35,6 +35,6 @@ public interface IClienteFrecuenteBO  {
     public abstract List<ClienteFrecuenteReporteDTO> filtrarClientes(String nombre, Integer visitas) throws NegocioException;
 
     //Contrato 8: Generacion del reporte
-    public abstract void generarReporteClientesFrecuentes(String nombre, Integer visitas) throws NegocioException;
+    public abstract boolean generarReporteClientesFrecuentes(String nombre, Integer visitas) throws NegocioException;
     
 }

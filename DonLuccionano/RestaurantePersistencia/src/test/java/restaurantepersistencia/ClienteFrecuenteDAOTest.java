@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
+import restaurantedtos.ClienteFrecuenteReporteDTO;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ClienteFrecuenteDAOTest {
     public void init() {
         this.dao = new ClienteFrecuenteDAO();
     }
-    
+//    
 //    @Test
 //    public void testCrearClienteFrecuente() {
 //        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("Alex", "García", "Trejo", "6241857098", "alexGarciaTrejo@gmail.com", LocalDate.of(2003, 04, 28));
@@ -107,4 +108,46 @@ public class ClienteFrecuenteDAOTest {
 //            }
 //        });
 //    }
+//    
+//    @Test
+//    public void testBuscarClientePorIdExiste() {
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente cliente = dao.buscarPorId(1);
+//            assertNotNull(cliente);
+//        });
+//    }
+//    
+//    @Test
+//    public void testBuscarClientePorIdNoExiste() {
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente cliente = dao.buscarPorId(3);
+//            assertNull(cliente);
+//        });
+//    }
+//    
+//    @Test
+//    public void testFiltrarClienteFrecuentePorNombre() {
+//        assertDoesNotThrow(() -> {
+//            List<ClienteFrecuenteReporteDTO> cliente = dao.filtrarClientes("Ana", null);
+//            assertNotNull(cliente);
+//        });
+//    }
+//    
+//    @Test
+//    public void testFiltrarClienteFrecuentePorVisitas() {
+//        assertDoesNotThrow(() -> {
+//            List<ClienteFrecuenteReporteDTO> cliente = dao.filtrarClientes(null, 2);
+//            assertNotNull(cliente);
+//        });
+//    }
+//    
+//    @Test
+//    public void testFiltrarClienteFrecuenteSinNombreYVisitas() {
+//        assertDoesNotThrow(() -> {
+//            List<ClienteFrecuenteReporteDTO> cliente = dao.filtrarClientes(null, null);
+//            for (ClienteFrecuenteReporteDTO c: cliente) {
+//                System.out.println(c.toString());
+//            }
+//        });
+//    }        
 }

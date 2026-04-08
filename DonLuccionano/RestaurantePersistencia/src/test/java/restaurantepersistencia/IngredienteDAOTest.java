@@ -30,7 +30,7 @@ public class IngredienteDAOTest {
 //    @Test
 //    public void testRegistrarNuevoIngrediente() {
 //        BigDecimal cantidad =  new BigDecimal("2");
-//        IngredienteDTO ingrediente = new IngredienteDTO("Pan de Hamburguesa", restaurantedtos.TipoUnidad.PIEZAS, cantidad, null);
+//        IngredienteDTO ingrediente = new IngredienteDTO("Pan de Hamburguesa", EnumeradoresDTO.TipoUnidad.PIEZAS, cantidad, null);
 //        assertDoesNotThrow(() -> {
 //            Ingrediente ingredienteNuevo = dao.nuevoIngrediente(ingrediente);
 //            assertNotNull(ingredienteNuevo);
