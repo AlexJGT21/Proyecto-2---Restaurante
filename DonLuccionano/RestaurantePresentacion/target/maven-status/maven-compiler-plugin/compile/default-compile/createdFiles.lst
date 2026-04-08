@@ -5,8 +5,10 @@ PanelesDinamicos\RegistrarClientePanel$3.class
 PanelesDinamicos\NuevoProductoPanel$1.class
 PanelesDinamicos\BuscarIngredienteProductoInventarioPanel.class
 PanelesDinamicos\BuscarIngredienteProductoInventarioPanel$1.class
+restaurantepresentacion\GestionProductosFORM$6.class
 restaurantepresentacion\AdministradorFORM$3.class
 restaurantepresentacion\GestionRestauranteFORM.class
+PanelesDinamicos\NuevoProductoPanel$8.class
 restaurantepresentacion\GestionRestauranteFORM$2.class
 PanelesDinamicos\NuevoIngredientePanel$4.class
 restaurantepresentacion\GestionClientesFORM$5.class
@@ -18,6 +20,7 @@ PanelesDinamicos\BuscarClienteFrecuentePanel.class
 restaurantepresentacion\AdministradorFORM$6.class
 restaurantepresentacion\BuscarClienteFORM.class
 restaurantepresentacion\SistemaReportesFORM$2.class
+PanelesDinamicos\ConsultarRecetaPanel.class
 Iniciar\Launcher.class
 PanelesDinamicos\NuevoProductoPanel$2.class
 PanelesDinamicos\ReportesClienteFrecuentePanel$1.class
@@ -25,6 +28,7 @@ restaurantepresentacion\AdministradorFORM$2.class
 restaurantepresentacion\MenuClienteFrecuenteFORM$2.class
 restaurantepresentacion\BuscarClienteFORM$2.class
 restaurantepresentacion\GestionIngredientesFORM$2.class
+PanelesDinamicos\NuevoProductoPanel$9.class
 PanelesDinamicos\NuevoIngredientePanel$3.class
 PanelesDinamicos\NuevoIngredientePanel$6.class
 restaurantepresentacion\SistemaReportesFORM$3.class
@@ -33,6 +37,7 @@ restaurantepresentacion\BuscarClienteFORM$5.class
 restaurantepresentacion\GestionIngredientesFORM$5.class
 restaurantepresentacion\GestionProductosFORM$3.class
 PanelesDinamicos\BuscarClienteFrecuentePanel$3.class
+PanelesDinamicos\ConsultarRecetaPanel$2.class
 restaurantepresentacion\AdministradorFORM$5.class
 restaurantepresentacion\GestionClientesFORM$4.class
 restaurantepresentacion\GestionRestauranteFORM$3.class
@@ -56,6 +61,7 @@ restaurantepresentacion\MenuClienteFrecuenteFORM$1.class
 restaurantepresentacion\AdministrarClientesFrecuentesFORM$1.class
 restaurantepresentacion\GestionIngredientesFORM$1.class
 PanelesDinamicos\NuevoIngredientePanel$2.class
+PanelesDinamicos\ConsultarRecetaPanel$1.class
 restaurantepresentacion\GestionRestauranteFORM$4.class
 restaurantepresentacion\AdministradorFORM$4.class
 restaurantepresentacion\GestionIngredientesFORM$4.class

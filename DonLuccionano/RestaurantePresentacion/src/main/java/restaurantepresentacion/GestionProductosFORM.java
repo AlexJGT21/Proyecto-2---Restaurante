@@ -40,6 +40,7 @@ public class GestionProductosFORM extends javax.swing.JFrame {
         btnNuevoProducto = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        btnConsultarRecetas = new javax.swing.JButton();
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(719, 540));
@@ -97,6 +98,13 @@ public class GestionProductosFORM extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        btnConsultarRecetas.setText("Consultar Recetas");
+        btnConsultarRecetas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarRecetasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,7 +119,8 @@ public class GestionProductosFORM extends javax.swing.JFrame {
                             .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnConsultarRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(59, 59, 59)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -127,7 +136,9 @@ public class GestionProductosFORM extends javax.swing.JFrame {
                         .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnConsultarRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27))
@@ -169,6 +180,22 @@ public class GestionProductosFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel3ComponentAdded
 
+    private void btnConsultarRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarRecetasActionPerformed
+
+        PanelesDinamicos.ConsultarRecetaPanel panelConsulta = new PanelesDinamicos.ConsultarRecetaPanel();
+        
+    
+        jPanel1.removeAll();
+        
+       
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(panelConsulta, java.awt.BorderLayout.CENTER);
+        
+       
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }//GEN-LAST:event_btnConsultarRecetasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,6 +233,7 @@ public class GestionProductosFORM extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarProducto;
+    private javax.swing.JButton btnConsultarRecetas;
     private javax.swing.JButton btnNuevoProducto;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;

@@ -6,6 +6,8 @@ package restaurantenegocio;
 
 import Interfaces.IProductoBO;
 import Interfaces.IProductoDAO;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import restaurantedominio.Producto;
 import restaurantedtos.ProductoDTO;
@@ -85,6 +87,26 @@ public class ProductoBO implements IProductoBO {
         } catch (PersistenciaException e) {
             LOGGER.severe(e.getMessage());
             throw new NegocioException("Error al intentar buscar el producto en la base de datos.");
+        }
+    }
+
+    @Override
+    public List<ProductoDTO> obtenerProductos() throws NegocioException {
+        try {
+            List<Producto> listaEntidades = productoDAO.obtenerProductos();
+            List<ProductoDTO> listaDTO = new ArrayList<>();
+            
+            for (Producto p : listaEntidades) {
+                
+                ProductoDTO dto = new ProductoDTO();
+                dto.setId(p.getId());
+                dto.setNombre(p.getNombre());
+                
+                listaDTO.add(dto);
+            }
+            return listaDTO;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al consultar la lista de productos: " + e.getMessage());
         }
     }
 }

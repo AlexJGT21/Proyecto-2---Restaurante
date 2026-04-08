@@ -15,6 +15,9 @@ public class IngredienteDTO {
     private BigDecimal cantidad;
     private byte[] imagen;
 
+    public IngredienteDTO() {
+    }
+  
     /**
      * CONSTRUCTOR NUEVO: Sin imagen (Opcional). 
      * Ideal para las pruebas y cuando el usuario decide no subir foto.

@@ -33,4 +33,6 @@ public interface IIngredienteDAO {
     //Contrato 5: Permite actualizar la cantidad de un ingrediente
     public abstract Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws PersistenciaException;
     
+    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception;
+    
 }

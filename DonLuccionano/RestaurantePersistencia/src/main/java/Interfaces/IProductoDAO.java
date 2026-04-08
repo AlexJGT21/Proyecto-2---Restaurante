@@ -25,6 +25,6 @@ public interface IProductoDAO {
 
     public abstract Producto buscarPorId(Long id) throws PersistenciaException;
     
-    
+    public abstract List<Producto> obtenerProductos() throws PersistenciaException;
 
 }

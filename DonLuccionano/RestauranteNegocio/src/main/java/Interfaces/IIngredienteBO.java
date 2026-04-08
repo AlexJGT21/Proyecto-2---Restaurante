@@ -27,5 +27,7 @@ public interface IIngredienteBO {
     //Contrato 4: Permite actualizar la cantidad de un ingrediente.
     //Aquí se hacen las validaciones de la cantidad
     public abstract Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws NegocioException;
+ 
+    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception;
     
 }

@@ -154,4 +154,40 @@ public class IngredienteDAO implements IIngredienteDAO {
             throw new PersistenciaException("NO SE PUDO ACTUALIZAR EL INGREDIENTE");
         }
     }
+
+    @Override
+    public List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception {
+        EntityManager entitymanager = Conexion.ManejadorConexiones.crearEntityManager();
+        try {
+            
+            List<Ingrediente> lista = entitymanager.createQuery("""
+                                                                SELECT i FROM Ingrediente i
+                                                                """, Ingrediente.class).getResultList();
+            
+            List<IngredienteDTO> listaDTO = new ArrayList<>();
+           
+            for (restaurantedominio.Ingrediente ing : lista) {
+                IngredienteDTO dto = new IngredienteDTO();
+                dto.setId(ing.getId());
+                dto.setNombre(ing.getNombre());
+                dto.setCantidad(ing.getCantidad());
+                
+                if (ing.getUnidad() != null) {
+                    // Sacamos el nombre en texto (ej. "GRAMOS") del Dominio
+                    String nombreUnidad = ing.getUnidad().name(); 
+                    
+                    // Lo convertimos al Enum del DTO
+                    EnumeradoresDTO.TipoUnidad unidadDTO = EnumeradoresDTO.TipoUnidad.valueOf(nombreUnidad);
+                    
+                    dto.setUnidad(unidadDTO);
+                }
+                listaDTO.add(dto);
+            }
+            return listaDTO;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar ingredientes");
+        } finally {
+            entitymanager.close();
+        }
+    }
 }

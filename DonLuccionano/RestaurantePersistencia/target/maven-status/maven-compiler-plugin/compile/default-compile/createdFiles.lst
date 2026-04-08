@@ -4,6 +4,7 @@ restaurantepersistencia\ProductoDAO.class
 restaurantepersistencia\Adapter\NuevoIngredienteDTOAIngredienteAdapter$1.class
 Interfaces\IProductoDAO.class
 Conexion\ManejadorConexiones.class
+restaurantepersistencia\ProductoIngredientesDAO.class
 restaurantepersistencia\Adapter\NuevaMesaDTOAMesaAdapter$1.class
 restaurantepersistencia\ClienteFrecuenteDAO.class
 Interfaces\IIngredienteDAO.class
@@ -14,4 +15,5 @@ Interfaces\IComandaDAO.class
 restaurantepersistencia\Adapter\NuevoIngredienteDTOAIngredienteAdapter.class
 restaurantepersistencia\MesaDAO.class
 Interfaces\IClienteFrecuenteDAO.class
+Interfaces\IProductoIngredientesDAO.class
 restaurantepersistencia\PersistenciaException.class
