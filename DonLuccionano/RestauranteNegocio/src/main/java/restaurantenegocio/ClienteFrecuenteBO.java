@@ -1,6 +1,7 @@
 
 package restaurantenegocio;
 
+import Conexion.ManejadorConexiones;
 import Interfaces.IClienteFrecuenteBO;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,6 +9,20 @@ import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantepersistencia.ClienteFrecuenteDAO;
 import Interfaces.IClienteFrecuenteDAO;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantepersistencia.PersistenciaException;
 
@@ -225,5 +240,52 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         } catch (PersistenciaException e) {
             throw new NegocioException("NO FUE POSIBLE REALIZAR FILTRADO DE CLIENTES FRECUENTES.");
         }        
+    }
+
+    @Override
+    public void generarReporteClientesFrecuentes(String nombre, Integer visitas) throws NegocioException {
+        try {
+            //Se carga el reporte desde la carpeta resources (recursos)
+            Connection conexion = ManejadorConexiones.crearConexionJDBC();
+            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ClientesFrecientes.jasper");
+            if (reporte == null) {
+                throw new NegocioException("No se encontro el reporte.");
+            }            
+            
+            //Parametros de reporte
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("nombre", nombre);
+            parametros.put("visitas", visitas);
+            //LLenado del reporte
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+            
+            //Se elige donde se guarda
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar reporte");
+            
+            //Filtro para mostrar solo archivos pdf
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
+            fileChooser.addChoosableFileFilter(filtro);
+            fileChooser.setFileFilter(filtro);
+            
+            int result = fileChooser.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File archivoGuardar = fileChooser.getSelectedFile();
+                
+                String archivoRuta = archivoGuardar.getAbsolutePath();
+                if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
+                    archivoRuta += ".pdf";
+                }
+                
+                try {
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
+                    JOptionPane.showMessageDialog(null, "Reporte guardado exitosamente en: " + archivoRuta);                    
+                } catch (JRException e) {
+                    JOptionPane.showMessageDialog(null, "Error al guardar archivo." + e.getMessage());
+                }                
+            }
+        } catch (HeadlessException | SQLException | JRException | NegocioException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar reporte.");
+        }
     }
 }

@@ -1,6 +1,9 @@
 
 package Conexion;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,5 +23,12 @@ public class ManejadorConexiones {
         EntityManager entityManager = entityMF.createEntityManager();        
         //Regresa una conexion
         return entityManager;
+    }
+    
+    public static Connection crearConexionJDBC() throws SQLException {
+        String url = "jdbc:mysql://localhost:3306/restaurantebd";
+        String usser = "root";
+        String password = "SQLLUCI";
+        return DriverManager.getConnection(url,usser, password);
     }
 }

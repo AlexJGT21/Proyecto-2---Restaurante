@@ -42,6 +42,11 @@
             <version>5.10.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.20.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.release>23</maven.compiler.release>

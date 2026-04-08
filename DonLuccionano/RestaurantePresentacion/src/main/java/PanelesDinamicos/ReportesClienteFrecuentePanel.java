@@ -3,6 +3,7 @@ package PanelesDinamicos;
 
 import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
@@ -194,7 +195,19 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtNombre.getText();
+        int valor = (int) spNumVisitas.getValue();
+        Integer visitas = (valor == 0) ? null: valor;
+        
+        if (nombre.isEmpty()) {
+            nombre = null;
+        }
+        try {
+            clienteFrecuenteBO.generarReporteClientesFrecuentes(nombre, visitas);
+            JOptionPane.showMessageDialog(this, "Reporte generado exitosamente.");
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al generar reporte.");
+        }        
     }//GEN-LAST:event_btnExportarActionPerformed
     
     private void limpiarCampos() {
