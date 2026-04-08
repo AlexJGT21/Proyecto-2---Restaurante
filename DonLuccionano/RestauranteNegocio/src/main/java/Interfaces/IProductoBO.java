@@ -20,4 +20,5 @@ public interface IProductoBO {
     
     public Producto buscarPorNombre(String nombre) throws NegocioException;
     
+    public abstract List<ProductoDTO> obtenerProductos() throws NegocioException;
 }

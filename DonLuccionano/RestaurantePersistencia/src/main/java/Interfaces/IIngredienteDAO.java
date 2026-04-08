@@ -35,5 +35,5 @@ public interface IIngredienteDAO {
     
     //Actualiza el ingrediente cuando se comanda la orden
     public abstract void actualizarIngrediente (Ingrediente ingrediente) throws PersistenciaException;
-    
+    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception;    
 }

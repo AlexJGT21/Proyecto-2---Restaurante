@@ -20,9 +20,13 @@ public class ProductoDTO {
     private boolean activo;
     private List<ProductoIngredientesDTO> receta;
 
+    
+    
     /**
      * Constructor por defecto.
      */
+    
+    
     public ProductoDTO() {
         this.activo = true; // Por defecto lo hacemos activo
     }
@@ -36,6 +40,15 @@ public class ProductoDTO {
         this.precio = precio;
         this.imagen = imagen;
         this.activo = true; // Asumimos que los productos creados a la antigua también nacen activos
+    }
+
+    public ProductoDTO(String nombre, Float precio, byte[] imagen, String descripcion, String tipo, boolean activo) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.imagen = imagen;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+        this.activo = activo;
     }
 
     /**

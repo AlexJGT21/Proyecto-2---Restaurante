@@ -152,4 +152,13 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("FALLO EN LA ACTUALIZACIÓN DE INGREDIENTE");
         }        
     }
+
+    @Override
+    public List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception {
+        try {
+            return ingredienteDAO.consultarTodosLosIngredientes();
+        } catch (Exception e) {
+            throw new restaurantenegocio.NegocioException("Error al obtener la lista de ingredientes.");
+        }
+    }
 }

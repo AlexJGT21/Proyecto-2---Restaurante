@@ -89,6 +89,22 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    @Override
+    public List<Producto> obtenerProductos() throws PersistenciaException {
+        EntityManager entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+        try {
+            // Busca todos los productos existentes en la tabla
+            return entityManager.createQuery("""
+                                             SELECT p FROM Producto p
+                                             """
+                                            , Producto.class).getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener el catálogo de productos.");
+        } finally {
+            entityManager.close();
+        }
+    }
+
  
     
 }

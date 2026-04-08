@@ -25,20 +25,20 @@ public class Producto implements Serializable {
     @Column(name = "id_producto")
     private Long id;
     
-    @Column(name = "nombre", nullable = false, unique = true, length = 50) // ITSON: Nombres no duplicados
+    @Column(name = "nombre", nullable = false, unique = true, length = 50) 
     private String nombre;
     
     @Column(name = "descripcion", length = 200)
     private String descripcion;
     
-    @Column(name = "tipo", nullable = false, length = 30) // Ej: "platillo", "bebida"
+    @Column(name = "tipo", nullable = false, length = 30) 
     private String tipo;
     
     @Column(name = "precio", nullable = false)
     private Float precio;
     
     @Column(name = "activo", nullable = false)
-    private boolean activo; // ITSON: Validar que esté activo para agregarlo a comanda
+    private boolean activo; 
     
     @Lob
     @Column(name = "imagen", columnDefinition = "MEDIUMBLOB", nullable = true)
@@ -63,24 +63,70 @@ public class Producto implements Serializable {
     }
 
     // GETTERS Y SETTERS
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-    public Float getPrecio() { return precio; }
-    public void setPrecio(Float precio) { this.precio = precio; }
-    public boolean isActivo() { return activo; }
-    public void setActivo(boolean activo) { this.activo = activo; }
-    public byte[] getImagen() { return imagen; }
-    public void setImagen(byte[] imagen) { this.imagen = imagen; }
+    public Long getId() { 
+        return id; 
+    }
+    
+    public void setId(Long id) { 
+        this.id = id; 
+    }
+    
+    public String getNombre() { 
+        return nombre; 
+    }
+    
+    public void setNombre(String nombre) { 
+        this.nombre = nombre; 
+    }
+    
+    public String getDescripcion() {
+        return descripcion; 
+    }
+    
+    public void setDescripcion(String descripcion) { 
+        this.descripcion = descripcion; 
+    }
+    
+    public String getTipo() { 
+        return tipo; 
+    }
+    
+    public void setTipo(String tipo) { 
+        this.tipo = tipo; 
+    }
+    
+    public Float getPrecio() { 
+        return precio; 
+    }
+    
+    public void setPrecio(Float precio) { 
+        this.precio = precio; 
+    }
+    
+    public boolean isActivo() { 
+        return activo; 
+    }
+    
+    public void setActivo(boolean activo) { 
+        this.activo = activo;
+    }
+    
+    public byte[] getImagen() { 
+        return imagen;
+    }
+    
+    public void setImagen(byte[] imagen) { 
+        this.imagen = imagen;
+    }
     
     // GETTER Y SETTER ACTUALIZADOS
-    public List<ProductoIngredientes> getListaIngredientes() { return listaIngredientes; }
-    public void setListaIngredientes(List<ProductoIngredientes> listaIngredientes) { this.listaIngredientes = listaIngredientes; }
+    public List<ProductoIngredientes> getListaIngredientes() { 
+        return listaIngredientes; 
+    }
+    
+    public void setListaIngredientes(List<ProductoIngredientes> listaIngredientes) { 
+        this.listaIngredientes = listaIngredientes; 
+    }
 
     @Override
     public int hashCode() {

@@ -5,9 +5,11 @@ restaurantenegocio\ClienteFrecuenteBO.class
 Interfaces\IProductoBO.class
 restaurantenegocio\NegocioException.class
 restaurantenegocio\IngredienteBO.class
+restaurantenegocio\ProductoIngredientesBO.class
 Adapters\NuevaComandaDTOAComandaAdapter.class
 restaurantenegocio\MesaBO.class
 restaurantenegocio\ComandaBO.class
 Interfaces\IClienteFrecuenteBO.class
 Interfaces\IIngredienteBO.class
 Interfaces\IComandaBO.class
+Interfaces\IProductoIngredientesBO.class

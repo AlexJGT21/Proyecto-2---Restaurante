@@ -4,6 +4,7 @@
  */
 package PanelesDinamicos;
 
+import EnumeradoresDTO.Disponibilidad;
 import Interfaces.IProductoBO;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,7 @@ import restaurantedtos.ProductoDTO;
 import restaurantenegocio.NegocioException;
 import restaurantenegocio.ProductoBO;
 import ImagenTabla.ImageTable;
+import java.awt.Container;
 
 /**
  *
@@ -43,7 +45,7 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
         DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
         modelo.setRowCount(0);
         
-        tblProductos.getColumnModel().getColumn(3).setCellRenderer(new ImageTable());
+        tblProductos.getColumnModel().getColumn(6).setCellRenderer(new ImageTable());
         llenarTabla();
     }
 
@@ -71,6 +73,9 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
                     p.getId(),
                     p.getNombre(),
                     p.getPrecio(),
+                    p.getDescripcion(),
+                    p.getTipo(),
+                    p.isActivo(),
                     lbImage
                 };
                 modelo.addRow(fila);
@@ -82,8 +87,10 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
     
     private void limpiarCampos() {
         txtNombre.setText("");
-        txtPrecio.setText(""); 
-        txtRutaImagen.setText(""); 
+        txtPrecio.setText("");
+        txtDescripcion.setText("");
+        cbTipo.setSelectedIndex(0); 
+        chkActivo.setSelected(true);
         lbImagen.setIcon(null);
         selectFile = null;
     }
@@ -110,6 +117,12 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
+        jlabel3 = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextField();
+        jlabel4 = new javax.swing.JLabel();
+        jlabel5 = new javax.swing.JLabel();
+        cbTipo = new javax.swing.JComboBox<>();
+        chkActivo = new javax.swing.JCheckBox();
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         jLabel1.setText("Nuevo Producto");
@@ -174,17 +187,17 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Precio", "Imagen"
+                "ID", "Nombre", "Precio", "Descripcion", "Tipo", "Activo", "Imagen"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -197,7 +210,37 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
             tblProductos.getColumnModel().getColumn(1).setResizable(false);
             tblProductos.getColumnModel().getColumn(2).setResizable(false);
             tblProductos.getColumnModel().getColumn(3).setResizable(false);
+            tblProductos.getColumnModel().getColumn(4).setResizable(false);
+            tblProductos.getColumnModel().getColumn(5).setResizable(false);
+            tblProductos.getColumnModel().getColumn(6).setResizable(false);
         }
+
+        jlabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jlabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jlabel3.setText("Activo: ");
+
+        txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescripcionActionPerformed(evt);
+            }
+        });
+
+        jlabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jlabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jlabel4.setText("Descripcion: ");
+
+        jlabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jlabel5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        jlabel5.setText("Tipo: ");
+
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Platillo", "Bebida", "Postre", "Entrada", "Extra" }));
+        cbTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoActionPerformed(evt);
+            }
+        });
+
+        chkActivo.setText("Producto disponible para venta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -208,17 +251,15 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                    .addComponent(txtImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                                     .addComponent(jlabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(lbImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -231,10 +272,23 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(87, 87, 87)
                                 .addComponent(btnImagen)
-                                .addGap(56, 98, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jlabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jlabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                                    .addComponent(cbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(chkActivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,11 +301,23 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNombre))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlabel2)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbTipo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chkActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtImagen)
                             .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,7 +332,7 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(18, Short.MAX_VALUE))))
+                        .addContainerGap(235, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -321,8 +387,11 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnImagenActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        String nombre = txtNombre.getText();        
-        String precioString = txtPrecio.getText(); 
+        String nombre = txtNombre.getText().trim();        
+        String precioString = txtPrecio.getText().trim(); 
+        String descripcion = txtDescripcion.getText().trim(); 
+        String tipo = cbTipo.getSelectedItem().toString(); 
+        Boolean activo = chkActivo.isSelected(); 
         
         // Validaciones de campos vacíos en la pantalla
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -364,15 +433,38 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
             }
         }
         
-        // Mandamos llamar a la BO
-        ProductoDTO nuevoProducto = new ProductoDTO(nombre, precio, imagenBytes);
+      
+        
+        ProductoDTO nuevoProducto = new restaurantedtos.ProductoDTO(
+            nombre, 
+            descripcion, 
+            tipo, 
+            precio, 
+            activo, 
+            imagenBytes, 
+            null         // La Receta vacía por el momento
+        );
+        
+        
         try {
-            restaurantedominio.Producto producto = productoBO.crearProducto(nuevoProducto);
-            JOptionPane.showMessageDialog(this, "Producto registrado exitosamente", "NUEVO PRODUCTO", JOptionPane.INFORMATION_MESSAGE);
+            // Guardamos en la BD y obtenemos el producto ya con su ID generado
+            Producto productoGuardado = productoBO.crearProducto(nuevoProducto);
             
-            // Refrescamos la tabla 
-            llenarTabla();
-            limpiarCampos();
+            JOptionPane.showMessageDialog(this, "¡Producto guardado! Ahora arma la receta.");
+            
+          
+            Container contenedor = this.getParent(); 
+            if (contenedor != null) {
+                contenedor.removeAll(); 
+                
+                
+                BuscarIngredienteProductoInventarioPanel panelReceta = 
+                        new BuscarIngredienteProductoInventarioPanel(productoGuardado);
+                
+                contenedor.add(panelReceta, java.awt.BorderLayout.CENTER);
+                contenedor.revalidate();
+                contenedor.repaint();
+            }
             
         } catch (NegocioException e) {
             LOGGER.severe(e.getMessage());
@@ -384,17 +476,31 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
         limpiarCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionActionPerformed
+
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnImagen;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cbTipo;
+    private javax.swing.JCheckBox chkActivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlabel2;
+    private javax.swing.JLabel jlabel3;
+    private javax.swing.JLabel jlabel4;
+    private javax.swing.JLabel jlabel5;
     private javax.swing.JLabel lbImagen;
     private javax.swing.JTable tblProductos;
+    private javax.swing.JTextField txtDescripcion;
     private javax.swing.JLabel txtImagen;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
