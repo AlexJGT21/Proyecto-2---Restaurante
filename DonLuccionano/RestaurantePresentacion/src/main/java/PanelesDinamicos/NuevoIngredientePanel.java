@@ -49,7 +49,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         modelo.setRowCount(0); 
         List<Ingrediente> ingredientes;
         try {
-            ingredientes = control.llenarTabla();
+            ingredientes = control.llenarTablaIngredientes();
             if (ingredientes.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No existen ingredientes registrados. Ingrese uno para comenzar llenado.", 
                                               "Búsqueda vacía", JOptionPane.INFORMATION_MESSAGE);

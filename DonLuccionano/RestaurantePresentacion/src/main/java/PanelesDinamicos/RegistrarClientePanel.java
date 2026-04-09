@@ -31,7 +31,7 @@ public class RegistrarClientePanel extends javax.swing.JPanel {
         modelo.setRowCount(0); 
         List<ClienteFrecuenteDTO> clienteFrecuente;
         try {
-            clienteFrecuente = control.obtenerListaClientes();
+            clienteFrecuente = control.obtenerListaClientesFrecuentes();
             for (ClienteFrecuenteDTO c: clienteFrecuente) {               
                 Object[] fila = {
                     c.getNombre(),

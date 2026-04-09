@@ -1,10 +1,7 @@
 package restaurantepresentacionFORMS;
 
 import Controlador.Control;
-import Interfaces.IClienteFrecuenteBO;
 import Interfaces.IComandaBO;
-import Interfaces.IMesaBO;
-import Interfaces.IProductoBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,25 +20,16 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AbrirComandaFORM.class.getName());
 
     // 1. Declaramos los objetos BO que usará esta pantalla
-    private IMesaBO mesaBO;
-    private IProductoBO productoBO;
-    private IClienteFrecuenteBO clienteBO;
-    private IComandaBO comandaBO;
-    
+    //Nota: Alejandro: Se cambio el control a una clase control (jaja xd)
     private Control control;
 
     private restaurantedtos.ClienteFrecuenteDTO clienteSeleccionado;
     private javax.swing.table.DefaultTableModel modeloMenu;
     private javax.swing.table.DefaultTableModel modeloOrden;
 
-    public AbrirComandaFORM() {
+    public AbrirComandaFORM(Control control) {
         this.control = control;
         initComponents();
-
-        this.mesaBO = new restaurantenegocio.MesaBO();
-        this.productoBO = new restaurantenegocio.ProductoBO();
-        this.clienteBO = new restaurantenegocio.ClienteFrecuenteBO();
-        this.comandaBO = new restaurantenegocio.ComandaBO();
 
         // Inicializamos las tablas y cargamos los datos
         configurarTablas();
@@ -327,7 +315,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
 
         try {
             // Buscamos al cliente
-            ClienteFrecuente clienteBD = clienteBO.buscarPorTelefono(telefono);
+            ClienteFrecuente clienteBD = control.buscarClientePorTelefono(telefono);
 
             if (clienteBD != null) {
                 // Si lo encuentrs
@@ -435,7 +423,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
             nuevaComanda.setComentarios(comentarios); // Le seteamos los comentarios
 
             // Usamos el supermetodo
-            ComandaDTO comandaAbierta = comandaBO.abrirComanda(nuevaComanda);
+            ComandaDTO comandaAbierta = control.abrirComanda(nuevaComanda);
 
             // JOptionPane de confirmacion
             JOptionPane.showMessageDialog(this, "¡Comanda abierta con éxito!\nFolio generado: " + comandaAbierta.getFolio());
@@ -458,31 +446,6 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
         this.dispose();
         control.mostrarGestionClientesFORM();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AbrirComandaFORM().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxMesa;
@@ -523,7 +486,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
 
         try {
             // Traemos todas las mesas
-            java.util.List<restaurantedominio.Mesa> mesas = mesaBO.listarMesas();
+            java.util.List<restaurantedominio.Mesa> mesas = control.listarMesas();
 
             for (restaurantedominio.Mesa mesa : mesas) {
                 // Solo agregamos las DISPONIBLES
@@ -542,7 +505,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
 
         try {
             // Traemos los productos de la BD
-            List<restaurantedominio.Producto> productos = productoBO.llenarTabla();
+            List<restaurantedominio.Producto> productos = control.llenarTabla();
 
             for (restaurantedominio.Producto p : productos) {
                 // Filtramos por tipo (Platillo, Bebida, Postre) y validamos que esté ACTIVO
