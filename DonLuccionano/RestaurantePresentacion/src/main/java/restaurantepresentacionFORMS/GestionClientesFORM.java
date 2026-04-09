@@ -5,7 +5,7 @@ import Controlador.Control;
 
 /**
  *
-    * @author Alex García Trejo
+ * @author Alex García Trejo
  */
 public class GestionClientesFORM extends javax.swing.JFrame {
 
@@ -30,10 +30,10 @@ public class GestionClientesFORM extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnClienteFrecuente = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnCancelarPedido = new javax.swing.JButton();
+        btnComandasActivas = new javax.swing.JButton();
         btnReturn = new javax.swing.JButton();
         btnCancelarPedido1 = new javax.swing.JButton();
+        btnAbrirComanda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,23 +78,13 @@ public class GestionClientesFORM extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 255));
-        jButton1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        jButton1.setText("Abrir Comanda");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnComandasActivas.setBackground(new java.awt.Color(0, 204, 255));
+        btnComandasActivas.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        btnComandasActivas.setText("Comandas Activas");
+        btnComandasActivas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnComandasActivas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        btnCancelarPedido.setBackground(new java.awt.Color(0, 204, 255));
-        btnCancelarPedido.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
-        btnCancelarPedido.setText("Cerrar comanda");
-        btnCancelarPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnCancelarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarPedidoActionPerformed(evt);
+                btnComandasActivasActionPerformed(evt);
             }
         });
 
@@ -118,6 +108,16 @@ public class GestionClientesFORM extends javax.swing.JFrame {
             }
         });
 
+        btnAbrirComanda.setBackground(new java.awt.Color(0, 204, 255));
+        btnAbrirComanda.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
+        btnAbrirComanda.setText("Abrir Comanda");
+        btnAbrirComanda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnAbrirComanda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirComandaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -138,9 +138,9 @@ public class GestionClientesFORM extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnClienteFrecuente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCancelarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnComandasActivas, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCancelarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAbrirComanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(69, 69, 69)))))
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -153,9 +153,9 @@ public class GestionClientesFORM extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClienteFrecuente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAbrirComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnComandasActivas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
@@ -187,26 +187,27 @@ public class GestionClientesFORM extends javax.swing.JFrame {
         control.regresarGestionRestauranteFORM();
     }//GEN-LAST:event_btnReturnActionPerformed
 
-    private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarPedidoActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnComandasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActivasActionPerformed
         this.dispose();
-        AbrirComandaFORM comandaForm = new AbrirComandaFORM();
-        comandaForm.setVisible(true);    }//GEN-LAST:event_jButton1ActionPerformed
+        control.mostrarComandasActivasFORM();
+    }//GEN-LAST:event_btnComandasActivasActionPerformed
 
     private void btnCancelarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedido1ActionPerformed
 
 
     }//GEN-LAST:event_btnCancelarPedido1ActionPerformed
 
+    private void btnAbrirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirComandaActionPerformed
+        this.dispose();
+        control.mostrarAbrirComandaFORM();
+    }//GEN-LAST:event_btnAbrirComandaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelarPedido;
+    private javax.swing.JButton btnAbrirComanda;
     private javax.swing.JButton btnCancelarPedido1;
     private javax.swing.JButton btnClienteFrecuente;
+    private javax.swing.JButton btnComandasActivas;
     private javax.swing.JButton btnReturn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

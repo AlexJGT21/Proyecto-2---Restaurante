@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import restaurantedominio.Comanda;
+import restaurantedominio.Producto;
 
 /**
  * @author JAR (JAIME, ALEJANDRO, ROBERTO)
@@ -33,15 +34,45 @@ public class ComandaDAO implements IComandaDAO {
     }
 
     @Override
-    public void actualizarComanda(Comanda comanda) throws PersistenciaException {
+    public void actualizarComanda(Comanda comandaActualizada) throws PersistenciaException {
+        EntityManager entityManager = null;
         try {
-            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+
+            // Iniciamos la transacción porque vamos a modificar datos
             entityManager.getTransaction().begin();
-            entityManager.merge(comanda);
+
+            // Buscamos la comanda original en la BD para NO perder su Mesa, Cliente ni Folio
+            Comanda comandaDB = entityManager.find(Comanda.class, comandaActualizada.getId());
+
+            if (comandaDB == null) {
+                throw new PersistenciaException("No se encontró la comanda a actualizar.");
+            }
+
+            // Le actualizamos el dinero)
+            comandaDB.setTotalVenta(comandaActualizada.getTotalVenta());
+
+            // Le actualizamos la lista de productos
+            List<Producto> productosReales = new java.util.ArrayList<>();
+            for (restaurantedominio.Producto pObj : comandaActualizada.getProductos()) {
+                restaurantedominio.Producto pDB = entityManager.find(restaurantedominio.Producto.class, pObj.getId());
+                if (pDB != null) {
+                    productosReales.add(pDB);
+                }
+            }
+            comandaDB.setProductos(productosReales);
+
+            // 4. Guardamos los cambios
+            entityManager.merge(comandaDB);
             entityManager.getTransaction().commit();
-        } catch (PersistenceException e) {
-            LOGGER.severe(e.getMessage());
-            throw new PersistenciaException("NO SE PUDO ACTUALIZAR LA COMANDA.");
+
+        } catch (Exception e) {
+      
+            throw new restaurantepersistencia.PersistenciaException("Error al actualizar la comanda: " + e.getMessage());
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
         }
     }
 
@@ -50,7 +81,7 @@ public class ComandaDAO implements IComandaDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Comanda> query = entityManager.createQuery(
-            """
+                    """
             SELECT c 
             FROM Comanda c 
             WHERE c.folio = :folio
@@ -70,7 +101,7 @@ public class ComandaDAO implements IComandaDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Long> query = entityManager.createQuery(
-            """
+                    """
             SELECT COUNT(c) 
             FROM Comanda c 
             WHERE c.fecha = :fecha
@@ -84,15 +115,15 @@ public class ComandaDAO implements IComandaDAO {
     }
 
     /**
-     * Requerimiento: Módulo de Reportes.
-     * Permite obtener comandas para el reporte de ventas por rango.
+     * Requerimiento: Módulo de Reportes. Permite obtener comandas para el
+     * reporte de ventas por rango.
      */
     @Override
     public List<Comanda> consultarPorRangoFechas(LocalDate inicio, LocalDate fin) throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Comanda> query = entityManager.createQuery(
-            """
+                    """
             SELECT c 
             FROM Comanda c 
             WHERE c.fecha BETWEEN :inicio AND :fin
@@ -123,7 +154,7 @@ public class ComandaDAO implements IComandaDAO {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Comanda> query = entityManager.createQuery(
-            """
+                    """
             SELECT c 
             FROM Comanda c 
             WHERE c.cliente.id = :idCliente
@@ -135,4 +166,50 @@ public class ComandaDAO implements IComandaDAO {
             throw new PersistenciaException("ERROR AL CONSULTAR HISTORIAL DEL CLIENTE.");
         }
     }
+
+    @Override
+    public java.util.List<restaurantedominio.Comanda> obtenerComandasActivas() throws restaurantepersistencia.PersistenciaException {
+        javax.persistence.EntityManager entityManager = null;
+        try {
+            entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+
+            // Buscamos todas las comandas cuyo estado sea ABIERTA
+            String jpql = "SELECT c FROM Comanda c WHERE c.estado = :estadoBuscado";
+            javax.persistence.TypedQuery<restaurantedominio.Comanda> query = entityManager.createQuery(jpql, restaurantedominio.Comanda.class);
+
+            query.setParameter("estadoBuscado", EnumeradoresDominio.EstadoComanda.ABIERTA);
+
+            return query.getResultList();
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar las comandas activas: " + e.getMessage());
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public restaurantedominio.Comanda consultarComanda(Long idComanda) throws restaurantepersistencia.PersistenciaException {
+        EntityManager entityManager = null;
+        try {
+            entityManager = Conexion.ManejadorConexiones.crearEntityManager();
+            restaurantedominio.Comanda comanda = entityManager.find(restaurantedominio.Comanda.class, idComanda);
+
+            if (comanda == null) {
+                throw new restaurantepersistencia.PersistenciaException("No se encontró ninguna comanda con el ID proporcionado.");
+            }
+
+            return comanda;
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar la comanda: " + e.getMessage());
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
 }

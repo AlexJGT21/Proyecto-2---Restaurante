@@ -1,3 +1,4 @@
+
 package restaurantepresentacionFORMS;
 
 import Controlador.Control;
@@ -10,19 +11,19 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
-import restaurantedtos.ComandaDTO;
-import restaurantedtos.MesaDTO;
 import restaurantedtos.ProductoDTO;
+import restaurantenegocio.NegocioException;
 
 /**
  *
  * @author Dell
  */
-public class AbrirComandaFORM extends javax.swing.JFrame {
+public class EditarComandaFORM extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AbrirComandaFORM.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarComandaFORM.class.getName());
 
     // 1. Declaramos los objetos BO que usará esta pantalla
+    private Long idComandaActual;
     private IMesaBO mesaBO;
     private IProductoBO productoBO;
     private IClienteFrecuenteBO clienteBO;
@@ -34,19 +35,67 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
     private javax.swing.table.DefaultTableModel modeloMenu;
     private javax.swing.table.DefaultTableModel modeloOrden;
 
-    public AbrirComandaFORM() {
-        this.control = control;
+    /**
+     * Porque dos initComponents cuando solo deberia ser un costructor para esta clase?
+     * En todo caso deberia estar todo esto abajo
+     * @param idComanda 
+     */
+    
+   public EditarComandaFORM(Long idComanda) {
         initComponents();
-
+        this.idComandaActual = idComanda;
+        
         this.mesaBO = new restaurantenegocio.MesaBO();
         this.productoBO = new restaurantenegocio.ProductoBO();
         this.clienteBO = new restaurantenegocio.ClienteFrecuenteBO();
         this.comandaBO = new restaurantenegocio.ComandaBO();
-
-        // Inicializamos las tablas y cargamos los datos
+        
         configurarTablas();
-        llenarComboBoxMesas();
-        llenarTablaMenu("Platillo");
+        llenarTablaMenu("Platillo"); // Llenamos el menú normal
+        
+        // ¡NUEVO! Cargamos los datos de la comanda existente
+        cargarDatosComandaVieja();
+    }
+
+    // El constructor vacío por si NetBeans lo pide
+    public EditarComandaFORM(Control control) {
+        initComponents();
+    }
+
+    private void cargarDatosComandaVieja() {
+        try {
+            // Buscamos la comanda en la BD
+            restaurantedominio.Comanda comandaAnterior = comandaBO.consultarComanda(idComandaActual);
+            
+            // 1. Bloqueamos la selección de mesa y cliente (¡porque ya están sentados!)
+            ComboBoxMesa.removeAllItems();
+            ComboBoxMesa.addItem(comandaAnterior.getMesa().getId() + " - Mesa " + comandaAnterior.getMesa().getNumMesa());
+            ComboBoxMesa.setEnabled(false); // Lo deshabilitamos para que no lo cambien
+            
+            if (comandaAnterior.getCliente() != null) {
+                txtCliente.setText(comandaAnterior.getCliente().getNumeroTelefonico());
+                lblClienteSeleccionado.setText("Cliente: " + comandaAnterior.getCliente().getNombre());
+            } else {
+                lblClienteSeleccionado.setText("Público General");
+            }
+            txtCliente.setEnabled(false);
+            btnBuscar.setEnabled(false); // Ya no pueden buscar otro cliente
+            
+            // 2. Cargamos los platillos que ya habían pedido en la tabla de la derecha
+            for (restaurantedominio.Producto p : comandaAnterior.getProductos()) {
+                modeloOrden.addRow(new Object[]{
+                    p.getId(), 
+                    p.getNombre(), 
+                    "$" + p.getPrecio()
+                });
+            }
+            
+            // 3. Calculamos el total
+            actualizarTotal();
+            
+        } catch (restaurantenegocio.NegocioException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar la comanda: " + ex.getMessage());
+        }
     }
 
     /**
@@ -146,7 +195,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
             }
         });
 
-        btnAbrirComanda.setText("Abrir Comanda");
+        btnAbrirComanda.setText("Actualizar Orden");
         btnAbrirComanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAbrirComandaActionPerformed(evt);
@@ -154,7 +203,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("Realizar la comanda");
+        jLabel1.setText("Editar Comanda");
 
         btnPlatillo.setText("Platillo");
         btnPlatillo.addActionListener(new java.awt.event.ActionListener() {
@@ -202,10 +251,6 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,6 +301,10 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblMesa1)
                 .addGap(395, 395, 395))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(316, 316, 316)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,65 +437,43 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnAbrirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirComandaActionPerformed
-        // Validamos que se haya seleccionado una mesa
-        if (ComboBoxMesa.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una mesa disponible.");
-            return;
-        }
-
-        // Validamos que haya productos en la orden
         if (modeloOrden.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "La comanda debe tener al menos un producto.");
             return;
         }
 
         try {
-            // Sacamos el ID de la mesa seleccionada
-            String mesaSeleccionada = (String) ComboBoxMesa.getSelectedItem();
-            Long idMesa = Long.parseLong(mesaSeleccionada.split(" - ")[0]);
-
-            MesaDTO mesaDTO = new MesaDTO();
-            mesaDTO.setId(idMesa);
-
-            // Recopilar todos los productos de la tabla orden
-            List<ProductoDTO> productosComanda = new ArrayList<>();
+            // Recopilamps todos los productpa de la tabla de la Orden (los viejos y los nuevos juntos)
+            List<restaurantedtos.ProductoDTO> todosLosProductos = new ArrayList<>();
             double totalCalculado = 0;
-
+            
             for (int i = 0; i < modeloOrden.getRowCount(); i++) {
                 Long idProducto = (Long) modeloOrden.getValueAt(i, 0);
-
                 ProductoDTO prod = new ProductoDTO();
                 prod.setId(idProducto);
-                productosComanda.add(prod);
+                todosLosProductos.add(prod);
 
-                // Calculamos el total
                 String precioStr = (String) modeloOrden.getValueAt(i, 2);
-                precioStr = precioStr.replace("$", "");
-                totalCalculado += Double.parseDouble(precioStr);
+                precioStr = precioStr.replace("$", ""); 
+                totalCalculado += Double.parseDouble(precioStr); 
             }
 
-            // Armamos la ComandaDTO 
-            ComandaDTO nuevaComanda = new ComandaDTO();
-            nuevaComanda.setMesa(mesaDTO); // Le seteamos la mesa
-            nuevaComanda.setCliente(clienteSeleccionado); // Le seteamos el cliente
-            nuevaComanda.setProductos(productosComanda); // le seteamos la lista de productos de la orden
-            nuevaComanda.setTotalVenta((long) totalCalculado); // Le seteamos el total
-            String comentarios = txtComentarios.getText().trim();
-            nuevaComanda.setComentarios(comentarios); // Le seteamos los comentarios
+            // Armamos el DTO solo con lo que se va a actualizar
+            restaurantedtos.ComandaDTO comandaActualizada = new restaurantedtos.ComandaDTO();
+            comandaActualizada.setId(idComandaActual); // ojo cuidado
+            comandaActualizada.setProductos(todosLosProductos);
+            comandaActualizada.setTotalVenta((long) totalCalculado);
 
-            // Usamos el supermetodo
-            ComandaDTO comandaAbierta = comandaBO.abrirComanda(nuevaComanda);
+            // Lo mandamos a actualizar y cruzamos los deditos para que no truene
+            comandaBO.actualizarComanda(comandaActualizada); 
 
-            // JOptionPane de confirmacion
-            JOptionPane.showMessageDialog(this, "¡Comanda abierta con éxito!\nFolio generado: " + comandaAbierta.getFolio());
+            JOptionPane.showMessageDialog(this, "¡Orden actualizada con éxito!");
 
-            // Cerramos esta pantalla y regresamos
+            // Regresamos
             this.dispose();
-            control.mostrarGestionClientesFORM();
-
-        } catch (restaurantenegocio.NegocioException ex) {
-            // Si el BO rechaza la comanda
-            JOptionPane.showMessageDialog(this, "No se pudo abrir la comanda:\n" + ex.getMessage(), "Alerta", JOptionPane.WARNING_MESSAGE);
+            control.mostrarComandasActivasFORM();
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo actualizar:\n" + ex.getMessage());
         }
      }//GEN-LAST:event_btnAbrirComandaActionPerformed
 
@@ -458,31 +485,6 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
         this.dispose();
         control.mostrarGestionClientesFORM();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AbrirComandaFORM().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxMesa;
