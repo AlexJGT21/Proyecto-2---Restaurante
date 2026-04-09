@@ -3,6 +3,7 @@ package restaurantepresentacionFORMS;
 
 import Controlador.Control;
 import PanelesDinamicos.ReportesClienteFrecuentePanel;
+import PanelesDinamicos.ReportesComandasPanel;
 import java.awt.BorderLayout;
 
 /**
@@ -12,6 +13,7 @@ import java.awt.BorderLayout;
 public class SistemaReportesFORM extends javax.swing.JFrame {
 
     private ReportesClienteFrecuentePanel reportesClientesPanel;
+    private ReportesComandasPanel reportesComandasPanel;
     private Control control;
     
     public SistemaReportesFORM(Control control) {
@@ -64,7 +66,7 @@ public class SistemaReportesFORM extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel1.setText("Reportes clientes frecuentes");
+        jLabel1.setText("Sistema de Reportes");
 
         btnReportesComandas.setBackground(new java.awt.Color(0, 153, 204));
         btnReportesComandas.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 24)); // NOI18N
@@ -150,7 +152,14 @@ public class SistemaReportesFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesClientesActionPerformed
 
     private void btnReportesComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesComandasActionPerformed
-        // TODO add your handling code here:
+        jPanel2.removeAll();
+        reportesComandasPanel = new ReportesComandasPanel(control);
+        
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(reportesComandasPanel, BorderLayout.CENTER);
+        
+        jPanel2.revalidate();
+        jPanel2.repaint();
     }//GEN-LAST:event_btnReportesComandasActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed

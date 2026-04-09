@@ -184,7 +184,7 @@ public class GestionClientesFORM extends javax.swing.JFrame {
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         this.dispose();
-        control.regresarGestionRestauranteFORM();
+        control.mostrarGestionRestauranteFORM();
     }//GEN-LAST:event_btnReturnActionPerformed
 
     private void btnComandasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActivasActionPerformed

@@ -202,8 +202,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         this.dispose();
-//        GestionRestauranteFORM management = new GestionRestauranteFORM();
-//        management.setVisible(true);
+        control.mostrarGestionRestauranteFORM();
     }//GEN-LAST:event_btnReturnActionPerformed
 
     private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed

@@ -6,6 +6,7 @@ restaurantepresentacionFORMS\CobrarComandaFORM$2.class
 restaurantepresentacionFORMS\AdministradorFORM$3.class
 restaurantepresentacionFORMS\GestionIngredientesFORM$4.class
 restaurantepresentacionFORMS\GestionClientesFORM.class
+PanelesDinamicos\ReportesComandasPanel$2.class
 PanelesDinamicos\BuscarIngredienteProductoInventarioPanel$5.class
 restaurantepresentacionFORMS\GestionIngredientesFORM$1.class
 restaurantepresentacionFORMS\GestionProductosFORM.class
@@ -36,6 +37,7 @@ restaurantepresentacionFORMS\AdministradorFORM$5.class
 PanelesDinamicos\ReportesClienteFrecuentePanel$2.class
 restaurantepresentacionFORMS\GestionRestauranteFORM$3.class
 restaurantepresentacionFORMS\GestionProductosFORM$4.class
+PanelesDinamicos\ReportesComandasPanel.class
 PanelesDinamicos\BuscarClienteFrecuentePanel$2.class
 restaurantepresentacionFORMS\AdministrarClientesFrecuentesFORM$2.class
 restaurantepresentacionFORMS\AdministradorFORM.class
@@ -82,6 +84,7 @@ PanelesDinamicos\ReportesClienteFrecuentePanel$1.class
 restaurantepresentacionFORMS\AdministradorFORM$2.class
 PanelesDinamicos\ReportesClienteFrecuentePanel$4.class
 restaurantepresentacionFORMS\CobrarComandaFORM$1.class
+PanelesDinamicos\ReportesComandasPanel$3.class
 restaurantepresentacionFORMS\GestionIngredientesFORM$2.class
 restaurantepresentacionFORMS\CobrarComandaFORM$4.class
 PanelesDinamicos\BuscarIngredienteProductoInventarioPanel$4.class
@@ -110,6 +113,7 @@ PanelesDinamicos\NuevoProductoPanel$4.class
 PanelesDinamicos\BuscarIngredienteProductoInventarioPanel$2.class
 restaurantepresentacionFORMS\AbrirComandaFORM$2.class
 restaurantepresentacionFORMS\ComandasActivasFORM$1.class
+PanelesDinamicos\ReportesComandasPanel$1.class
 restaurantepresentacionFORMS\AbrirComandaFORM$9.class
 restaurantepresentacionFORMS\EditarComandaFORM$8.class
 restaurantepresentacionFORMS\AbrirComandaFORM.class

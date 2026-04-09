@@ -182,7 +182,8 @@ public class AdministrarClientesFrecuentesFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarClienteFActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        control.mostrarGestionClientesFORM();        
     }//GEN-LAST:event_btnReturnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
