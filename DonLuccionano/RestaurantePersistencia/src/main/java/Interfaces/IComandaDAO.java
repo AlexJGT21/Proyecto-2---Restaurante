@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package Interfaces;
 
 import java.time.LocalDate;
@@ -21,4 +17,11 @@ public interface IComandaDAO {
     public abstract Long consultarCantidadPorDia(LocalDate fecha) throws PersistenciaException;
     public abstract List<Comanda> consultarPorRangoFechas(LocalDate inicio, LocalDate fin) throws PersistenciaException;
     public abstract List<Comanda> consultarPorCliente(Long idCliente) throws PersistenciaException;
+    public List<restaurantedominio.Comanda> obtenerComandasActivas() throws PersistenciaException;
+    /**
+     * Busca una comanda en específico por su ID.
+     */
+    public Comanda consultarComanda(Long idComanda) throws PersistenciaException;
+    
+    
 }

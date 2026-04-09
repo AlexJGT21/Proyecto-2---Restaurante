@@ -173,7 +173,9 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
             }
         });
 
+        lblClienteSeleccionado.setBackground(new java.awt.Color(0, 0, 0));
         lblClienteSeleccionado.setFont(new java.awt.Font("Baskerville Old Face", 0, 18)); // NOI18N
+        lblClienteSeleccionado.setForeground(new java.awt.Color(0, 102, 0));
         lblClienteSeleccionado.setText("Cliente frecuente");
 
         btnQuitar.setText("Quitar");

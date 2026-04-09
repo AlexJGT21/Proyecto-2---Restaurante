@@ -106,7 +106,7 @@ public class ComandaBO implements IComandaBO {
                     // Restamos la cantidad usando BigDecimal y la seteamos al ingrediente
                     BigDecimal nuevoStock = ingrediente.getCantidad().subtract(cantidadRequerida);
                     ingrediente.setCantidad(nuevoStock);
-                    
+
                     // Guardamos el ingrediente con su nuevo stock en la BD
                     ingredienteDAO.actualizarIngrediente(ingrediente);
                 }
@@ -252,6 +252,48 @@ public class ComandaBO implements IComandaBO {
         } catch (PersistenciaException e) {
             LOGGER.severe(e.getMessage());
             throw new NegocioException("Error al consultar la comanda por folio: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Comanda> obtenerComandasActivas() throws restaurantenegocio.NegocioException {
+        try {
+            return comandaDAO.obtenerComandasActivas();
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No se pudieron cargar las comandas activas.", ex);
+        }
+    }
+
+    @Override
+    public Comanda consultarComanda(Long idComanda) throws restaurantenegocio.NegocioException {
+        try {
+            return comandaDAO.consultarComanda(idComanda);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No fue posible consultar la información de la comanda.", ex);
+        }
+    }
+    @Override
+    public void actualizarComanda(ComandaDTO comandaDTO) throws NegocioException {
+        try {
+            // Creamos una entidad Comanda solo con los datos que queremos actualizar
+            Comanda comanda = new Comanda();
+            comanda.setId(comandaDTO.getId());
+            comanda.setTotalVenta(comandaDTO.getTotalVenta());
+
+            // Le pasamos los IDs de los productos
+            List<restaurantedominio.Producto> listaProductos = new ArrayList<>();
+            for (ProductoDTO pDTO : comandaDTO.getProductos()) {
+                Producto p = new Producto();
+                p.setId(pDTO.getId());
+                listaProductos.add(p);
+            }
+            comanda.setProductos(listaProductos);
+
+            // usamos el metodo de la dao
+            comandaDAO.actualizarComanda(comanda);
+            
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error en la capa de negocio al actualizar la comanda.", ex);
         }
     }
 }
