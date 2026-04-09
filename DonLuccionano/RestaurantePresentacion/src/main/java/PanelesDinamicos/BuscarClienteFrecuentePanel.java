@@ -1,12 +1,12 @@
 
 package PanelesDinamicos;
 
+import Controlador.Control;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.ClienteFrecuente;
-import restaurantenegocio.ClienteFrecuenteBO;
 import restaurantenegocio.NegocioException;
 
 /**
@@ -15,11 +15,11 @@ import restaurantenegocio.NegocioException;
  */
 public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
 
-    private ClienteFrecuenteBO clienteFrecuenteBO;
+    private Control control;
     
-    public BuscarClienteFrecuentePanel() {
+    public BuscarClienteFrecuentePanel(Control control) {
+        this.control = control;
         initComponents();
-        clienteFrecuenteBO = new ClienteFrecuenteBO();
     }
     
     private void llenarTabla(List<ClienteFrecuente> clientes) {
@@ -232,21 +232,21 @@ public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
 
             if (!telefono.isEmpty()) {
                 // Si escribió teléfono, buscamos estrictamente por teléfono
-                ClienteFrecuente cliente = clienteFrecuenteBO.buscarPorTelefono(telefono);
+                ClienteFrecuente cliente = control.buscarClientePorTelefono(telefono);
                 if (cliente != null) {
                     resultados.add(cliente);
                 }
             } 
             else if (!correo.isEmpty()) {
                 // Si no hay teléfono pero sí correo, buscamos por correo
-                ClienteFrecuente cliente = clienteFrecuenteBO.buscarPorCorreo(correo);
+                ClienteFrecuente cliente = control.buscarClientePorCorreo(correo);
                 if (cliente != null) {
                     resultados.add(cliente);
                 }
             } 
             else {
                 // Si no hay ni teléfono ni correo, usamos los nombres
-                resultados = clienteFrecuenteBO.buscarClienteLista(nombre, apellidoP, apellidoM);
+                resultados = control.buscarClientePorNombreApellidos(nombre, apellidoP, apellidoM);
             }            
             // Llenamos la tabla
             llenarTabla(resultados);

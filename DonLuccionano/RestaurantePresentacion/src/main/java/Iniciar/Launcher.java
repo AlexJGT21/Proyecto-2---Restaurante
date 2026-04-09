@@ -1,7 +1,7 @@
 
 package Iniciar;
 
-import restaurantepresentacion.GestionRestauranteFORM;
+import Controlador.Control;
 
 /**
  *
@@ -10,7 +10,7 @@ import restaurantepresentacion.GestionRestauranteFORM;
 public class Launcher {
     
     public static void main(String[] args) {
-        GestionRestauranteFORM management = new GestionRestauranteFORM();
-        management.setVisible(true);
+        Control control = new Control();
+        control.mostrarGestionRestauranteFORM();
     }
 }

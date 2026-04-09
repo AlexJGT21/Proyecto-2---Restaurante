@@ -1,6 +1,7 @@
 
 package PanelesDinamicos;
 
+import Controlador.Control;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Ingrediente;
 import EnumeradoresDTO.TipoUnidad;
 import restaurantedtos.IngredienteDTO;
-import restaurantenegocio.IngredienteBO;
 import restaurantenegocio.NegocioException;
 import ImagenTabla.ImageTable;
 
@@ -30,13 +30,14 @@ import ImagenTabla.ImageTable;
  */
 public class NuevoIngredientePanel extends javax.swing.JPanel {
     
-    private IngredienteBO ingredienteBO;
+    private Control control;
+    
     public File selectFile;
     private static final Logger LOGGER = Logger.getLogger(NuevoIngredientePanel.class.getName());     
 
-    public NuevoIngredientePanel() {
+    public NuevoIngredientePanel(Control control) {
+        this.control = control;
         initComponents();
-        this.ingredienteBO = new IngredienteBO();
         tbIngredientes.setRowHeight(60);
         tbIngredientes.getColumnModel().getColumn(4).setCellRenderer(new ImageTable());
         llenarTabla();
@@ -48,7 +49,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         modelo.setRowCount(0); 
         List<Ingrediente> ingredientes;
         try {
-            ingredientes = ingredienteBO.llenarTabla();
+            ingredientes = control.llenarTabla();
             if (ingredientes.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No existen ingredientes registrados. Ingrese uno para comenzar llenado.", 
                                               "Búsqueda vacía", JOptionPane.INFORMATION_MESSAGE);
@@ -327,7 +328,7 @@ public class NuevoIngredientePanel extends javax.swing.JPanel {
         TipoUnidad unidad = (TipoUnidad) comboUnidades.getSelectedItem();        
         IngredienteDTO nuevoIngrediente = new IngredienteDTO(nombre, unidad, cantidad, imagenBytes);
         try {
-            Ingrediente ingrediente = ingredienteBO.nuevoIngrediente(nuevoIngrediente);
+            Ingrediente ingrediente = control.nuevoIngrediente(nuevoIngrediente);
             JOptionPane.showMessageDialog(this, 
                                           "Ingrediente registrado existosamente", 
                                           "NUEVO INGREDIENTE", 

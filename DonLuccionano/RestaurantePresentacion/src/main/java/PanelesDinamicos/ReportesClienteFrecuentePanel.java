@@ -1,6 +1,7 @@
 
 package PanelesDinamicos;
 
+import Controlador.Control;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -8,7 +9,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import restaurantedtos.ClienteFrecuenteReporteDTO;
-import restaurantenegocio.ClienteFrecuenteBO;
 import restaurantenegocio.NegocioException;
 
 /**
@@ -17,13 +17,14 @@ import restaurantenegocio.NegocioException;
  */
 public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
 
+    private Control control;
+    
     private SpinnerNumberModel spinnerNumber;
-    private ClienteFrecuenteBO clienteFrecuenteBO;
     private static final Logger LOGGER = Logger.getLogger(ReportesClienteFrecuentePanel.class.getName());
     
-    public ReportesClienteFrecuentePanel() {
+    public ReportesClienteFrecuentePanel(Control control) {
+        this.control = control;
         initComponents();
-        clienteFrecuenteBO = new ClienteFrecuenteBO();
         spinnerNumber = new SpinnerNumberModel(0, 0, 100, 1);
         spNumVisitas.setModel(spinnerNumber);        
         ((JSpinner.DefaultEditor) spNumVisitas.getEditor()).getTextField().setEditable(false);
@@ -34,7 +35,7 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
         modelo.setRowCount(0); 
         List<ClienteFrecuenteReporteDTO> clientes;
         try {
-            clientes = clienteFrecuenteBO.filtrarClientes(nombre, visitas);
+            clientes = control.filtrarClientes(nombre, visitas);
             for (ClienteFrecuenteReporteDTO cf: clientes) {               
                 Object[] fila = {
                     cf.getNombre(),
@@ -199,7 +200,7 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
         Integer visitas = (int) spNumVisitas.getValue();
         
         try {
-            boolean generado = clienteFrecuenteBO.generarReporteClientesFrecuentes(nombre, visitas);
+            boolean generado = control.generarReporteClientesFrecuentes(nombre, visitas);
             if (generado) {
                 JOptionPane.showMessageDialog(this, "Reporte generado exitosamente.");
             } else {

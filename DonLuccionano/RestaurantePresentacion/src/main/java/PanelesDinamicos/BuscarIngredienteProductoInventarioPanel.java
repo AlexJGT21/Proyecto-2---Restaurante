@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package PanelesDinamicos;
 
+import Controlador.Control;
 import Interfaces.IIngredienteBO;
 import Interfaces.IProductoBO;
 import Interfaces.IProductoIngredientesBO;
@@ -18,23 +16,15 @@ import restaurantedtos.ProductoDTO;
  */
 public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel {
 
-    private Producto productoActual; 
-    private IIngredienteBO ingredienteBO;
-    private IProductoIngredientesBO piBO;
-    private IProductoBO productoBO; 
+    private Producto productoActual;     
+    private Control control;
     
     private List<IngredienteDTO> listaIngredientesDisponibles;
     private List<ProductoDTO> listaProductosDisponibles;
     
-    private void inicializarBOs() {
-        this.ingredienteBO = new restaurantenegocio.IngredienteBO();
-        this.piBO = new restaurantenegocio.ProductoIngredientesBO();
-        this.productoBO = new restaurantenegocio.ProductoBO(); 
-    }
-    
-    public BuscarIngredienteProductoInventarioPanel() {
+    public BuscarIngredienteProductoInventarioPanel(Control control) {
+        this.control = control;
         initComponents();
-        inicializarBOs();
         cargarIngredientesAlCombo(); 
         cargarProductosAlCombo();
     }
@@ -42,7 +32,6 @@ public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel
     public BuscarIngredienteProductoInventarioPanel(restaurantedominio.Producto productoBase) {
         initComponents();
         this.productoActual = productoBase;
-        inicializarBOs();
         
         cargarIngredientesAlCombo(); 
         cargarProductosAlCombo(); 
@@ -52,7 +41,7 @@ public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel
     private void cargarIngredientesAlCombo() {
         try {
             cbIngredientes.removeAllItems(); 
-            listaIngredientesDisponibles = ingredienteBO.consultarTodosLosIngredientes(); 
+            listaIngredientesDisponibles = control.consultarTodosLosIngredientes(); 
             for (restaurantedtos.IngredienteDTO ing : listaIngredientesDisponibles) {
                 cbIngredientes.addItem(ing.getNombre()); 
             }
@@ -64,7 +53,7 @@ public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel
     private void cargarProductosAlCombo() {
         try {
             cbProductos.removeAllItems();
-            listaProductosDisponibles = productoBO.obtenerProductos(); 
+            listaProductosDisponibles = control.obtenerProductos(); 
             for (restaurantedtos.ProductoDTO prod : listaProductosDisponibles) {
                 cbProductos.addItem(prod.getNombre());
             }
@@ -79,7 +68,7 @@ public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel
         modelo.setRowCount(0); 
         
         try {
-            java.util.List<restaurantedominio.ProductoIngredientes> receta = piBO.obtenerIngredientesPorProducto(productoActual.getId());
+            java.util.List<restaurantedominio.ProductoIngredientes> receta = control.obtenerIngredientesPorProducto(productoActual.getId());
             for (restaurantedominio.ProductoIngredientes pi : receta) {
                 Object[] fila = { 
                     pi.getIngredientes().getNombre(), 
@@ -264,7 +253,7 @@ public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel
             nuevaRelacion.setIngredientes(ingredienteEntidad);
             nuevaRelacion.setCantidad(new java.math.BigDecimal(cantidadStr)); 
             
-            piBO.agregarProductoIngrediente(nuevaRelacion);
+            control.agregarProductoIngrediente(nuevaRelacion);
             
             javax.swing.JOptionPane.showMessageDialog(this, "¡Ingrediente agregado a la receta!");
             txtCantidadIngrediente.setText(""); 
@@ -306,7 +295,6 @@ public class BuscarIngredienteProductoInventarioPanel extends javax.swing.JPanel
     private void txtCantidadIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadIngredienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadIngredienteActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarIngrediente;

@@ -1,14 +1,13 @@
 
 package PanelesDinamicos;
 
+import Controlador.Control;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
-import restaurantenegocio.ClienteFrecuenteBO;
 import restaurantenegocio.NegocioException;
 
 /**
@@ -17,12 +16,13 @@ import restaurantenegocio.NegocioException;
  */
 public class RegistrarClientePanel extends javax.swing.JPanel {
 
-    private ClienteFrecuenteBO clienteFrecuenteBO;
+    private Control control;
+    
     private static final Logger LOGGER = Logger.getLogger(RegistrarClientePanel.class.getName());
     
-    public RegistrarClientePanel() {
+    public RegistrarClientePanel(Control control) {
+        this.control = control;
         initComponents();
-        clienteFrecuenteBO = new ClienteFrecuenteBO();
         llenarTabla();
     }
     
@@ -31,7 +31,7 @@ public class RegistrarClientePanel extends javax.swing.JPanel {
         modelo.setRowCount(0); 
         List<ClienteFrecuenteDTO> clienteFrecuente;
         try {
-            clienteFrecuente = clienteFrecuenteBO.listaClientesF();
+            clienteFrecuente = control.obtenerListaClientes();
             for (ClienteFrecuenteDTO c: clienteFrecuente) {               
                 Object[] fila = {
                     c.getNombre(),
@@ -224,7 +224,7 @@ public class RegistrarClientePanel extends javax.swing.JPanel {
         String telefono = this.txtTelefono.getText();        
         ClienteFrecuenteDTO clienteFrecuenteDTO = new ClienteFrecuenteDTO(nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now());
         try {
-            ClienteFrecuente clienteFrecuente = clienteFrecuenteBO.crearCliente(clienteFrecuenteDTO);
+            control.registrarCliente(clienteFrecuenteDTO);
             JOptionPane.showMessageDialog(this, "Cliente registrado correctamente.");
             llenarTabla();
             limpiarCampos();
