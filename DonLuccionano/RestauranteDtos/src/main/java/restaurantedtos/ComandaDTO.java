@@ -2,7 +2,7 @@ package restaurantedtos;
 
 import EnumeradoresDTO.EstadoComandaDTO;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,7 +12,7 @@ public class ComandaDTO implements Serializable {
 
     private Long id;
     private String folio;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
     private EstadoComandaDTO estado;
     private String comentarios;
     private Long totalVenta;
@@ -28,7 +28,7 @@ public class ComandaDTO implements Serializable {
     /**
      * Constructor completo para mostrar datos (UI)
      */
-    public ComandaDTO(Long id, String folio, LocalDate fecha, EstadoComandaDTO estado,
+    public ComandaDTO(Long id, String folio, LocalDateTime fecha, EstadoComandaDTO estado,
             String comentarios, Long totalVenta, MesaDTO mesa,
             List<ProductoDTO> productos, ClienteFrecuenteDTO cliente) {
         this.id = id;
@@ -76,11 +76,11 @@ public class ComandaDTO implements Serializable {
         this.folio = folio;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

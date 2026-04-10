@@ -1,7 +1,7 @@
 package Adapters;
 
 import EnumeradoresDominio.EstadoComanda;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedominio.Comanda;
@@ -27,7 +27,7 @@ public class NuevaComandaDTOAComandaAdapter {
         Comanda comanda = new Comanda();
         
         comanda.setFolio(folio);
-        comanda.setFecha(LocalDate.now());
+        comanda.setFecha(LocalDateTime.now());
         comanda.setEstado(EstadoComanda.ABIERTA); // Por defecto al crear
         comanda.setComentarios(dto.getComentarios());
         comanda.setTotalVenta(dto.getTotalVenta());

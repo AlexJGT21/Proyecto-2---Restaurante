@@ -3,6 +3,7 @@ package restaurantepersistencia;
 import Conexion.ManejadorConexiones;
 import Interfaces.IComandaDAO;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -99,15 +100,22 @@ public class ComandaDAO implements IComandaDAO {
     @Override
     public Long consultarCantidadPorDia(LocalDate fecha) throws PersistenciaException {
         try {
+            // Te cambie esta consulta para que funcione con los cambios que hice, ahora revisa el dia pero le indique que por rango de horas
+            LocalDateTime inicioDia = fecha.atStartOfDay(); // 00:00:00
+            LocalDateTime finDia = fecha.atTime(23, 59, 59, 999999999); // 23:59:59.999...
+
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Long> query = entityManager.createQuery(
                     """
             SELECT COUNT(c) 
             FROM Comanda c 
-            WHERE c.fecha = :fecha
-            """, Long.class);
-            query.setParameter("fecha", fecha);
+            WHERE c.fecha BETWEEN :inicio AND :fin
+            """, Long.class); // Cambie "=" por "BETWEEN"
+            
+            query.setParameter("inicio", inicioDia);
+            query.setParameter("fin", finDia);
             return query.getSingleResult();
+            
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("ERROR AL CONSULTAR CONTEO DIARIO.");
@@ -121,6 +129,10 @@ public class ComandaDAO implements IComandaDAO {
     @Override
     public List<Comanda> consultarPorRangoFechas(LocalDate inicio, LocalDate fin) throws PersistenciaException {
         try {
+            // Aqui hoce lo mismo que en el otro metodo
+            LocalDateTime inicioRango = inicio.atStartOfDay();
+            LocalDateTime finRango = fin.atTime(23, 59, 59, 999999999);
+
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
             TypedQuery<Comanda> query = entityManager.createQuery(
                     """
@@ -129,9 +141,11 @@ public class ComandaDAO implements IComandaDAO {
             WHERE c.fecha BETWEEN :inicio AND :fin
             ORDER BY c.fecha ASC, c.folio ASC
             """, Comanda.class);
-            query.setParameter("inicio", inicio);
-            query.setParameter("fin", fin);
+            
+            query.setParameter("inicio", inicioRango);
+            query.setParameter("fin", finRango);
             return query.getResultList();
+            
         } catch (PersistenceException e) {
             LOGGER.severe(e.getMessage());
             throw new PersistenciaException("ERROR AL GENERAR LISTA PARA REPORTE.");

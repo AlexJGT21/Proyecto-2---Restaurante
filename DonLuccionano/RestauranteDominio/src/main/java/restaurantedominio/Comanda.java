@@ -3,7 +3,7 @@ package restaurantedominio;
 
 import EnumeradoresDominio.EstadoComanda;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public class Comanda implements Serializable {
     private String folio;
 
     @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @ManyToOne
     @JoinColumn(name = "id_mesa", nullable = false)
@@ -72,7 +72,7 @@ public class Comanda implements Serializable {
     /**
      * Constructor con todos los parámetros.
      */
-    public Comanda(Long id, String folio, LocalDate fecha, Mesa mesa, List<Producto> productos, EstadoComanda estado, String comentarios, long totalVenta, ClienteFrecuente cliente) {
+    public Comanda(Long id, String folio, LocalDateTime fecha, Mesa mesa, List<Producto> productos, EstadoComanda estado, String comentarios, long totalVenta, ClienteFrecuente cliente) {
         this.id = id;
         this.folio = folio;
         this.fecha = fecha;
@@ -87,7 +87,7 @@ public class Comanda implements Serializable {
     /**
      * Constructor sin ID para creación de nuevas comandas.
      */
-    public Comanda(String folio, LocalDate fecha, Mesa mesa, List<Producto> productos, EstadoComanda estado, String comentarios, long totalVenta) {
+    public Comanda(String folio, LocalDateTime fecha, Mesa mesa, List<Producto> productos, EstadoComanda estado, String comentarios, long totalVenta) {
         this.folio = folio;
         this.fecha = fecha;
         this.mesa = mesa;
@@ -115,11 +115,11 @@ public class Comanda implements Serializable {
         this.folio = folio;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
