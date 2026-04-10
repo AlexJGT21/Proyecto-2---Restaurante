@@ -152,12 +152,18 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("FALLO EN LA ACTUALIZACIÓN DE INGREDIENTE");
         }        
     }
-
+    
+    /**
+     * Metodo que consulta ingredientes como DTOs
+     * @return Lista de ingredientes DTO
+     * @throws NegocioException No fue posible realizar consulta de ingredientes
+     */
     @Override
-    public List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception {
+    public List<IngredienteDTO> consultarTodosLosIngredientes() throws NegocioException {
         try {
             return ingredienteDAO.consultarTodosLosIngredientes();
-        } catch (Exception e) {
+        } catch (PersistenciaException e) {
+            LOGGER.severe(e.getMessage());
             throw new restaurantenegocio.NegocioException("Error al obtener la lista de ingredientes.");
         }
     }

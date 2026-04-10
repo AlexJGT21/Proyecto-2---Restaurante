@@ -28,6 +28,6 @@ public interface IIngredienteBO {
     //Aquí se hacen las validaciones de la cantidad
     public abstract Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws NegocioException;
  
-    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception;
-    
+    //Contrato 5: Lista todos los ingredientes como DTOs
+    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws NegocioException;    
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.007" tests="13" errors="0" skipped="13" failures="0">
+  <properties/>
+  <testcase name="testBuscarClientePorIdNoExiste" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientePorNombreOtrosCamposVacios" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testFiltrarClienteFrecuenteSinNombreYVisitas" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testFiltrarClienteFrecuentePorNombre" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testListarClientesFrecuenteFunciona" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientePorNumeroTelefonico" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientePorCorreoElectronico" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testCrearClienteFrecuente" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientePorIdExiste" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientePorApellidoPaternoOtrosCamposVacios" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientePorApellidoMaternoOtrosCamposVacios" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testFiltrarClienteFrecuentePorVisitas" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+  <testcase name="testBuscarClientesTodosCamposVacios" classname="restaurantepersistencia.ClienteFrecuenteDAOTest" time="0.0">
+    <skipped message="class restaurantepersistencia.ClienteFrecuenteDAOTest is @Disabled"/>
+  </testcase>
+</testsuite>

@@ -37,5 +37,5 @@ public interface IIngredienteDAO {
     public abstract void actualizarIngrediente (Ingrediente ingrediente) throws PersistenciaException;
     
     //Contrato 7: Lista todos los ingredientes disponibles
-    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception;    
+    public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws PersistenciaException;    
 }

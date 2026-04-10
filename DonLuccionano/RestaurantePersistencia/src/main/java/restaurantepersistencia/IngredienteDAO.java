@@ -53,8 +53,8 @@ public class IngredienteDAO implements IIngredienteDAO {
      * Metodo de busqueda que se usa con "nuevoIngrediente" para verificar
      * existencia de otros productos, evitando duplicados
      *
-     * @param nombre Argumento de busqueda
-     * @param unidad Argumento de busqueda
+     * @param nombre Parametro de busqueda
+     * @param unidad Parametro de busqueda
      * @return El ingrediente repetido si es que existe
      * @throws PersistenciaException NO se pudo consultar el ingrediente
      */
@@ -104,6 +104,13 @@ public class IngredienteDAO implements IIngredienteDAO {
         }
     }
 
+    /**
+     * Metodo que busca ingredientes por nombre o tipo de unidad
+     * @param nombreIngrediente Parametro de busqueda
+     * @param unidadIngrediente Parametro de busqueda
+     * @return Lista de ingredientes con coincidencias
+     * @throws PersistenciaException No fue posible realizar la busqueda.
+     */
     @Override
     public List<Ingrediente> buscarPorNombreUnidad(String nombreIngrediente, TipoUnidad unidadIngrediente) throws PersistenciaException {
         try {
@@ -178,9 +185,14 @@ public class IngredienteDAO implements IIngredienteDAO {
             throw new PersistenciaException("Error al actualizar el stock del ingrediente: " + e.getMessage());
         }
     }
-
+    
+    /**
+     * Lista todos los ingredientes como DTOs
+     * @return Lista de ingredientes DTO
+     * @throws PersistenciaException No fue posible realizar consulta de productos
+     */
     @Override
-    public List<IngredienteDTO> consultarTodosLosIngredientes() throws Exception {
+    public List<IngredienteDTO> consultarTodosLosIngredientes() throws PersistenciaException {
         EntityManager entitymanager = Conexion.ManejadorConexiones.crearEntityManager();
         try {
             
@@ -208,7 +220,8 @@ public class IngredienteDAO implements IIngredienteDAO {
                 listaDTO.add(dto);
             }
             return listaDTO;
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
             throw new PersistenciaException("Error al consultar ingredientes");
         } finally {
             entitymanager.close();
