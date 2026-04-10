@@ -1,8 +1,10 @@
 package Interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 import restaurantedominio.Comanda;
 import restaurantedtos.ComandaDTO;
+import restaurantedtos.ReporteComandaDTO;
 import restaurantenegocio.NegocioException;
 
 /**
@@ -16,4 +18,7 @@ public interface IComandaBO {
     public List<Comanda> obtenerComandasActivas() throws NegocioException;
     public Comanda consultarComanda(Long idComanda) throws NegocioException;
     public void actualizarComanda(ComandaDTO comandaDTO) throws NegocioException;
+    
+    //Metodo de generacion de reporte
+    public List<ReporteComandaDTO> generarReporteComanda(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException;
 }

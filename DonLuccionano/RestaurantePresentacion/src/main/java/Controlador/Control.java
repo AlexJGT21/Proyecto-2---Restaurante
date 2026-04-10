@@ -7,6 +7,7 @@ import Interfaces.IIngredienteBO;
 import Interfaces.IMesaBO;
 import Interfaces.IProductoBO;
 import Interfaces.IProductoIngredientesBO;
+import java.time.LocalDate;
 import java.util.List;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedominio.Comanda;
@@ -20,6 +21,7 @@ import restaurantedtos.ComandaDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantedtos.MesaDTO;
 import restaurantedtos.ProductoDTO;
+import restaurantedtos.ReporteComandaDTO;
 import restaurantenegocio.ClienteFrecuenteBO;
 import restaurantenegocio.ComandaBO;
 import restaurantenegocio.IngredienteBO;
@@ -204,5 +206,9 @@ public class Control {
 
     public void entregarComanda(Long idComanda) throws NegocioException {
         comandaBO.entregarComanda(idComanda);
+    }
+    
+    public List<ReporteComandaDTO> generarReporteComanda(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException {
+        return comandaBO.generarReporteComanda(fechaInicio, fechaFin);
     }
 }

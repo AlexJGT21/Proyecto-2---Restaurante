@@ -11,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import restaurantedominio.Comanda;
-import restaurantedominio.Producto;
+import restaurantedtos.ReporteComandaDTO;
 
 /**
  * @author JAR (JAIME, ALEJANDRO, ROBERTO)
@@ -253,6 +253,27 @@ public class ComandaDAO implements IComandaDAO {
             if (entityManager != null) {
                 entityManager.close();
             }
+        }
+    }
+
+    @Override
+    public List<ReporteComandaDTO> generarReporteComanda(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.crearEntityManager();
+            TypedQuery<ReporteComandaDTO> query = entityManager.createQuery(
+            """
+            SELECT new restaurantedtos.ReporteComandaDTO
+            (cf.nombre, co.estado, co.fecha, co.totalVenta)
+            FROM Comanda co
+            LEFT JOIN co.cliente cf
+            WHERE co.fecha >= :fechaInicio AND co.fecha < :fechaFin
+            """, ReporteComandaDTO.class);
+            query.setParameter("fechaInicio", fechaInicio);
+            query.setParameter("fechaFin", fechaFin);            
+            return query.getResultList();            
+        } catch (PersistenceException e) {
+            LOGGER.severe(e.getMessage());
+            throw new PersistenciaException("NO FUE POSIBLE GENERAR LA CONSULTA PARA EL REPORTE.");
         }
     }
 }

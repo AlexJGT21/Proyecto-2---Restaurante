@@ -2,10 +2,28 @@
 package PanelesDinamicos;
 
 import Controlador.Control;
+import java.io.File;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import restaurantedtos.ReporteComandaDTO;
+import restaurantenegocio.NegocioException;
 
 /**
  *
@@ -35,7 +53,7 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         dateCFechaFin = new com.toedter.calendar.JDateChooser();
         btnBuscar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnGenerarReporte = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtFechaInicio = new javax.swing.JTextField();
@@ -61,9 +79,14 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        jButton1.setText("Exportar PDF");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnGenerarReporte.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        btnGenerarReporte.setText("Exportar PDF");
+        btnGenerarReporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,9 +136,8 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtFechaInicio)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -140,7 +162,7 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
                         .addComponent(jLabel3))
                     .addComponent(dateCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnGenerarReporte)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar)))
                 .addGap(18, 18, 18)
@@ -167,12 +189,71 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaInicioActionPerformed
 
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        Date fechaInicio = dateCFechaInicio.getDate();
+        Date fechaFin = dateCFechaFin.getDate();
+        
+        if (fechaInicio == null || fechaFin == null) {
+            JOptionPane.showMessageDialog(this, 
+                                          "No pueden existir fechas vacias. Seleccione ambas.", 
+                                          "RANGO DE FECHAS", 
+                                          JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        try {
+            List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No existen comandas en el rango especificado.");
+                return;
+            }
+            
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
+            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ReporteComandas.jasper");
+            
+            Map<String,Object> parametros = new HashMap<>();
+            //Total acumulado de ventas por periodo
+            double total = lista.stream()
+                    .mapToDouble(ReporteComandaDTO::getTotalVenta)
+                    .sum();            
+            parametros.put("totalVentas", total);
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
+
+            //Se elige donde se guarda
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar reporte");
+            
+            //Filtro para mostrar solo archivos pdf
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
+            fileChooser.addChoosableFileFilter(filtro);
+            fileChooser.setFileFilter(filtro);
+            
+            int result = fileChooser.showSaveDialog(null);
+            if (result != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            File archivoGuardar = fileChooser.getSelectedFile();
+            String archivoRuta = archivoGuardar.getAbsolutePath();
+            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
+                archivoRuta += ".pdf";
+            }            
+            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
+            JOptionPane.showMessageDialog(this, "Reporte generado correctamente.");            
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al generar reporte: " + ex.getMessage());
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, "Error al generar reporte:" + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnGenerarReporte;
     private com.toedter.calendar.JDateChooser dateCFechaFin;
     private com.toedter.calendar.JDateChooser dateCFechaInicio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

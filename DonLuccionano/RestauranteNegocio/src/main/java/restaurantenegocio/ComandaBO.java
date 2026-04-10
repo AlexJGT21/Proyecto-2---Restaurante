@@ -1,6 +1,5 @@
 package restaurantenegocio;
 
-import Adapters.NuevaComandaDTOAComandaAdapter;
 import EnumeradoresDominio.Disponibilidad;
 import EnumeradoresDominio.EstadoComanda;
 import java.time.LocalDate;
@@ -19,13 +18,10 @@ import Interfaces.IComandaDAO;
 import Interfaces.IIngredienteDAO;
 import Interfaces.IMesaDAO;
 import Interfaces.IProductoDAO;
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import restaurantedominio.ClienteFrecuente;
-import restaurantedominio.Ingrediente;
 import restaurantedominio.Producto;
-import restaurantedominio.ProductoIngredientes;
-import restaurantedtos.ProductoDTO;
+import restaurantedtos.ReporteComandaDTO;
 import restaurantepersistencia.ClienteFrecuenteDAO;
 import restaurantepersistencia.IngredienteDAO;
 import restaurantepersistencia.PersistenciaException;
@@ -277,4 +273,31 @@ public class ComandaBO implements IComandaBO {
         }
     }
 
+    /**
+     * Metodo que genera un reporte de comandas por periodo de fechas
+     * @param fechaInicio Rango de inicio
+     * @param fechaFin Rango final
+     * @return Lista con comandas en el rango especificado
+     * @throws NegocioException No fue posible generar el reporte
+     */
+    @Override
+    public List<ReporteComandaDTO> generarReporteComanda(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException {
+        if (fechaInicio == null || fechaFin == null) {
+            throw new NegocioException("Las fechas no pueden ser vacias. Ingrese rango de fechas por favor.");
+        }
+        
+        if (fechaInicio.isAfter(fechaFin)) {
+            throw new NegocioException("La fecha de inicio no puede ser despues de la fecha final.");
+        }
+        
+        LocalDateTime inicioCO = fechaInicio.atStartOfDay();
+        LocalDateTime finalCO = fechaFin.plusDays(1).atStartOfDay();
+        
+        try {
+            return comandaDAO.generarReporteComanda(inicioCO, finalCO);
+        } catch (PersistenciaException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new NegocioException("Error al generar reporte.");
+        }
+    }
 }

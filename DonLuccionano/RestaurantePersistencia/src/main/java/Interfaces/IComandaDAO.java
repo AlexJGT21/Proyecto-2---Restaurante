@@ -1,8 +1,10 @@
 package Interfaces;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import restaurantedominio.Comanda;
+import restaurantedtos.ReporteComandaDTO;
 import restaurantepersistencia.PersistenciaException;
 
 /**
@@ -24,4 +26,7 @@ public interface IComandaDAO {
     public Comanda consultarComanda(Long idComanda) throws PersistenciaException;
     
     public void cambiarEstado(Long idComanda, EnumeradoresDominio.EstadoComanda nuevoEstado) throws PersistenciaException;
+    
+    //Usa una DTO para generar el reporte de la comanda
+    public List<ReporteComandaDTO> generarReporteComanda(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException;
 }
