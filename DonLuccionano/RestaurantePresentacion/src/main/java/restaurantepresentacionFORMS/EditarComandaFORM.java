@@ -1,4 +1,3 @@
-
 package restaurantepresentacionFORMS;
 
 import Controlador.Control;
@@ -9,55 +8,43 @@ import Interfaces.IProductoBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantedtos.ProductoDTO;
 import restaurantenegocio.NegocioException;
 
-/**
- *
- * @author Dell
- */
 public class EditarComandaFORM extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarComandaFORM.class.getName());
 
-    // 1. Declaramos los objetos BO que usará esta pantalla
     private Long idComandaActual;
-    private IMesaBO mesaBO;
-    private IProductoBO productoBO;
-    private IClienteFrecuenteBO clienteBO;
-    private IComandaBO comandaBO;
-    
+
     private Control control;
 
     private restaurantedtos.ClienteFrecuenteDTO clienteSeleccionado;
-    private javax.swing.table.DefaultTableModel modeloMenu;
-    private javax.swing.table.DefaultTableModel modeloOrden;
+    private DefaultTableModel modeloMenu;
+    private DefaultTableModel modeloOrden;
 
     /**
-     * Porque dos initComponents cuando solo deberia ser un costructor para esta clase?
-     * En todo caso deberia estar todo esto abajo
-     * @param idComanda 
+     * Porque dos initComponents cuando solo deberia ser un costructor para esta
+     * clase? En todo caso deberia estar todo esto abajo
+     *
+     * @param idComanda
      */
-    
-   public EditarComandaFORM(Long idComanda) {
+    public EditarComandaFORM(Controlador.Control control, Long idComanda) {
+
         initComponents();
         this.idComandaActual = idComanda;
-        
-        this.mesaBO = new restaurantenegocio.MesaBO();
-        this.productoBO = new restaurantenegocio.ProductoBO();
-        this.clienteBO = new restaurantenegocio.ClienteFrecuenteBO();
-        this.comandaBO = new restaurantenegocio.ComandaBO();
-        
+        this.control = control;
+
         configurarTablas();
         llenarTablaMenu("Platillo"); // Llenamos el menú normal
-        
-        // ¡NUEVO! Cargamos los datos de la comanda existente
+
+        // Cargamos los datos de la comanda existente
         cargarDatosComandaVieja();
     }
 
-    // El constructor vacío por si NetBeans lo pide
     public EditarComandaFORM(Control control) {
         initComponents();
     }
@@ -65,13 +52,13 @@ public class EditarComandaFORM extends javax.swing.JFrame {
     private void cargarDatosComandaVieja() {
         try {
             // Buscamos la comanda en la BD
-            restaurantedominio.Comanda comandaAnterior = comandaBO.consultarComanda(idComandaActual);
-            
+            restaurantedominio.Comanda comandaAnterior = control.consultarComanda(idComandaActual);
+
             // 1. Bloqueamos la selección de mesa y cliente (¡porque ya están sentados!)
             ComboBoxMesa.removeAllItems();
             ComboBoxMesa.addItem(comandaAnterior.getMesa().getId() + " - Mesa " + comandaAnterior.getMesa().getNumMesa());
             ComboBoxMesa.setEnabled(false); // Lo deshabilitamos para que no lo cambien
-            
+
             if (comandaAnterior.getCliente() != null) {
                 txtCliente.setText(comandaAnterior.getCliente().getNumeroTelefonico());
                 lblClienteSeleccionado.setText("Cliente: " + comandaAnterior.getCliente().getNombre());
@@ -80,19 +67,19 @@ public class EditarComandaFORM extends javax.swing.JFrame {
             }
             txtCliente.setEnabled(false);
             btnBuscar.setEnabled(false); // Ya no pueden buscar otro cliente
-            
+
             // 2. Cargamos los platillos que ya habían pedido en la tabla de la derecha
             for (restaurantedominio.Producto p : comandaAnterior.getProductos()) {
                 modeloOrden.addRow(new Object[]{
-                    p.getId(), 
-                    p.getNombre(), 
+                    p.getId(),
+                    p.getNombre(),
                     "$" + p.getPrecio()
                 });
             }
-            
+
             // 3. Calculamos el total
             actualizarTotal();
-            
+
         } catch (restaurantenegocio.NegocioException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar la comanda: " + ex.getMessage());
         }
@@ -376,7 +363,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
         try {
             // Buscamos al cliente
-            ClienteFrecuente clienteBD = clienteBO.buscarPorTelefono(telefono);
+            ClienteFrecuente clienteBD = control.buscarClientePorTelefono(telefono);
 
             if (clienteBD != null) {
                 // Si lo encuentrs
@@ -390,7 +377,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
                 lblClienteSeleccionado.setText("No encontrado (Público General)");
                 clienteSeleccionado = null; // null le dirá al BO que use el Cliente General
             }
-        } catch (restaurantenegocio.NegocioException ex) {
+        } catch (NegocioException ex) {
 
             JOptionPane.showMessageDialog(this, ex.getMessage());
             lblClienteSeleccionado.setText("Cliente frecuente");
@@ -446,7 +433,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
             // Recopilamps todos los productpa de la tabla de la Orden (los viejos y los nuevos juntos)
             List<restaurantedtos.ProductoDTO> todosLosProductos = new ArrayList<>();
             double totalCalculado = 0;
-            
+
             for (int i = 0; i < modeloOrden.getRowCount(); i++) {
                 Long idProducto = (Long) modeloOrden.getValueAt(i, 0);
                 ProductoDTO prod = new ProductoDTO();
@@ -454,8 +441,8 @@ public class EditarComandaFORM extends javax.swing.JFrame {
                 todosLosProductos.add(prod);
 
                 String precioStr = (String) modeloOrden.getValueAt(i, 2);
-                precioStr = precioStr.replace("$", ""); 
-                totalCalculado += Double.parseDouble(precioStr); 
+                precioStr = precioStr.replace("$", "");
+                totalCalculado += Double.parseDouble(precioStr);
             }
 
             // Armamos el DTO solo con lo que se va a actualizar
@@ -465,7 +452,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
             comandaActualizada.setTotalVenta((long) totalCalculado);
 
             // Lo mandamos a actualizar y cruzamos los deditos para que no truene
-            comandaBO.actualizarComanda(comandaActualizada); 
+            control.actualizarComanda(comandaActualizada);
 
             JOptionPane.showMessageDialog(this, "¡Orden actualizada con éxito!");
 
@@ -483,7 +470,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
-        control.mostrarGestionClientesFORM();
+        control.mostrarComandasActivasFORM();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -525,7 +512,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
         try {
             // Traemos todas las mesas
-            java.util.List<restaurantedominio.Mesa> mesas = mesaBO.listarMesas();
+            java.util.List<restaurantedominio.Mesa> mesas = control.listarMesas();
 
             for (restaurantedominio.Mesa mesa : mesas) {
                 // Solo agregamos las DISPONIBLES
@@ -544,7 +531,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
         try {
             // Traemos los productos de la BD
-            List<restaurantedominio.Producto> productos = productoBO.llenarTabla();
+            List<restaurantedominio.Producto> productos = control.llenarTabla();
 
             for (restaurantedominio.Producto p : productos) {
                 // Filtramos por tipo (Platillo, Bebida, Postre) y validamos que esté ACTIVO
@@ -557,7 +544,7 @@ public class EditarComandaFORM extends javax.swing.JFrame {
                     });
                 }
             }
-        } catch (restaurantenegocio.NegocioException e) {
+        } catch (NegocioException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar el menú: " + e.getMessage());
         }
     }

@@ -169,7 +169,7 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
         
         // Cerramos esta pantalla y abrimos la de edición
         this.dispose();
-        control.mostrarEditarComandaFORM();
+        control.mostrarEditarComandaFORM(idComanda);
     }//GEN-LAST:event_btnEditarOrdenActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -189,10 +189,9 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
         String totalTexto = (String) modeloComandas.getValueAt(fila, 4);
         
         
-        // ¡Magia! Abrimos la pantalla de cobro (que haremos en el siguiente paso) 
-        // y le pasamos el ID por el constructor para que sepa qué cobrar
+        // Abrimos la pantalla de cobro
         this.dispose();
-        control.mostrarCobrarComandaFORM();
+        control.mostrarCobrarComandaFORM(idComanda, totalTexto);
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -148,12 +148,14 @@ public class Control {
         new ComandasActivasFORM(this).setVisible(true);
     }
     
-    public void mostrarEditarComandaFORM() {
-        new EditarComandaFORM(this).setVisible(true);
+    
+    public void mostrarEditarComandaFORM(Long idComanda) {
+        new EditarComandaFORM(this, idComanda).setVisible(true);
     }
     
-    public void mostrarCobrarComandaFORM() {
-        new CobrarComandaFORM(this).setVisible(true);
+    
+    public void mostrarCobrarComandaFORM(Long idComanda, String totalTexto) {
+        new CobrarComandaFORM(this, idComanda, totalTexto).setVisible(true);
     }
     
     public Mesa registrarMesa(MesaDTO nuevaMesa) throws NegocioException {
@@ -185,5 +187,22 @@ public class Control {
      }
     
     
+    public Comanda consultarComanda(Long idComanda) throws NegocioException {
+        return comandaBO.consultarComanda(idComanda);
+    }
     
+    public void actualizarComanda(ComandaDTO comandaDTO) throws NegocioException {
+        comandaBO.actualizarComanda(comandaDTO);
+    }
+    public void actualizarVisitaCliente(Long idCliente, double monto) throws NegocioException {
+        clienteFrecuenteBO.actualizarVisita(idCliente, monto);
+    }
+
+    public void liberarMesa(Long idMesa) throws NegocioException {
+        mesaBO.cambiarDisponibilidad(idMesa, EnumeradoresDominio.Disponibilidad.DISPONIBLE);
+    }
+
+    public void entregarComanda(Long idComanda) throws NegocioException {
+        comandaBO.entregarComanda(idComanda);
+    }
 }

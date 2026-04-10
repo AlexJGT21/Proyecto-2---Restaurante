@@ -67,7 +67,7 @@ public class ComandaDAO implements IComandaDAO {
             entityManager.getTransaction().commit();
 
         } catch (Exception e) {
-      
+
             throw new restaurantepersistencia.PersistenciaException("Error al actualizar la comanda: " + e.getMessage());
         } finally {
             if (entityManager != null) {
@@ -212,4 +212,31 @@ public class ComandaDAO implements IComandaDAO {
         }
     }
 
+    @Override
+    public void cambiarEstado(Long idComanda, EnumeradoresDominio.EstadoComanda nuevoEstado) throws PersistenciaException {
+        javax.persistence.EntityManager entityManager = null;
+        try {
+            entityManager = ManejadorConexiones.crearEntityManager();
+            entityManager.getTransaction().begin();
+
+            
+            restaurantedominio.Comanda comandaDB = entityManager.find(restaurantedominio.Comanda.class, idComanda);
+            if (comandaDB != null) {
+                // Solo le modificamos el estado
+                comandaDB.setEstado(nuevoEstado);
+                entityManager.merge(comandaDB);
+            }
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al cambiar estado: " + e.getMessage());
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
 }

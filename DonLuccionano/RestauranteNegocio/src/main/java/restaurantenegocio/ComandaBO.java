@@ -213,7 +213,7 @@ public class ComandaBO implements IComandaBO {
 
             // 3. Cambiamos el estado a entregada y actualizamos
             comanda.setEstado(EstadoComanda.ENTREGADA);
-            comandaDAO.actualizarComanda(comanda);
+            comandaDAO.cambiarEstado(idComanda, EstadoComanda.ENTREGADA);
 
             // 4. Liberamos la mesa (los comensales ya terminaron)
             mesaDAO.cambiarDisponibilidad(comanda.getMesa().getId(), Disponibilidad.DISPONIBLE);

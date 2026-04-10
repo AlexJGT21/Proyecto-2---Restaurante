@@ -23,5 +23,5 @@ public interface IComandaDAO {
      */
     public Comanda consultarComanda(Long idComanda) throws PersistenciaException;
     
-    
+    public void cambiarEstado(Long idComanda, EnumeradoresDominio.EstadoComanda nuevoEstado) throws PersistenciaException;
 }

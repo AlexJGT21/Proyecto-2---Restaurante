@@ -15,26 +15,20 @@ public class CobrarComandaFORM extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CobrarComandaFORM.class.getName());
     private Long idComandaActual;
     private double totalVenta;
-    private IComandaBO comandaBO;
-    private IClienteFrecuenteBO clienteBO;
-    private IMesaBO mesaBO;
+
     
     private Control control;
 
-    public CobrarComandaFORM(Long idComanda, String totalTexto) {
+    public CobrarComandaFORM(Control control, Long idComanda, String totalTexto) {
         initComponents();
-
+        this.control = control;
         this.idComandaActual = idComanda;
-        this.comandaBO = new restaurantenegocio.ComandaBO();
-        this.clienteBO = new restaurantenegocio.ClienteFrecuenteBO();
-        this.mesaBO = new restaurantenegocio.MesaBO();
+        
         String totalLimpio = totalTexto.replace("$", "").trim();
         this.totalVenta = Double.parseDouble(totalLimpio);
 
-        // Mostramos el total en la pantalla
         lblTotalPagar.setText("Total a Pagar: $" + String.format("%.2f", totalVenta));
 
-        // Le agregamos un evento al campo de texto para que calcule el cambio automáticamente mientras escribes
         txtEfectivo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 calcularCambio();
@@ -178,22 +172,21 @@ public class CobrarComandaFORM extends javax.swing.JFrame {
                 return;
             }
 
-            // 2. Buscamos la comanda original en la BD para saber qué mesa y cliente tiene
-            restaurantedominio.Comanda comandaCerrar = comandaBO.consultarComanda(idComandaActual);
+           // 2. Buscamos la comanda
+            restaurantedominio.Comanda comandaCerrar = control.consultarComanda(idComandaActual);
 
-            // 3. ACTUALIZAR PUNTOS DEL CLIENTE (Si no es Público General)
+            // 3. ACTUALIZAR PUNTOS
             if (comandaCerrar.getCliente() != null) {
-                clienteBO.actualizarVisita(comandaCerrar.getCliente().getId(), totalVenta);
+                control.actualizarVisitaCliente(comandaCerrar.getCliente().getId(), totalVenta);
             }
 
-            // 4. LIBERAR LA MESA (Pasarla a DISPONIBLE)
-            mesaBO.cambiarDisponibilidad(comandaCerrar.getMesa().getId(), EnumeradoresDominio.Disponibilidad.DISPONIBLE);
+            // 4. LIBERAR LA MESA
+            control.liberarMesa(comandaCerrar.getMesa().getId());
 
-            // 5. CERRAR LA COMANDA (Aquí asumo que tienes un método entregarComanda o cerrarComanda en tu BO)
-            // Si tu método se llama distinto, cámbialo aquí abajo:
-            comandaBO.entregarComanda(idComandaActual); 
+            // 5. CERRAR LA COMANDA
+            control.entregarComanda(idComandaActual);
 
-            // 6. Mensaje de éxito y fin del ciclo
+            // 6. Mensaje de éxito
             javax.swing.JOptionPane.showMessageDialog(this, 
                     "¡Cobro realizado con éxito!\nCambio a entregar: $" + String.format("%.2f", (efectivo - totalVenta)));
 
@@ -211,7 +204,7 @@ public class CobrarComandaFORM extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
-        control.mostrarCobrarComandaFORM();
+        control.mostrarComandasActivasFORM();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
