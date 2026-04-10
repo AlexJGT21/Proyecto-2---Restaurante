@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.ClienteFrecuente;
 import restaurantedtos.ClienteFrecuenteDTO;
+import restaurantedtos.ComandaDTO;
 import restaurantedtos.ProductoDTO;
 import restaurantenegocio.NegocioException;
 
@@ -54,10 +55,10 @@ public class EditarComandaFORM extends javax.swing.JFrame {
             // Buscamos la comanda en la BD
             restaurantedominio.Comanda comandaAnterior = control.consultarComanda(idComandaActual);
 
-            // 1. Bloqueamos la selección de mesa y cliente (¡porque ya están sentados!)
+            // Bloqueamos la selección de mesa y cliente (¡porque ya están sentados!)
             ComboBoxMesa.removeAllItems();
             ComboBoxMesa.addItem(comandaAnterior.getMesa().getId() + " - Mesa " + comandaAnterior.getMesa().getNumMesa());
-            ComboBoxMesa.setEnabled(false); // Lo deshabilitamos para que no lo cambien
+            ComboBoxMesa.setEnabled(false); // Lo deshabilitamos para que no se pueda cambiar
 
             if (comandaAnterior.getCliente() != null) {
                 txtCliente.setText(comandaAnterior.getCliente().getNumeroTelefonico());
@@ -66,22 +67,23 @@ public class EditarComandaFORM extends javax.swing.JFrame {
                 lblClienteSeleccionado.setText("Público General");
             }
             txtCliente.setEnabled(false);
-            btnBuscar.setEnabled(false); // Ya no pueden buscar otro cliente
+            btnBuscar.setEnabled(false); // tampoco se va a apoder cambiar de cliente
 
-            // 2. Cargamos los platillos que ya habían pedido en la tabla de la derecha
-            for (restaurantedominio.Producto p : comandaAnterior.getProductos()) {
+            // Cargamos los platillos que ya habían pedido en la tabla de la derecha
+            for (restaurantedominio.DetalleComanda det : comandaAnterior.getDetalles()) {
                 modeloOrden.addRow(new Object[]{
-                    p.getId(),
-                    p.getNombre(),
-                    "$" + p.getPrecio()
+                    det.getProducto().getId(), 
+                    det.getCantidad(),
+                    det.getProducto().getNombre(), 
+                    "$" + String.format("%.2f", det.getSubtotal())
                 });
             }
 
-            // 3. Calculamos el total
+            // Calculamos el total
             actualizarTotal();
 
-        } catch (restaurantenegocio.NegocioException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar la comanda: " + ex.getMessage());
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la comanda: " + ex.getMessage());
         }
     }
 
@@ -388,24 +390,41 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         int filaSeleccionada = tablaMenu.getSelectedRow();
-
-        // Validamos que si haya una tabla seleccionada
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto del menú para agregar.");
             return;
         }
 
-        // Extraemos los datos de la fila seleccionada
-        Long id = (Long) modeloMenu.getValueAt(filaSeleccionada, 0);
+        Long idProd = (Long) modeloMenu.getValueAt(filaSeleccionada, 0);
         String nombre = (String) modeloMenu.getValueAt(filaSeleccionada, 1);
         String precioStr = (String) modeloMenu.getValueAt(filaSeleccionada, 3);
+        double precioReal = Double.parseDouble(precioStr.replace("$", ""));
 
-        // Pasamos los datos a la tabla de la Orden
-        modeloOrden.addRow(new Object[]{id, nombre, precioStr});
+        // revisamos si el producto ya esta en la tabla de la comanda
+        boolean existe = false;
+        for (int i = 0; i < modeloOrden.getRowCount(); i++) {
+            Long idEnOrden = (Long) modeloOrden.getValueAt(i, 0);
 
-        // Actualizamos el total
+            if (idEnOrden.equals(idProd)) {
+                // si existe nomas le summos uno
+                int cantActual = (Integer) modeloOrden.getValueAt(i, 1);
+                modeloOrden.setValueAt(cantActual + 1, i, 1);
+
+                // Actualizamos su subtotal
+                double nuevoSubtotal = (cantActual + 1) * precioReal;
+                modeloOrden.setValueAt("$" + String.format("%.2f", nuevoSubtotal), i, 3);
+
+                existe = true;
+                break;
+            }
+        }
+
+        // 2. Si no existe nomas lo agregamos
+        if (!existe) {
+            modeloOrden.addRow(new Object[]{idProd, 1, nombre, "$" + String.format("%.2f", precioReal)});
+        }
+
         actualizarTotal();
-
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
@@ -425,33 +444,41 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
     private void btnAbrirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirComandaActionPerformed
         if (modeloOrden.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "La comanda debe tener al menos un producto.");
+            javax.swing.JOptionPane.showMessageDialog(this, "La comanda debe tener al menos un producto.");
             return;
         }
 
         try {
-            // Recopilamps todos los productpa de la tabla de la Orden (los viejos y los nuevos juntos)
-            List<restaurantedtos.ProductoDTO> todosLosProductos = new ArrayList<>();
+            
+            List<restaurantedtos.DetalleComandaDTO> listaDetalles = new java.util.ArrayList<>();
             double totalCalculado = 0;
 
+            // recorremos la tabla y llenamos la lista
             for (int i = 0; i < modeloOrden.getRowCount(); i++) {
                 Long idProducto = (Long) modeloOrden.getValueAt(i, 0);
-                ProductoDTO prod = new ProductoDTO();
-                prod.setId(idProducto);
-                todosLosProductos.add(prod);
+                Integer cantidad = (Integer) modeloOrden.getValueAt(i, 1);
+                
+                String subStr = (String) modeloOrden.getValueAt(i, 3);
+                double subtotal = Double.parseDouble(subStr.replace("$", "").replace(",", ""));
 
-                String precioStr = (String) modeloOrden.getValueAt(i, 2);
-                precioStr = precioStr.replace("$", "");
-                totalCalculado += Double.parseDouble(precioStr);
+                ProductoDTO prod = new restaurantedtos.ProductoDTO();
+                prod.setId(idProducto);
+
+                restaurantedtos.DetalleComandaDTO detalle = new restaurantedtos.DetalleComandaDTO(cantidad, subtotal, prod);
+                
+                // Agregamos a la lista
+                listaDetalles.add(detalle);
+
+                totalCalculado += subtotal;
             }
 
-            // Armamos el DTO solo con lo que se va a actualizar
-            restaurantedtos.ComandaDTO comandaActualizada = new restaurantedtos.ComandaDTO();
-            comandaActualizada.setId(idComandaActual); // ojo cuidado
-            comandaActualizada.setProductos(todosLosProductos);
+            // hacemos la comanda
+            ComandaDTO comandaActualizada = new restaurantedtos.ComandaDTO();
+            comandaActualizada.setId(idComandaActual); 
+            comandaActualizada.setDetalles(listaDetalles);
             comandaActualizada.setTotalVenta((long) totalCalculado);
 
-            // Lo mandamos a actualizar y cruzamos los deditos para que no truene
+            // Actualizamos
             control.actualizarComanda(comandaActualizada);
 
             JOptionPane.showMessageDialog(this, "¡Orden actualizada con éxito!");
@@ -459,9 +486,11 @@ public class EditarComandaFORM extends javax.swing.JFrame {
             // Regresamos
             this.dispose();
             control.mostrarComandasActivasFORM();
-        } catch (NegocioException ex) {
+            
+        } catch (restaurantenegocio.NegocioException ex) {
             JOptionPane.showMessageDialog(this, "No se pudo actualizar:\n" + ex.getMessage());
         }
+    
      }//GEN-LAST:event_btnAbrirComandaActionPerformed
 
     private void txtComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComentariosActionPerformed
@@ -498,12 +527,12 @@ public class EditarComandaFORM extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void configurarTablas() {
-        // Configuramos tablas
-        modeloMenu = new javax.swing.table.DefaultTableModel(new Object[]{"ID", "Nombre", "Tipo", "Precio"}, 0);
+        modeloMenu = new DefaultTableModel(new Object[]{"ID", "Nombre", "Tipo", "Precio"}, 0);
         tablaMenu.setModel(modeloMenu);
 
-        modeloOrden = new javax.swing.table.DefaultTableModel(new Object[]{"ID", "Nombre", "Precio"}, 0);
+        modeloOrden = new DefaultTableModel(new Object[]{"ID", "Cant.", "Nombre", "Subtotal"}, 0);
         tablaOrden.setModel(modeloOrden);
+
     }
 
     private void llenarComboBoxMesas() {
@@ -551,17 +580,12 @@ public class EditarComandaFORM extends javax.swing.JFrame {
 
     private void actualizarTotal() {
         double total = 0.0;
-
-        // recorremos todas las filas
         for (int i = 0; i < modeloOrden.getRowCount(); i++) {
-            String precio = (String) modeloOrden.getValueAt(i, 2);
-
-            // Le quitamos el "$" 
-            precio = precio.replace("$", "");
-            total += Double.parseDouble(precio);
+            // El subtotal ahora está en la columna 3
+            String subtotalStr = (String) modeloOrden.getValueAt(i, 3);
+            subtotalStr = subtotalStr.replace("$", "").replace(",", "");
+            total += Double.parseDouble(subtotalStr);
         }
-
-        // Ponemos el total en la etiqueta
         lblTotal.setText(String.format("Total: $%.2f", total));
     }
 }

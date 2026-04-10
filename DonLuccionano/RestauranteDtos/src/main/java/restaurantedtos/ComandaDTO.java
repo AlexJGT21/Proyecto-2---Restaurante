@@ -19,7 +19,7 @@ public class ComandaDTO implements Serializable {
 
     
     private MesaDTO mesa;
-    private List<ProductoDTO> productos;
+    private List<DetalleComandaDTO> detalles;
     private ClienteFrecuenteDTO cliente; // Puede ser null
 
     public ComandaDTO() {
@@ -30,7 +30,7 @@ public class ComandaDTO implements Serializable {
      */
     public ComandaDTO(Long id, String folio, LocalDateTime fecha, EstadoComandaDTO estado,
             String comentarios, Long totalVenta, MesaDTO mesa,
-            List<ProductoDTO> productos, ClienteFrecuenteDTO cliente) {
+            List<DetalleComandaDTO> detalles, ClienteFrecuenteDTO cliente) {
         this.id = id;
         this.folio = folio;
         this.fecha = fecha;
@@ -38,7 +38,7 @@ public class ComandaDTO implements Serializable {
         this.comentarios = comentarios;
         this.totalVenta = totalVenta;
         this.mesa = mesa;
-        this.productos = productos;
+        this.detalles = detalles;
         this.cliente = cliente;
     }
 
@@ -52,13 +52,15 @@ public class ComandaDTO implements Serializable {
         this.mesa = mesa;
     }
 
-    public List<ProductoDTO> getProductos() {
-        return productos;
+    public List<DetalleComandaDTO> getDetalles() {
+        return detalles;
     }
 
-    public void setProductos(List<ProductoDTO> productos) {
-        this.productos = productos;
+    public void setDetalles(List<DetalleComandaDTO> detalles) {
+        this.detalles = detalles;
     }
+
+
 
     public Long getId() {
         return id;

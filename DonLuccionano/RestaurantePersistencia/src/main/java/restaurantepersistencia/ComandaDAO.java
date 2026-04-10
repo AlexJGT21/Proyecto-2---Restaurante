@@ -35,40 +35,42 @@ public class ComandaDAO implements IComandaDAO {
     }
 
     @Override
-    public void actualizarComanda(Comanda comandaActualizada) throws PersistenciaException {
-        EntityManager entityManager = null;
+    public void actualizarComanda(restaurantedominio.Comanda comandaActualizada) throws restaurantepersistencia.PersistenciaException {
+        javax.persistence.EntityManager entityManager = null;
         try {
             entityManager = Conexion.ManejadorConexiones.crearEntityManager();
-
-            // Iniciamos la transacción porque vamos a modificar datos
             entityManager.getTransaction().begin();
 
-            // Buscamos la comanda original en la BD para NO perder su Mesa, Cliente ni Folio
-            Comanda comandaDB = entityManager.find(Comanda.class, comandaActualizada.getId());
+            restaurantedominio.Comanda comandaDB = entityManager.find(restaurantedominio.Comanda.class, comandaActualizada.getId());
 
             if (comandaDB == null) {
-                throw new PersistenciaException("No se encontró la comanda a actualizar.");
+                throw new restaurantepersistencia.PersistenciaException("No se encontró la comanda a actualizar.");
             }
 
-            // Le actualizamos el dinero)
             comandaDB.setTotalVenta(comandaActualizada.getTotalVenta());
 
-            // Le actualizamos la lista de productos
-            List<Producto> productosReales = new java.util.ArrayList<>();
-            for (restaurantedominio.Producto pObj : comandaActualizada.getProductos()) {
-                restaurantedominio.Producto pDB = entityManager.find(restaurantedominio.Producto.class, pObj.getId());
-                if (pDB != null) {
-                    productosReales.add(pDB);
-                }
-            }
-            comandaDB.setProductos(productosReales);
+            // Limpiamos los detalles viejos
+            comandaDB.getDetalles().clear();
 
-            // 4. Guardamos los cambios
+            // Agregamos los nuevos detalles
+            for (restaurantedominio.DetalleComanda detActualizado : comandaActualizada.getDetalles()) {
+                restaurantedominio.DetalleComanda nuevoDetalle = new restaurantedominio.DetalleComanda();
+                nuevoDetalle.setCantidad(detActualizado.getCantidad());
+                nuevoDetalle.setSubtotal(detActualizado.getSubtotal());
+
+                // Buscamos el producto real
+                restaurantedominio.Producto pDB = entityManager.find(restaurantedominio.Producto.class, detActualizado.getProducto().getId());
+                nuevoDetalle.setProducto(pDB);
+
+                // Enlazamos
+                nuevoDetalle.setComanda(comandaDB);
+                comandaDB.getDetalles().add(nuevoDetalle);
+            }
+
             entityManager.merge(comandaDB);
             entityManager.getTransaction().commit();
 
         } catch (Exception e) {
-
             throw new restaurantepersistencia.PersistenciaException("Error al actualizar la comanda: " + e.getMessage());
         } finally {
             if (entityManager != null) {

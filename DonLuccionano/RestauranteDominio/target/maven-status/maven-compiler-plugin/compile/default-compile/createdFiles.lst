@@ -1,4 +1,5 @@
 restaurantedominio\ProductoIngredientes.class
+restaurantedominio\DetalleComanda.class
 restaurantedominio\Ingrediente.class
 EnumeradoresDominio\EstadoComanda.class
 restaurantedominio\ClienteFrecuente.class

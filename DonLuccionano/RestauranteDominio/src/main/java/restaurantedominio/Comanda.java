@@ -4,7 +4,9 @@ package restaurantedominio;
 import EnumeradoresDominio.EstadoComanda;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,9 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -41,13 +42,8 @@ public class Comanda implements Serializable {
     @JoinColumn(name = "id_mesa", nullable = false)
     private Mesa mesa;
 
-    @ManyToMany
-    @JoinTable(
-        name = "comanda_productos",
-        joinColumns = @JoinColumn(name = "id_comanda"),
-        inverseJoinColumns = @JoinColumn(name = "id_producto")
-    )
-    private List<Producto> productos;
+    @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleComanda> detalles = new ArrayList<>();
 
     @Column(name = "estado", nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -72,12 +68,12 @@ public class Comanda implements Serializable {
     /**
      * Constructor con todos los parámetros.
      */
-    public Comanda(Long id, String folio, LocalDateTime fecha, Mesa mesa, List<Producto> productos, EstadoComanda estado, String comentarios, long totalVenta, ClienteFrecuente cliente) {
+    public Comanda(Long id, String folio, LocalDateTime fecha, Mesa mesa, List<DetalleComanda> detalles, EstadoComanda estado, String comentarios, long totalVenta, ClienteFrecuente cliente) {
         this.id = id;
         this.folio = folio;
         this.fecha = fecha;
         this.mesa = mesa;
-        this.productos = productos;
+        this.detalles = detalles;
         this.estado = estado;
         this.comentarios = comentarios;
         this.totalVenta = totalVenta;
@@ -87,11 +83,11 @@ public class Comanda implements Serializable {
     /**
      * Constructor sin ID para creación de nuevas comandas.
      */
-    public Comanda(String folio, LocalDateTime fecha, Mesa mesa, List<Producto> productos, EstadoComanda estado, String comentarios, long totalVenta) {
+    public Comanda(String folio, LocalDateTime fecha, Mesa mesa, List<DetalleComanda> detalles, EstadoComanda estado, String comentarios, long totalVenta) {
         this.folio = folio;
         this.fecha = fecha;
         this.mesa = mesa;
-        this.productos = productos;
+        this.detalles = detalles;
         this.estado = estado;
         this.comentarios = comentarios;
         this.totalVenta = totalVenta;
@@ -131,12 +127,12 @@ public class Comanda implements Serializable {
         this.mesa = mesa;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public List<DetalleComanda> getDetalles() {
+        return detalles;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setDetalles(List<DetalleComanda> detalles) {
+        this.detalles = detalles;
     }
 
     public EstadoComanda getEstado() {

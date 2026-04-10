@@ -55,12 +55,10 @@ public class ComandaBO implements IComandaBO {
     @Override
     public ComandaDTO abrirComanda(ComandaDTO comandaDTO) throws NegocioException {
         try {
-            // REGLA 1: Validar que la comanda tenga al menos un producto
-            if (comandaDTO.getProductos() == null || comandaDTO.getProductos().isEmpty()) {
+            if (comandaDTO.getDetalles() == null || comandaDTO.getDetalles().isEmpty()) {
                 throw new NegocioException("La comanda debe contener al menos un producto.");
             }
 
-            // REGLA 2: Validar disponibilidad de la mesa
             Mesa mesa = mesaDAO.listarMesas().stream()
                     .filter(m -> m.getId().equals(comandaDTO.getMesa().getId()))
                     .findFirst()
@@ -70,86 +68,92 @@ public class ComandaBO implements IComandaBO {
                 throw new NegocioException("La mesa no está disponible. Ya tiene una comanda activa.");
             }
 
-            // Generamos el Folio
             String folioUnico = generarFolio();
 
-            // REGLA 3: Mapeo y Validación Estricta de Productos e Ingredientes
-            List<Producto> productosReales = new ArrayList<>();
-            for (ProductoDTO prodDTO : comandaDTO.getProductos()) {
+            // REGLA 3: Mapeo, Validación y Multiplicación de Cantidades
+            List<restaurantedominio.DetalleComanda> detallesReales = new java.util.ArrayList<>();
+            
+            for (restaurantedtos.DetalleComandaDTO detalleDTO : comandaDTO.getDetalles()) {
+                Producto producto = productoDAO.buscarPorId(detalleDTO.getProducto().getId());
 
-                Producto producto = productoDAO.buscarPorId(prodDTO.getId());
+                if (producto == null) throw new NegocioException("El producto seleccionado no existe.");
+                if (!producto.isActivo()) throw new NegocioException("El producto '" + producto.getNombre() + "' no está activo.");
 
-                if (producto == null) {
-                    throw new NegocioException("El producto seleccionado no existe en la base de datos.");
-                }
+                // VALIDACIÓN DE INVENTARIO MULTIPLICADO
+                for (restaurantedominio.ProductoIngredientes detalleIng : producto.getListaIngredientes()) {
+                    restaurantedominio.Ingrediente ingrediente = detalleIng.getIngredientes();
 
-                // VALIDACIÓN ITSON 1: Que el producto esté Activo
-                if (!producto.isActivo()) {
-                    throw new NegocioException("El producto '" + producto.getNombre() + "' no está activo y no se puede vender.");
-                }
+                    // ¡MAGIA!: Multiplicamos lo que pide la receta por la CANTIDAD que ordenó el cliente
+                    java.math.BigDecimal cantidadRequerida = detalleIng.getCantidad().multiply(new java.math.BigDecimal(detalleDTO.getCantidad()));
 
-                // VALIDACIÓN ITSON 2: Validar Inventario de Ingredientes en stock
-                // (Nota: Asegúrate de que en tu clase Producto tengas el getter para la lista, ej: getListaIngredientes())
-                for (ProductoIngredientes detalle : producto.getListaIngredientes()) {
-
-                    // Ojo aquí: Tu método en ProductoIngredientes se llama getIngredientes() aunque devuelve uno solo
-                    Ingrediente ingrediente = detalle.getIngredientes();
-
-                    // Como tu cantidad ya es BigDecimal en ProductoIngredientes, lo pasamos directo
-                    BigDecimal cantidadRequerida = detalle.getCantidad();
-
-                    // compareTo devuelve -1 si el stock actual es MENOR a la cantidad requerida
                     if (ingrediente.getCantidad().compareTo(cantidadRequerida) < 0) {
-                        throw new NegocioException("Stock insuficiente del ingrediente '" + ingrediente.getNombre()
-                                + "' para preparar el platillo '" + producto.getNombre() + "'.");
+                        throw new NegocioException("Stock insuficiente de '" + ingrediente.getNombre()
+                                + "' para preparar " + detalleDTO.getCantidad() + "x '" + producto.getNombre() + "'.");
                     }
-                    // Restamos la cantidad usando BigDecimal y la seteamos al ingrediente
-                    BigDecimal nuevoStock = ingrediente.getCantidad().subtract(cantidadRequerida);
+                    java.math.BigDecimal nuevoStock = ingrediente.getCantidad().subtract(cantidadRequerida);
                     ingrediente.setCantidad(nuevoStock);
-
-                    // Guardamos el ingrediente con su nuevo stock en la BD
                     ingredienteDAO.actualizarIngrediente(ingrediente);
                 }
 
-                productosReales.add(producto);
+                restaurantedominio.DetalleComanda detalleNuevo = new restaurantedominio.DetalleComanda();
+                detalleNuevo.setProducto(producto);
+                detalleNuevo.setCantidad(detalleDTO.getCantidad());
+                detalleNuevo.setSubtotal(detalleDTO.getSubtotal());
+
+                detallesReales.add(detalleNuevo);
             }
 
-            // REGLA 4: Validar y Mapear Cliente Frecuente (Es Opcional)
+            // REGLA 4: Cliente
             ClienteFrecuente clienteReal = null;
             if (comandaDTO.getCliente() != null && comandaDTO.getCliente().getId() != null) {
                 clienteReal = clienteFrecuenteDAO.buscarPorId(comandaDTO.getCliente().getId());
-                if (clienteReal == null) {
-                    throw new NegocioException("El cliente frecuente seleccionado no es válido.");
-                }
+                if (clienteReal == null) throw new NegocioException("Cliente no válido.");
             } else {
-                // Requerimiento ITSON: "Cliente General"
                 List<ClienteFrecuente> clientesGen = clienteFrecuenteDAO.buscarClienteLista("Cliente General", "", "");
-                if (clientesGen != null && !clientesGen.isEmpty()) {
-                    clienteReal = clientesGen.get(0);
-                }
+                if (clientesGen != null && !clientesGen.isEmpty()) clienteReal = clientesGen.get(0);
             }
 
-            // 4. De DTO a Entidad (Usando el Adapter que creamos)
-            Comanda nuevaComanda = NuevaComandaDTOAComandaAdapter.adaptar(
-                    comandaDTO, mesa, clienteReal, productosReales, folioUnico
+            Comanda nuevaComanda = Adapters.NuevaComandaDTOAComandaAdapter.adaptar(
+                    comandaDTO, mesa, clienteReal, detallesReales, folioUnico
             );
 
-            // 5. Guardar la comanda en la base de datos
             comandaDAO.registrarComanda(nuevaComanda);
-
-            // 6. Cambiar el estado de la mesa a NO DISPONIBLE
             mesaDAO.cambiarDisponibilidad(mesa.getId(), Disponibilidad.NO_DISPONIBLE);
 
-            // 7. Retornar el DTO actualizado con el nuevo ID y Folio
             comandaDTO.setId(nuevaComanda.getId());
             comandaDTO.setFolio(folioUnico);
-            comandaDTO.setEstado(EstadoComandaDTO.ABIERTA);
+            comandaDTO.setEstado(EnumeradoresDTO.EstadoComandaDTO.ABIERTA);
 
             return comandaDTO;
 
-        } catch (PersistenciaException e) {
-            LOGGER.severe(e.getMessage());
-            throw new NegocioException("Error en la base de datos al abrir la comanda: " + e.getMessage());
+        } catch (restaurantepersistencia.PersistenciaException e) {
+            throw new NegocioException("Error en la BD al abrir la comanda: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void actualizarComanda(ComandaDTO comandaDTO) throws NegocioException {
+        try {
+            Comanda comanda = new Comanda();
+            comanda.setId(comandaDTO.getId());
+            comanda.setTotalVenta(comandaDTO.getTotalVenta());
+
+            List<restaurantedominio.DetalleComanda> listaDetalles = new java.util.ArrayList<>();
+            for (restaurantedtos.DetalleComandaDTO dDTO : comandaDTO.getDetalles()) {
+                restaurantedominio.DetalleComanda det = new restaurantedominio.DetalleComanda();
+                Producto p = new Producto();
+                p.setId(dDTO.getProducto().getId());
+                det.setProducto(p);
+                det.setCantidad(dDTO.getCantidad());
+                det.setSubtotal(dDTO.getSubtotal());
+                listaDetalles.add(det);
+            }
+            comanda.setDetalles(listaDetalles);
+
+            comandaDAO.actualizarComanda(comanda);
+            
+        } catch (restaurantepersistencia.PersistenciaException ex) {
+            throw new NegocioException("Error en negocio al actualizar comanda.", ex);
         }
     }
 
@@ -272,28 +276,5 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("No fue posible consultar la información de la comanda.", ex);
         }
     }
-    @Override
-    public void actualizarComanda(ComandaDTO comandaDTO) throws NegocioException {
-        try {
-            // Creamos una entidad Comanda solo con los datos que queremos actualizar
-            Comanda comanda = new Comanda();
-            comanda.setId(comandaDTO.getId());
-            comanda.setTotalVenta(comandaDTO.getTotalVenta());
 
-            // Le pasamos los IDs de los productos
-            List<restaurantedominio.Producto> listaProductos = new ArrayList<>();
-            for (ProductoDTO pDTO : comandaDTO.getProductos()) {
-                Producto p = new Producto();
-                p.setId(pDTO.getId());
-                listaProductos.add(p);
-            }
-            comanda.setProductos(listaProductos);
-
-            // usamos el metodo de la dao
-            comandaDAO.actualizarComanda(comanda);
-            
-        } catch (PersistenciaException ex) {
-            throw new NegocioException("Error en la capa de negocio al actualizar la comanda.", ex);
-        }
-    }
 }
