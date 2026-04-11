@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: restaurantepersistencia.ClienteFrecuenteDAOTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 13, Time elapsed: 0.007 s -- in restaurantepersistencia.ClienteFrecuenteDAOTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 13, Time elapsed: 0.005 s -- in restaurantepersistencia.ClienteFrecuenteDAOTest

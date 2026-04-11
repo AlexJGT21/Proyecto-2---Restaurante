@@ -3,6 +3,7 @@ package restaurantedtos;
 
 import EnumeradoresDTO.EstadoComandaDTO;
 import java.time.LocalDateTime;
+import EnumeradoresDominio.EstadoComanda;
 
 /**
  *
@@ -10,26 +11,21 @@ import java.time.LocalDateTime;
  */
 public class ReporteComandaDTO {
     
-    private String nombre;
     private EstadoComandaDTO estado;
     private LocalDateTime fecha;
     private Long totalVenta;
+    private int mesa;
+    private String nombreCliente;
 
-    public ReporteComandaDTO(String nombre, EstadoComandaDTO estado, LocalDateTime fecha, Long totalVenta) {
-        this.nombre = nombre;
-        this.estado = estado;
+   
+    public ReporteComandaDTO(String nombreCliente, EstadoComanda estado, LocalDateTime fecha, Long totalVenta, Integer mesa) {
+        this.nombreCliente = nombreCliente;
+        this.estado = EstadoComandaDTO.valueOf(estado.name()); 
         this.fecha = fecha;
         this.totalVenta = totalVenta;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
+        this.mesa = mesa;
+    }   
+    
     public EstadoComandaDTO getEstado() {
         return estado;
     }
@@ -53,4 +49,22 @@ public class ReporteComandaDTO {
     public void setTotalVenta(Long totalVenta) {
         this.totalVenta = totalVenta;
     }    
+
+    public int getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(int mesa) {
+        this.mesa = mesa;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+    
+    
 }

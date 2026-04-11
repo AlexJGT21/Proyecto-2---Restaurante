@@ -89,10 +89,7 @@ public class ConsultarRecetaPanel extends javax.swing.JPanel {
 
         tbReceta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Ingrediente", "Cantidad", "Unidad"

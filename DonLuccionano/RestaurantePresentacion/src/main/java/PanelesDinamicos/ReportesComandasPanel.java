@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -35,6 +36,17 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
         this.control = control;
         initComponents();
     }    
+    
+    private String formatearFecha(LocalDateTime fecha) {
+        if (fecha == null) return "";
+
+        // Si no tiene hora (00:00)
+        if (fecha.getHour() == 0 && fecha.getMinute() == 0) {
+            return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+
+        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,17 +100,14 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Fecha y hora", "Mesa", "Total venta", "Estado", "Nombre cliente"
+                "Fecha y hora", "Mesa", "Total venta", "Estado", "Nombre cliente", "Total Ventas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -170,17 +179,54 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //1. Obtenermos la fecha del JDateChooser
-        Date date = dateCFechaInicio.getDate();
-        if (date != null) {
-            //2. Convertimos de Date a LocalDate
-            LocalDateTime fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            //3. Formateo con fecha y hora
-            DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            String fechaFormato = fecha.format(dft);
-            //4. Pasamos al text field            
-            txtFechaInicio.setText(fechaFormato);
+         Date fechaInicio = dateCFechaInicio.getDate();
+    Date fechaFin = dateCFechaFin.getDate();
+
+    if (fechaInicio == null || fechaFin == null) {
+        JOptionPane.showMessageDialog(this, 
+                "Selecciona ambas fechas", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+    try {
+        List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
+
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay comandas en ese rango");
+            return;
         }
+        
+        // Limpiar tabla
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        
+        // Acumular total de ventas por periodo
+        double totalAcumulado = 0;
+
+        // Llenar tabla
+        for (ReporteComandaDTO c : lista) {
+            
+            totalAcumulado += c.getTotalVenta();
+            
+            modelo.addRow(new Object[]{
+                formatearFecha(c.getFecha()),
+                c.getMesa(),
+                c.getTotalVenta(),
+                c.getEstado(),
+                c.getNombreCliente(),
+                
+                totalAcumulado
+            });
+        }
+
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaInicioActionPerformed

@@ -92,10 +92,7 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
 
         tbClientesFrecuentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Nombre", "Visitas", "Total gastado", "Ultima visita"

@@ -4,6 +4,7 @@ import Conexion.ManejadorConexiones;
 import Interfaces.IComandaDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -263,9 +264,10 @@ public class ComandaDAO implements IComandaDAO {
             TypedQuery<ReporteComandaDTO> query = entityManager.createQuery(
             """
             SELECT new restaurantedtos.ReporteComandaDTO
-            (cf.nombre, co.estado, co.fecha, co.totalVenta)
+            (cf.nombre, co.estado, co.fecha, co.totalVenta, m.numMesa)
             FROM Comanda co
             LEFT JOIN co.cliente cf
+            LEFT JOIN co.mesa m
             WHERE co.fecha >= :fechaInicio AND co.fecha < :fechaFin
             """, ReporteComandaDTO.class);
             query.setParameter("fechaInicio", fechaInicio);
@@ -276,4 +278,6 @@ public class ComandaDAO implements IComandaDAO {
             throw new PersistenciaException("NO FUE POSIBLE GENERAR LA CONSULTA PARA EL REPORTE.");
         }
     }
+    
+    
 }

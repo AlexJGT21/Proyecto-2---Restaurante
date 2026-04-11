@@ -90,10 +90,7 @@ public class BuscarClienteFrecuentePanel extends javax.swing.JPanel {
 
         tbClienteFrecuente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Nombre", "Apellido paterno", "Apellido materno", "Telefono", "Correo electronico", "Fecha registro", "Puntos "
