@@ -65,8 +65,9 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JButton();
         btnGenerarReporte = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        txtFechaInicio = new javax.swing.JTextField();
+        tbComandas = new javax.swing.JTable();
+        txtAcumulado = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 51, 204));
         setPreferredSize(new java.awt.Dimension(505, 440));
@@ -98,29 +99,34 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbComandas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Fecha y hora", "Mesa", "Total venta", "Estado", "Nombre cliente", "Total Ventas"
+                "Fecha y hora", "Mesa", "Total venta", "Estado", "Nombre cliente"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbComandas);
 
-        txtFechaInicio.addActionListener(new java.awt.event.ActionListener() {
+        txtAcumulado.setEditable(false);
+        txtAcumulado.setSelectionColor(new java.awt.Color(0, 0, 0));
+        txtAcumulado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaInicioActionPerformed(evt);
+                txtAcumuladoActionPerformed(evt);
             }
         });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Total Ventas:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -132,33 +138,37 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dateCFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(dateCFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dateCFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(dateCFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(jLabel1)))
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtFechaInicio)
+                            .addComponent(txtAcumulado)
                             .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
                 .addGap(4, 4, 4)
-                .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAcumulado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -180,117 +190,112 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
          Date fechaInicio = dateCFechaInicio.getDate();
-    Date fechaFin = dateCFechaFin.getDate();
+         Date fechaFin = dateCFechaFin.getDate();
+         
+         if (fechaInicio == null || fechaFin == null) {
+             JOptionPane.showMessageDialog(this, 
+                     "Selecciona ambas fechas", 
+                     "Error", 
+                     JOptionPane.ERROR_MESSAGE);
+             return;
+         }
+         
+         LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+         LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-    if (fechaInicio == null || fechaFin == null) {
-        JOptionPane.showMessageDialog(this, 
-                "Selecciona ambas fechas", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+         try {
+             List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
+             if (lista.isEmpty()) {
+                 JOptionPane.showMessageDialog(this, "No hay comandas en ese rango");
+                 return;
+             }        
+             // Limpiar tabla
+             DefaultTableModel modelo = (DefaultTableModel) tbComandas.getModel();
+             modelo.setRowCount(0);
 
-    LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+             // Acumular total de ventas por periodo
+             double totalAcumulado = 0;
 
-    try {
-        List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
-
-        if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay comandas en ese rango");
-            return;
-        }
-        
-        // Limpiar tabla
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0);
-        
-        // Acumular total de ventas por periodo
-        double totalAcumulado = 0;
-
-        // Llenar tabla
-        for (ReporteComandaDTO c : lista) {
-            
-            totalAcumulado += c.getTotalVenta();
-            
-            modelo.addRow(new Object[]{
-                formatearFecha(c.getFecha()),
-                c.getMesa(),
-                c.getTotalVenta(),
-                c.getEstado(),
-                c.getNombreCliente(),
-                
-                totalAcumulado
-            });
-        }
-
-    } catch (NegocioException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
+             // Llenar tabla
+             for (ReporteComandaDTO c : lista) {            
+                 totalAcumulado += c.getTotalVenta();
+                 String total = String.valueOf(totalAcumulado);
+                 txtAcumulado.setText(total);
+                 modelo.addRow(new Object[]{
+                     formatearFecha(c.getFecha()),
+                     c.getMesa(),
+                     c.getTotalVenta(),
+                     c.getEstado(),
+                     c.getNombreCliente(),                     
+                 });
+             }             
+         } catch (NegocioException e) {
+             JOptionPane.showMessageDialog(this, e.getMessage());
+         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void txtFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaInicioActionPerformed
+    private void txtAcumuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAcumuladoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaInicioActionPerformed
+    }//GEN-LAST:event_txtAcumuladoActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-        Date fechaInicio = dateCFechaInicio.getDate();
-        Date fechaFin = dateCFechaFin.getDate();
-        
-        if (fechaInicio == null || fechaFin == null) {
-            JOptionPane.showMessageDialog(this, 
-                                          "No pueden existir fechas vacias. Seleccione ambas.", 
-                                          "RANGO DE FECHAS", 
-                                          JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        try {
-            List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
-            if (lista.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No existen comandas en el rango especificado.");
-                return;
-            }
-            
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
-            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ReporteComandas.jasper");
-            
-            Map<String,Object> parametros = new HashMap<>();
-            //Total acumulado de ventas por periodo
-            double total = lista.stream()
-                    .mapToDouble(ReporteComandaDTO::getTotalVenta)
-                    .sum();            
-            parametros.put("totalVentas", total);
-            
-            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
-
-            //Se elige donde se guarda
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Guardar reporte");
-            
-            //Filtro para mostrar solo archivos pdf
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
-            fileChooser.addChoosableFileFilter(filtro);
-            fileChooser.setFileFilter(filtro);
-            
-            int result = fileChooser.showSaveDialog(null);
-            if (result != JFileChooser.APPROVE_OPTION) {
-                return;
-            }
-            
-            File archivoGuardar = fileChooser.getSelectedFile();
-            String archivoRuta = archivoGuardar.getAbsolutePath();
-            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
-                archivoRuta += ".pdf";
-            }            
-            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
-            JOptionPane.showMessageDialog(this, "Reporte generado correctamente.");            
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, "Error al generar reporte: " + ex.getMessage());
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Error al generar reporte:" + ex.getMessage());
-        }
+//        Date fechaInicio = dateCFechaInicio.getDate();
+//        Date fechaFin = dateCFechaFin.getDate();
+//        
+//        if (fechaInicio == null || fechaFin == null) {
+//            JOptionPane.showMessageDialog(this, 
+//                                          "No pueden existir fechas vacias. Seleccione ambas.", 
+//                                          "RANGO DE FECHAS", 
+//                                          JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//        LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        try {
+//            List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
+//            if (lista.isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "No existen comandas en el rango especificado.");
+//                return;
+//            }
+//            
+//            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
+//            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ReporteComandas.jasper");
+//            
+//            Map<String,Object> parametros = new HashMap<>();
+//            //Total acumulado de ventas por periodo
+//            double total = lista.stream()
+//                    .mapToDouble(ReporteComandaDTO::getTotalVenta)
+//                    .sum();            
+//            parametros.put("totalVentas", total);
+//            
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
+//
+//            //Se elige donde se guarda
+//            JFileChooser fileChooser = new JFileChooser();
+//            fileChooser.setDialogTitle("Guardar reporte");
+//            
+//            //Filtro para mostrar solo archivos pdf
+//            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
+//            fileChooser.addChoosableFileFilter(filtro);
+//            fileChooser.setFileFilter(filtro);
+//            
+//            int result = fileChooser.showSaveDialog(null);
+//            if (result != JFileChooser.APPROVE_OPTION) {
+//                return;
+//            }
+//            
+//            File archivoGuardar = fileChooser.getSelectedFile();
+//            String archivoRuta = archivoGuardar.getAbsolutePath();
+//            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
+//                archivoRuta += ".pdf";
+//            }            
+//            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
+//            JOptionPane.showMessageDialog(this, "Reporte generado correctamente.");            
+//        } catch (NegocioException ex) {
+//            JOptionPane.showMessageDialog(this, "Error al generar reporte: " + ex.getMessage());
+//        } catch (JRException ex) {
+//            JOptionPane.showMessageDialog(this, "Error al generar reporte:" + ex.getMessage());
+//        }
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -301,8 +306,9 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtFechaInicio;
+    private javax.swing.JTable tbComandas;
+    private javax.swing.JTextField txtAcumulado;
     // End of variables declaration//GEN-END:variables
 }
