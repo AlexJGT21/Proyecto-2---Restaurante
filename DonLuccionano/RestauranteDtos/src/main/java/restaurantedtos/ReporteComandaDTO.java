@@ -1,9 +1,9 @@
 
 package restaurantedtos;
 
-import EnumeradoresDTO.EstadoComandaDTO;
 import java.time.LocalDateTime;
 import EnumeradoresDominio.EstadoComanda;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -11,27 +11,30 @@ import EnumeradoresDominio.EstadoComanda;
  */
 public class ReporteComandaDTO {
     
-    private EstadoComandaDTO estado;
+    private EstadoComanda estado;
     private LocalDateTime fecha;
     private Long totalVenta;
-    private int mesa;
+    private Integer mesa;
     private String nombreCliente;
 
-   
-    public ReporteComandaDTO(String nombreCliente, EstadoComanda estado, LocalDateTime fecha, Long totalVenta, Integer mesa) {
-        this.nombreCliente = nombreCliente;
-        this.estado = EstadoComandaDTO.valueOf(estado.name()); 
+    public ReporteComandaDTO(EstadoComanda estado, LocalDateTime fecha, Long totalVenta, Integer mesa, String nombreCliente) {
+        this.estado = estado;
         this.fecha = fecha;
         this.totalVenta = totalVenta;
         this.mesa = mesa;
-    }   
+        this.nombreCliente = nombreCliente;
+    }
     
-    public EstadoComandaDTO getEstado() {
+    public EstadoComanda getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoComandaDTO estado) {
+    public void setEstado(EstadoComanda estado) {
         this.estado = estado;
+    }
+    
+    public String getEstadoTexto() {
+        return estado != null ?  estado.name() : "";
     }
 
     public LocalDateTime getFecha() {
@@ -40,6 +43,13 @@ public class ReporteComandaDTO {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+    
+    public String getFechaFormato() {
+        if (fecha == null) {
+            return "";
+        }
+        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public Long getTotalVenta() {
@@ -50,11 +60,11 @@ public class ReporteComandaDTO {
         this.totalVenta = totalVenta;
     }    
 
-    public int getMesa() {
+    public Integer getMesa() {
         return mesa;
     }
 
-    public void setMesa(int mesa) {
+    public void setMesa(Integer mesa) {
         this.mesa = mesa;
     }
 
@@ -64,7 +74,5 @@ public class ReporteComandaDTO {
 
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
-    }
-    
-    
+    }      
 }

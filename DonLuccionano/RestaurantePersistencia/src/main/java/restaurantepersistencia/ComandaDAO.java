@@ -264,7 +264,7 @@ public class ComandaDAO implements IComandaDAO {
             TypedQuery<ReporteComandaDTO> query = entityManager.createQuery(
             """
             SELECT new restaurantedtos.ReporteComandaDTO
-            (cf.nombre, co.estado, co.fecha, co.totalVenta, m.numMesa)
+            (co.estado, co.fecha, co.totalVenta, m.numMesa, cf.nombre)
             FROM Comanda co
             LEFT JOIN co.cliente cf
             LEFT JOIN co.mesa m
@@ -278,6 +278,4 @@ public class ComandaDAO implements IComandaDAO {
             throw new PersistenciaException("NO FUE POSIBLE GENERAR LA CONSULTA PARA EL REPORTE.");
         }
     }
-    
-    
 }

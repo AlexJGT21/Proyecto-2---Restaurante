@@ -239,63 +239,63 @@ public class ReportesComandasPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtAcumuladoActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-//        Date fechaInicio = dateCFechaInicio.getDate();
-//        Date fechaFin = dateCFechaFin.getDate();
-//        
-//        if (fechaInicio == null || fechaFin == null) {
-//            JOptionPane.showMessageDialog(this, 
-//                                          "No pueden existir fechas vacias. Seleccione ambas.", 
-//                                          "RANGO DE FECHAS", 
-//                                          JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        try {
-//            List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
-//            if (lista.isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "No existen comandas en el rango especificado.");
-//                return;
-//            }
-//            
-//            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
-//            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ReporteComandas.jasper");
-//            
-//            Map<String,Object> parametros = new HashMap<>();
-//            //Total acumulado de ventas por periodo
-//            double total = lista.stream()
-//                    .mapToDouble(ReporteComandaDTO::getTotalVenta)
-//                    .sum();            
-//            parametros.put("totalVentas", total);
-//            
-//            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
-//
-//            //Se elige donde se guarda
-//            JFileChooser fileChooser = new JFileChooser();
-//            fileChooser.setDialogTitle("Guardar reporte");
-//            
-//            //Filtro para mostrar solo archivos pdf
-//            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
-//            fileChooser.addChoosableFileFilter(filtro);
-//            fileChooser.setFileFilter(filtro);
-//            
-//            int result = fileChooser.showSaveDialog(null);
-//            if (result != JFileChooser.APPROVE_OPTION) {
-//                return;
-//            }
-//            
-//            File archivoGuardar = fileChooser.getSelectedFile();
-//            String archivoRuta = archivoGuardar.getAbsolutePath();
-//            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
-//                archivoRuta += ".pdf";
-//            }            
-//            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
-//            JOptionPane.showMessageDialog(this, "Reporte generado correctamente.");            
-//        } catch (NegocioException ex) {
-//            JOptionPane.showMessageDialog(this, "Error al generar reporte: " + ex.getMessage());
-//        } catch (JRException ex) {
-//            JOptionPane.showMessageDialog(this, "Error al generar reporte:" + ex.getMessage());
-//        }
+        Date fechaInicio = dateCFechaInicio.getDate();
+        Date fechaFin = dateCFechaFin.getDate();
+        
+        if (fechaInicio == null || fechaFin == null) {
+            JOptionPane.showMessageDialog(this, 
+                                          "No pueden existir fechas vacias. Seleccione ambas.", 
+                                          "RANGO DE FECHAS", 
+                                          JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        LocalDate inicio = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fin = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        try {
+            List<ReporteComandaDTO> lista = control.generarReporteComanda(inicio, fin);
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No existen comandas en el rango especificado.");
+                return;
+            }
+            
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
+            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ReporteComandas.jasper");
+            
+            Map<String,Object> parametros = new HashMap<>();
+            //Total acumulado de ventas por periodo
+            double total = lista.stream()
+                    .mapToDouble(ReporteComandaDTO::getTotalVenta)
+                    .sum();            
+            parametros.put("totalVentas", total);
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
+
+            //Se elige donde se guarda
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar reporte");
+            
+            //Filtro para mostrar solo archivos pdf
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
+            fileChooser.addChoosableFileFilter(filtro);
+            fileChooser.setFileFilter(filtro);
+            
+            int result = fileChooser.showSaveDialog(null);
+            if (result != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            File archivoGuardar = fileChooser.getSelectedFile();
+            String archivoRuta = archivoGuardar.getAbsolutePath();
+            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
+                archivoRuta += ".pdf";
+            }            
+            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
+            JOptionPane.showMessageDialog(this, "Reporte generado correctamente.");            
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al generar reporte: " + ex.getMessage());
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, "Error al generar reporte:" + ex.getMessage());
+        }
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
