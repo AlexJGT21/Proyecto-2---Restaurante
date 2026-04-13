@@ -4,6 +4,7 @@
  */
 package PanelesDinamicos;
 
+import Controlador.Control;
 import Interfaces.IProductoBO;
 import Interfaces.IProductoIngredientesBO;
 import java.util.List;
@@ -18,15 +19,14 @@ import restaurantedtos.ProductoDTO;
  */
 public class ConsultarRecetaPanel extends javax.swing.JPanel {
     
+    private Control control;
+    
     private IProductoBO productoBO;
-    private IProductoIngredientesBO piBO;
     private List<ProductoDTO> listaProductosDisponibles;
     
-    public ConsultarRecetaPanel() {
+    public ConsultarRecetaPanel(Control control) {
+        this.control = control;
         initComponents();
-        this.productoBO = new restaurantenegocio.ProductoBO();
-        this.piBO = new restaurantenegocio.ProductoIngredientesBO();
-        
         cargarProductosAlCombo();
     }
     
@@ -48,7 +48,7 @@ public class ConsultarRecetaPanel extends javax.swing.JPanel {
         
         try {
             
-            List<ProductoIngredientes> receta = piBO.obtenerIngredientesPorProducto(idProducto);
+            List<ProductoIngredientes> receta = control.obtenerIngredientesPorProducto(idProducto);
             
             for (ProductoIngredientes pi : receta) {
                 Object[] fila = {

@@ -4,8 +4,7 @@
  */
 package PanelesDinamicos;
 
-import EnumeradoresDTO.Disponibilidad;
-import Interfaces.IProductoBO;
+import Controlador.Control;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -23,7 +22,6 @@ import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Producto;
 import restaurantedtos.ProductoDTO;
 import restaurantenegocio.NegocioException;
-import restaurantenegocio.ProductoBO;
 import ImagenTabla.ImageTable;
 import java.awt.Container;
 
@@ -33,13 +31,14 @@ import java.awt.Container;
  */
 public class NuevoProductoPanel extends javax.swing.JPanel {
 
-    private final IProductoBO productoBO;
+    private Control control;
+    
     private File selectFile;
     private static final Logger LOGGER = Logger.getLogger(NuevoProductoPanel.class.getName());
     
-    public NuevoProductoPanel() {
+    public NuevoProductoPanel(Control control) {
+        this.control = control;
         initComponents();
-        this.productoBO = new ProductoBO();
         tblProductos.setRowHeight(60);
        
         DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
@@ -55,7 +54,7 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
         modelo.setRowCount(0); 
         List<Producto> productos;
         try {
-            productos = productoBO.llenarTabla();
+            productos = control.llenarTabla();
             if (productos.isEmpty()) {
                 return;               
             }
@@ -448,7 +447,7 @@ public class NuevoProductoPanel extends javax.swing.JPanel {
         
         try {
             // Guardamos en la BD y obtenemos el producto ya con su ID generado
-            Producto productoGuardado = productoBO.crearProducto(nuevoProducto);
+            Producto productoGuardado = control.crearProducto(nuevoProducto);
             
             JOptionPane.showMessageDialog(this, "¡Producto guardado! Ahora arma la receta.");
             

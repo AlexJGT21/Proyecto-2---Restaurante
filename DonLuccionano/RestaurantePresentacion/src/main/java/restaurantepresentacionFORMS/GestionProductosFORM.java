@@ -2,8 +2,10 @@
 package restaurantepresentacionFORMS;
 
 import Controlador.Control;
+import PanelesDinamicos.BuscarIngredienteProductoInventarioPanel;
 import java.awt.BorderLayout;
 import PanelesDinamicos.BuscarProductoPanel;
+import PanelesDinamicos.ConsultarRecetaPanel;
 import PanelesDinamicos.NuevoProductoPanel;
 
 /**
@@ -14,6 +16,8 @@ public class GestionProductosFORM extends javax.swing.JFrame {
 
     private NuevoProductoPanel productoPanel;
     private BuscarProductoPanel buscarPanel;
+    private ConsultarRecetaPanel consultarReceta;
+    private BuscarIngredienteProductoInventarioPanel nuevaReceta;
     private Control control;
 
     public GestionProductosFORM(Control control) {
@@ -37,6 +41,7 @@ public class GestionProductosFORM extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnConsultarRecetas = new javax.swing.JButton();
+        btnCrearReceta = new javax.swing.JButton();
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(719, 540));
@@ -101,6 +106,13 @@ public class GestionProductosFORM extends javax.swing.JFrame {
             }
         });
 
+        btnCrearReceta.setText("Crear Receta");
+        btnCrearReceta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearRecetaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,13 +122,14 @@ public class GestionProductosFORM extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnNuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addComponent(btnBuscarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnConsultarRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnConsultarRecetas, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addComponent(btnCrearReceta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(59, 59, 59)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -130,11 +143,13 @@ public class GestionProductosFORM extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCrearReceta, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnConsultarRecetas, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27))
@@ -144,7 +159,7 @@ public class GestionProductosFORM extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        buscarPanel = new BuscarProductoPanel();
+        buscarPanel = new BuscarProductoPanel(control);
         
         jPanel1.removeAll();
         jPanel1.setLayout(new BorderLayout());
@@ -155,7 +170,7 @@ public class GestionProductosFORM extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void btnNuevoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProductoActionPerformed
-        productoPanel = new NuevoProductoPanel();
+        productoPanel = new NuevoProductoPanel(control);
         
         jPanel1.removeAll();
         jPanel1.setLayout(new BorderLayout());
@@ -176,23 +191,39 @@ public class GestionProductosFORM extends javax.swing.JFrame {
 
     private void btnConsultarRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarRecetasActionPerformed
 
-        PanelesDinamicos.ConsultarRecetaPanel panelConsulta = new PanelesDinamicos.ConsultarRecetaPanel();
+        consultarReceta = new ConsultarRecetaPanel(control);
         
     
         jPanel1.removeAll();
         
        
         jPanel1.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(panelConsulta, java.awt.BorderLayout.CENTER);
+        jPanel1.add(consultarReceta, java.awt.BorderLayout.CENTER);
         
        
         jPanel1.revalidate();
         jPanel1.repaint();
     }//GEN-LAST:event_btnConsultarRecetasActionPerformed
 
+    private void btnCrearRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRecetaActionPerformed
+       
+        nuevaReceta = new BuscarIngredienteProductoInventarioPanel(control); 
+        
+        jPanel1.removeAll();
+        
+       
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(nuevaReceta, java.awt.BorderLayout.CENTER);
+        
+       
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }//GEN-LAST:event_btnCrearRecetaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarProducto;
     private javax.swing.JButton btnConsultarRecetas;
+    private javax.swing.JButton btnCrearReceta;
     private javax.swing.JButton btnNuevoProducto;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;

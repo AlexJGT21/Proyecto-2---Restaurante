@@ -1,8 +1,8 @@
 
 package PanelesDinamicos;
 
+import Controlador.Control;
 import ImagenTabla.ImageTable;
-import Interfaces.IProductoBO;
 import java.awt.Image;
 import java.util.List;
 import java.util.logging.Logger;
@@ -12,20 +12,20 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import restaurantedominio.Producto;
 import restaurantenegocio.NegocioException;
-import restaurantenegocio.ProductoBO;
 
 /**
  *
  * @author Jaime
  */
 public class BuscarProductoPanel extends javax.swing.JPanel {
+    
+    private Control control;
 
-    private final IProductoBO productoBO;
     private static final Logger LOGGER = Logger.getLogger(BuscarProductoPanel.class.getName());
     
-    public BuscarProductoPanel() {
+    public BuscarProductoPanel(Control control) {
+        this.control = control;
         initComponents();
-        this.productoBO = new ProductoBO();
         tblProductos.setRowHeight(60);
         
         DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
@@ -40,7 +40,7 @@ public class BuscarProductoPanel extends javax.swing.JPanel {
         DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
         modelo.setRowCount(0); 
         try {
-            List<Producto> productos = productoBO.llenarTabla();
+            List<Producto> productos = control.llenarTabla();
             if (productos.isEmpty()) {
                 return;               
             }
@@ -193,7 +193,7 @@ public class BuscarProductoPanel extends javax.swing.JPanel {
         }
         
         try {
-            Producto encontrado = productoBO.buscarPorNombre(nombreBuscar);
+            Producto encontrado = control.buscarPorNombre(nombreBuscar);
             DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
             modelo.setRowCount(0); 
             

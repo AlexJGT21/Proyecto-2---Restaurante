@@ -130,6 +130,10 @@ public class Control {
         return piBO.agregarProductoIngrediente(pi);
     }
     
+    public Producto buscarPorNombre(String nombre) throws NegocioException {
+        return productoBO.buscarPorNombre(nombre);
+    }
+    
     public List<ProductoDTO> obtenerProductos() throws NegocioException {
         return productoBO.obtenerProductos();
     }
@@ -137,6 +141,12 @@ public class Control {
     public List<Producto> llenarTabla() throws NegocioException {
         return productoBO.llenarTabla();
     }
+    
+    public Producto crearProducto(ProductoDTO productoDTO) throws NegocioException {
+        return productoBO.crearProducto(productoDTO);
+    }
+    
+    
 
     public void mostrarAbrirComandaFORM() {
         new AbrirComandaFORM(this).setVisible(true);
