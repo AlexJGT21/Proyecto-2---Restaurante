@@ -189,15 +189,10 @@ public class Control {
     public List<ClienteFrecuenteReporteDTO> filtrarClientes(String nombre, Integer visitas) throws NegocioException {
         return clienteFrecuenteBO.filtrarClientes(nombre, visitas);
     }
-    
-    public boolean generarReporteClientesFrecuentes(String nombre, Integer visitas) throws NegocioException {
-        return clienteFrecuenteBO.generarReporteClientesFrecuentes(nombre, visitas);
-    }
-    
-     public List<Mesa> listarMesas() throws NegocioException {
-         return mesaBO.listarMesas();
-     }
-    
+
+    public List<Mesa> listarMesas() throws NegocioException {
+        return mesaBO.listarMesas();
+    }    
     
     public Comanda consultarComanda(Long idComanda) throws NegocioException {
         return comandaBO.consultarComanda(idComanda);

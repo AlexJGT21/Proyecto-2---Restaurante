@@ -35,7 +35,7 @@ public class ClienteFrecuente implements Serializable { //extends Cliente
     private String apellidoMaterno;
     
     @Column(name = "numero_telefonico", nullable = false, length = 255)   
-    //@Convert(converter = TelefonoConverter.class)
+    @Convert(converter = TelefonoConverter.class)
     private String numeroTelefonico;
     
     @Column(name = "correo_electronico", length = 50) //No se le puso "nullable" para hacerlo opcional

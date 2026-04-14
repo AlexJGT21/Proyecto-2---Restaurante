@@ -9,6 +9,7 @@
     <class>restaurantedominio.Comanda</class>
     <class>restaurantedominio.ProductoIngredientes</class>
     <class>restaurantedominio.DetalleComanda</class>
+    <class>restaurantedominio.TelefonoConverter</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/restauranteBD?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

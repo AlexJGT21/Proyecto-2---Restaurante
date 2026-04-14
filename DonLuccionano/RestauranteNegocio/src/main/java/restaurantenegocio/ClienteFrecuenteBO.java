@@ -241,62 +241,21 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("NO FUE POSIBLE REALIZAR FILTRADO DE CLIENTES FRECUENTES.");
         }        
     }
-
+    
     /**
-     * Metodo que genera el reporte de Jasper
-     * @param nombre Parametro filtro
-     * @param visitas Parametro de filtro
-     * @return true si se pudo generar el reporte, false en caso contrario
-     * @throws NegocioException Error al generar el reporte
+     * Metodo que genera el reporte de clientes frecuentes
+     * @param nombre Argumento de busqueda
+     * @param visitas Argumento de busqueda
+     * @return Reporte de clientes frecuentes
+     * @throws NegocioException No fue posible generar el reporte.
      */
     @Override
-    public boolean generarReporteClientesFrecuentes(String nombre, Integer visitas) throws NegocioException {
+    public List<ClienteFrecuenteReporteDTO> generarReporteClientesFrecuentes(String nombre, Integer visitas) throws NegocioException {
         try {
-            //Se carga el reporte desde la carpeta resources (recursos)
-            Connection conexion = ManejadorConexiones.crearConexionJDBC();
-            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ClienteFrecuente.jasper");
-            if (reporte == null) {
-                throw new NegocioException("No se encontro el reporte.");
-            }            
-            
-            //Parametros de reporte
-            Map<String, Object> parametros = new HashMap<>();
-            
-            String nombreParam = (nombre == null || nombre.trim().isEmpty()) ? null : nombre;
-            Integer visitasParam = (visitas == null || visitas == 0) ? null : visitas;
-            
-            parametros.put("nombre", nombreParam);
-            parametros.put("visitas", visitasParam);
-            //LLenado del reporte
-            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
-            
-            //Se elige donde se guarda
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Guardar reporte");
-            
-            //Filtro para mostrar solo archivos pdf
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
-            fileChooser.addChoosableFileFilter(filtro);
-            fileChooser.setFileFilter(filtro);
-            
-            int result = fileChooser.showSaveDialog(null);
-            if (result != JFileChooser.APPROVE_OPTION) {
-                return false;
-            }
-            
-            File archivoGuardar = fileChooser.getSelectedFile();
-            String archivoRuta = archivoGuardar.getAbsolutePath();
-            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
-                archivoRuta += ".pdf";
-            }
-            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);            
-            return true;
-        } catch (JRException e) {
+            return clienteFrecuenteDAO.filtrarClientes(nombre, visitas);
+        } catch (PersistenciaException e) {
             LOGGER.severe(e.getMessage());
             throw new NegocioException("Error al generar reporte.");
-        } catch (SQLException ex) {
-            LOGGER.severe(ex.getMessage());
-            throw new NegocioException("Erro al realizar conexion con la base de datos.");
-        }                
+        }
     }
 }

@@ -2,12 +2,25 @@
 package PanelesDinamicos;
 
 import Controlador.Control;
+import java.io.File;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantenegocio.NegocioException;
 
@@ -30,18 +43,28 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
         ((JSpinner.DefaultEditor) spNumVisitas.getEditor()).getTextField().setEditable(false);
     }
     
+    private String formatearFecha(LocalDateTime fecha) {
+        if (fecha == null) {
+            return "";
+        }
+        if (fecha.getHour() == 0 && fecha.getMinute() == 0) {
+            return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+    }
+    
     private void llenarTabla(String nombre, Integer visitas) {
         DefaultTableModel modelo = (DefaultTableModel) tbClientesFrecuentes.getModel();
         modelo.setRowCount(0); 
         List<ClienteFrecuenteReporteDTO> clientes;
         try {
             clientes = control.filtrarClientes(nombre, visitas);
-            for (ClienteFrecuenteReporteDTO cf: clientes) {               
+            for (ClienteFrecuenteReporteDTO cf: clientes) {
                 Object[] fila = {
                     cf.getNombre(),
                     cf.getTotalVisitas(),
                     cf.getTotalGastado(),
-                    cf.getFechaUltimaComanda()
+                    formatearFecha(cf.getFechaUltimaComanda())
                 };
                 modelo.addRow(fila);
             }
@@ -194,18 +217,51 @@ public class ReportesClienteFrecuentePanel extends javax.swing.JPanel {
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
         String nombre = txtNombre.getText().isEmpty()? null : txtNombre.getText();
-        Integer visitas = (int) spNumVisitas.getValue();
+        int valor = (int) spNumVisitas.getValue();
+        Integer visitas = (valor == 0) ? null: valor;        
         
         try {
-            boolean generado = control.generarReporteClientesFrecuentes(nombre, visitas);
-            if (generado) {
-                JOptionPane.showMessageDialog(this, "Reporte generado exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Operación cancelada.");
+            List<ClienteFrecuenteReporteDTO> lista = control.filtrarClientes(nombre, visitas);
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No existen clientes con esos filtros.");
+                return;
+            }
+            
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
+            InputStream reporte = getClass().getClassLoader().getResourceAsStream("reportes/ReporteClientesFrecuentes.jasper");
+            
+            Map<String,Object> parametros = new HashMap<>();
+
+            parametros.put("nombre", nombre);
+            parametros.put("visitas", visitas);
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, dataSource);
+            
+             //Se elige donde se guarda
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar reporte");
+            
+            //Filtro para mostrar solo archivos pdf
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos PDF (*.pdf)", "pdf");            
+            fileChooser.addChoosableFileFilter(filtro);
+            fileChooser.setFileFilter(filtro);
+            
+            int result = fileChooser.showSaveDialog(null);
+            if (result != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            File archivoGuardar = fileChooser.getSelectedFile();
+            String archivoRuta = archivoGuardar.getAbsolutePath();
+            if (!archivoRuta.toLowerCase().endsWith(".pdf") ) {
+                archivoRuta += ".pdf";
             }            
+            JasperExportManager.exportReportToPdfFile(jasperPrint, archivoRuta);
+            JOptionPane.showMessageDialog(this, "Reporte generado correctamente.");           
         } catch (NegocioException e) {
-            LOGGER.severe(e.getMessage());
-            JOptionPane.showMessageDialog(this, "Error al generar reporte.");            
+            JOptionPane.showMessageDialog(this, "Error al generar reporte: " + e.getMessage());
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, "Error al generar reporte:" + ex.getMessage());
         }        
     }//GEN-LAST:event_btnExportarActionPerformed
     
