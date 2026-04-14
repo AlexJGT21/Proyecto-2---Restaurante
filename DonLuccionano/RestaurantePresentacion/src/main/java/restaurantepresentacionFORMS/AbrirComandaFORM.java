@@ -71,6 +71,7 @@ public class AbrirComandaFORM extends javax.swing.JFrame {
         txtComentarios = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblMesa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblMesa.setText("Mesa");

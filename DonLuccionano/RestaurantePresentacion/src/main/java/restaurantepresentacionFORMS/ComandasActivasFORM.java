@@ -81,6 +81,7 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblComandasActivas.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblComandasActivas.setText("Comandas Activas");

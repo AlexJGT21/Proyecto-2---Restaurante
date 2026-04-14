@@ -83,6 +83,7 @@ public class CobrarComandaFORM extends javax.swing.JFrame {
         btnPagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblTotalPagar.setText("Total a Pagar: $0.00");
 
