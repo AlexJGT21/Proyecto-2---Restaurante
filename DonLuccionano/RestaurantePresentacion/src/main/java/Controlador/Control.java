@@ -216,4 +216,7 @@ public class Control {
     public List<ReporteComandaDTO> generarReporteComanda(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException {
         return comandaBO.generarReporteComanda(fechaInicio, fechaFin);
     }
+    public void cancelarComanda(Long idComanda) throws restaurantenegocio.NegocioException {
+        this.comandaBO.cancelarComanda(idComanda);
+    }
 }

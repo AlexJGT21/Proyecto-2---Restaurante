@@ -173,25 +173,35 @@ public class ComandaBO implements IComandaBO {
     @Override
     public void cancelarComanda(Long idComanda) throws NegocioException {
         try {
-            // 1. Buscamos la comanda
             Comanda comanda = comandaDAO.buscarPorId(idComanda);
             if (comanda == null) {
                 throw new NegocioException("La comanda especificada no existe.");
             }
 
-            // 2. Validamos la regla de negocio: Solo se cancelan comandas abiertas
             if (comanda.getEstado() != EstadoComanda.ABIERTA) {
                 throw new NegocioException("Solo se pueden cancelar comandas que estén en estado ABIERTA.");
             }
 
-            // 3. Cambiamos el estado a cancelada y actualizamos
-            comanda.setEstado(EstadoComanda.CANCELADA);
-            comandaDAO.actualizarComanda(comanda);
+            for (restaurantedominio.DetalleComanda detalle : comanda.getDetalles()) {
+                restaurantedominio.Producto producto = detalle.getProducto();
+                
+                for (restaurantedominio.ProductoIngredientes receta : producto.getListaIngredientes()) {
+                    restaurantedominio.Ingrediente ingrediente = receta.getIngredientes();
+                    
+                    java.math.BigDecimal cantidadDevuelta = receta.getCantidad().multiply(new java.math.BigDecimal(detalle.getCantidad()));
+                    
+                    java.math.BigDecimal stockRestaurado = ingrediente.getCantidad().add(cantidadDevuelta);
+                    ingrediente.setCantidad(stockRestaurado);
+                    
+                    ingredienteDAO.actualizarIngrediente(ingrediente);
+                }
+            }
 
-            // 4. Liberamos la mesa para que pueda ser usada de nuevo
+            comandaDAO.cambiarEstado(idComanda, EstadoComanda.CANCELADA);
+
             mesaDAO.cambiarDisponibilidad(comanda.getMesa().getId(), Disponibilidad.DISPONIBLE);
 
-        } catch (PersistenciaException e) {
+        } catch (restaurantepersistencia.PersistenciaException e) {
             LOGGER.severe(e.getMessage());
             throw new NegocioException("Error en la base de datos al cancelar la comanda: " + e.getMessage());
         }
@@ -300,4 +310,5 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Error al generar reporte.");
         }
     }
+    
 }

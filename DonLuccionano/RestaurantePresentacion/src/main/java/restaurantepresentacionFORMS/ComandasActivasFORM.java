@@ -78,6 +78,7 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
         btnEditarOrden = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         btnCobrar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,26 +119,36 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setText("Cancelar Comanda");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(345, 345, 345)
-                .addComponent(lblComandasActivas)
-                .addContainerGap(352, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(174, 174, 174)
+                .addGap(63, 63, 63)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(btnEditarOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
                 .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(182, 182, 182))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(322, 322, 322)
+                        .addComponent(lblComandasActivas)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +161,8 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
@@ -194,7 +206,41 @@ public class ComandasActivasFORM extends javax.swing.JFrame {
         control.mostrarCobrarComandaFORM(idComanda, totalTexto);
     }//GEN-LAST:event_btnCobrarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        int fila = tablaComandas.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una comanda de la tabla para cancelar.");
+            return;
+        }
+
+        // Ventana de confirmación de seguridad
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro que desea cancelar esta comanda?\nLa mesa se liberará y esta acción no se puede deshacer.", 
+                "Confirmar Cancelación", 
+                javax.swing.JOptionPane.YES_NO_OPTION, 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            // Agarramos el ID oculto de la fila seleccionada
+            Long idComanda = (Long) modeloComandas.getValueAt(fila, 0);
+
+            try {
+                // Llamamos al control para ejecutar la cancelación
+                control.cancelarComanda(idComanda);
+                
+                javax.swing.JOptionPane.showMessageDialog(this, "Comanda cancelada exitosamente.");
+                
+                // Recargamos la tabla para que desaparezca de las activas
+                llenarTablaActivas(); 
+                
+            } catch (Exception ex) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al cancelar la comanda:\n" + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnEditarOrden;
     private javax.swing.JButton btnRegresar;
