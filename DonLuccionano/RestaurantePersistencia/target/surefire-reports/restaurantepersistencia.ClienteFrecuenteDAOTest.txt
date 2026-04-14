@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: restaurantepersistencia.ClienteFrecuenteDAOTest
 -------------------------------------------------------------------------------
+<<<<<<< Updated upstream
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.449 s -- in restaurantepersistencia.ClienteFrecuenteDAOTest
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.532 s -- in restaurantepersistencia.ClienteFrecuenteDAOTest
+>>>>>>> Stashed changes

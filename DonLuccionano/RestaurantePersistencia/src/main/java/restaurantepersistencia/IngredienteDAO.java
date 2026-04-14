@@ -155,8 +155,8 @@ public class IngredienteDAO implements IIngredienteDAO {
     public Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.crearEntityManager();
-
             Ingrediente ingrediente = entityManager.find(Ingrediente.class, ingredienteInventario.getId());
+            
             ingrediente.setCantidad(ingredienteInventario.getCantidad());
             entityManager.getTransaction().begin();
             entityManager.merge(ingrediente);

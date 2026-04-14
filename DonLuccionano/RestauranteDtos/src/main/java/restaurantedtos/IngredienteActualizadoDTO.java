@@ -16,7 +16,7 @@ public class IngredienteActualizadoDTO {
         this.id = id;
         this.cantidad = cantidad;
     }
-
+    
     public Long getId() {
         return id;
     }

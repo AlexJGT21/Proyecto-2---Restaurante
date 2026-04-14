@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\Disponibilidad.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\EstadoComanda.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\EstadoMesa.java
@@ -12,3 +13,19 @@ C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\Restaurant
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\ProductoIngredientes.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\ProteccionDatos.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\TelefonoConverter.java
+=======
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\Disponibilidad.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\EstadoComanda.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\EstadoMesa.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\EnumeradoresDominio\TipoUnidad.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\Cliente.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\ClienteFrecuente.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\Comanda.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\DetalleComanda.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\Ingrediente.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\Mesa.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\Producto.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\ProductoIngredientes.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\ProteccionDatos.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDominio\src\main\java\restaurantedominio\TelefonoConverter.java
+>>>>>>> Stashed changes

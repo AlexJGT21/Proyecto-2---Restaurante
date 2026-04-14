@@ -30,4 +30,5 @@ public interface IIngredienteBO {
  
     //Contrato 5: Lista todos los ingredientes como DTOs
     public abstract List<IngredienteDTO> consultarTodosLosIngredientes() throws NegocioException;    
+    
 }

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\Controlador\Control.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\ImagenTabla\ImageTable.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\Iniciar\Launcher.java
@@ -21,3 +22,29 @@ C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\Restaurant
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\GestionProductosFORM.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\GestionRestauranteFORM.java
 C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\SistemaReportesFORM.java
+=======
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\Controlador\Control.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\ImagenTabla\ImageTable.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\Iniciar\Launcher.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\BuscarClienteFrecuentePanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\BuscarProductoPanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\ConsultarRecetaPanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\CrearRecetaPanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\InventariarIngredientesPanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\NuevoIngredientePanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\NuevoProductoPanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\RegistrarClientePanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\ReportesClienteFrecuentePanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\PanelesDinamicos\ReportesComandasPanel.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\AbrirComandaFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\AdministradorFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\AdministrarClientesFrecuentesFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\CobrarComandaFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\ComandasActivasFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\EditarComandaFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\GestionClientesFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\GestionIngredientesFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\GestionProductosFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\GestionRestauranteFORM.java
+C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestaurantePresentacion\src\main\java\restaurantepresentacionFORMS\SistemaReportesFORM.java
+>>>>>>> Stashed changes

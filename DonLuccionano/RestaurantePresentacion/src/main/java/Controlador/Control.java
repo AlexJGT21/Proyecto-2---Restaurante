@@ -18,6 +18,7 @@ import restaurantedominio.ProductoIngredientes;
 import restaurantedtos.ClienteFrecuenteDTO;
 import restaurantedtos.ClienteFrecuenteReporteDTO;
 import restaurantedtos.ComandaDTO;
+import restaurantedtos.IngredienteActualizadoDTO;
 import restaurantedtos.IngredienteDTO;
 import restaurantedtos.MesaDTO;
 import restaurantedtos.ProductoDTO;
@@ -29,6 +30,7 @@ import restaurantenegocio.MesaBO;
 import restaurantenegocio.NegocioException;
 import restaurantenegocio.ProductoBO;
 import restaurantenegocio.ProductoIngredientesBO;
+import restaurantepersistencia.PersistenciaException;
 import restaurantepresentacionFORMS.CobrarComandaFORM;
 import restaurantepresentacionFORMS.AbrirComandaFORM;
 import restaurantepresentacionFORMS.AdministradorFORM;
@@ -122,6 +124,11 @@ public class Control {
         return ingredienteBO.consultarTodosLosIngredientes();
     }
     
+    public Ingrediente inventariarIngrediente(IngredienteActualizadoDTO ingredienteInventario) throws NegocioException{
+        return ingredienteBO.inventariarIngrediente(ingredienteInventario);
+    }
+           
+    
     public List<ProductoIngredientes> obtenerIngredientesPorProducto(Long idProducto) throws NegocioException {
         return piBO.obtenerIngredientesPorProducto(idProducto);
     }
@@ -146,8 +153,6 @@ public class Control {
         return productoBO.crearProducto(productoDTO);
     }
     
-    
-
     public void mostrarAbrirComandaFORM() {
         new AbrirComandaFORM(this).setVisible(true);
     }
