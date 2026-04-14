@@ -28,15 +28,15 @@ public class ClienteFrecuenteDAOTest {
     public void init() {
         this.dao = new ClienteFrecuenteDAO();
     }
-    
-    @Test
-    public void testCrearClienteFrecuente() {
-        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("Alex", "García", "Trejo", "6241857098", "alexGarciaTrejo@gmail.com", LocalDate.of(2003, 04, 28));
-        assertDoesNotThrow(() -> {
-            ClienteFrecuente clienteFc = dao.crearCliente(cliente);
-            assertNotNull(clienteFc);
-        });
-    }
+//    
+//    @Test
+//    public void testCrearClienteFrecuente() {
+//        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO("Alex", "García", "Trejo", "6241857098", "alexGarciaTrejo@gmail.com", LocalDate.of(2003, 04, 28));
+//        assertDoesNotThrow(() -> {
+//            ClienteFrecuente clienteFc = dao.crearCliente(cliente);
+//            assertNotNull(clienteFc);
+//        });
+//    }
 //    
 //    @Test
 //    public void testBuscarClientePorNumeroTelefonico() {

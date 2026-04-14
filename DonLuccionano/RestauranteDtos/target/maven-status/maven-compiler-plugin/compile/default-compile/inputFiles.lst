@@ -1,29 +1,13 @@
-<<<<<<< Updated upstream
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\Disponibilidad.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\EstadoComandaDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\TipoUnidad.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ClienteFrecuenteDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ClienteFrecuenteReporteDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ComandaDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\DetalleComandaDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\IngredienteActualizadoDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\IngredienteDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\MesaDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ProductoDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ProductoIngredientesDTO.java
-C:\Users\Dell\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ReporteComandaDTO.java
-=======
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\Disponibilidad.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\EstadoComandaDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\TipoUnidad.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ClienteFrecuenteDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ClienteFrecuenteReporteDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ComandaDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\DetalleComandaDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\IngredienteActualizadoDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\IngredienteDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\MesaDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ProductoDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ProductoIngredientesDTO.java
-C:\Users\Jaime\Documents\GitHub\Proyecto-2---Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ReporteComandaDTO.java
->>>>>>> Stashed changes
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\Disponibilidad.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\EstadoComandaDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\EnumeradoresDTO\TipoUnidad.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ClienteFrecuenteDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ClienteFrecuenteReporteDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ComandaDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\DetalleComandaDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\IngredienteActualizadoDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\IngredienteDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\MesaDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ProductoDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ProductoIngredientesDTO.java
+C:\Users\maild\OneDrive\Documentos\GitHub\Proyecto 2 - Restaurante\DonLuccionano\RestauranteDtos\src\main\java\restaurantedtos\ReporteComandaDTO.java
