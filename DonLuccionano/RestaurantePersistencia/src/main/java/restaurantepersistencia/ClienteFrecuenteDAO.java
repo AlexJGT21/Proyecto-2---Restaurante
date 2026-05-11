@@ -57,10 +57,6 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         }
     }
     
-    public void hola(){
-        System.out.println("Hola");
-    }
-
     /**
      * Metodo de busqueda de cliente por nombre, apellido paterno o apellido
      * materno
