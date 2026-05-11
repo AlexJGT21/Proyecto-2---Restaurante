@@ -56,6 +56,10 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             throw new PersistenciaException("NO SE PUDO REGISTRAR EL CLIENTE");
         }
     }
+    
+    public void hola(){
+        System.out.println("Hola");
+    }
 
     /**
      * Metodo de busqueda de cliente por nombre, apellido paterno o apellido
